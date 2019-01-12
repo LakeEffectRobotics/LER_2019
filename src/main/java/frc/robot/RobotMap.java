@@ -7,16 +7,8 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -39,25 +31,25 @@ public class RobotMap {
 
 	/**
 	 * Declaring pins
-	 * TODO: Update pin mapping
+	 * TODO: Update pin once Sparks are physically mounted
 	 */
-	private static final int LEFT_TALON_1 = 1;
-	private static final int LEFT_TALON_2 = 2;
-	private static final int LEFT_TALON_3 = 3;
-	private static final int RIGHT_TALON_1 = 12;
-	private static final int RIGHT_TALON_2 = 11;//Victor SPX
-	private static final int RIGHT_TALON_3 = 10;
+	private static final int LEFT_SPARK_1 = 1;
+	private static final int LEFT_SPARK_2 = 2;
+	private static final int LEFT_SPARK_3 = 3;
+	private static final int RIGHT_SPARK_1 = 4;
+	private static final int RIGHT_SPARK_2 = 5;
+	private static final int RIGHT_SPARK_3 = 6;
 	
 
 	/**
 	 * Creating motor controller objects
 	 */
-	public static TalonSRX left_drive_talon_1 = new TalonSRX(LEFT_TALON_1);
-	public static TalonSRX left_drive_talon_2 = new TalonSRX(LEFT_TALON_2);
-	public static TalonSRX left_drive_talon_3 = new TalonSRX(LEFT_TALON_3);
-	public static TalonSRX right_drive_talon_1 = new TalonSRX(RIGHT_TALON_1);
-	public static VictorSPX right_drive_talon_2 = new VictorSPX(RIGHT_TALON_2);
-	public static TalonSRX right_drive_talon_3 = new TalonSRX(RIGHT_TALON_3);
+	public static Spark left_drive_spark_1 = new Spark(LEFT_SPARK_1);
+	public static Spark left_drive_spark_2 = new Spark(LEFT_SPARK_2);
+	public static Spark left_drive_spark_3 = new Spark(LEFT_SPARK_3);
+	public static Spark right_drive_spark_1 = new Spark(RIGHT_SPARK_1);
+	public static Spark right_drive_spark_2 = new Spark(RIGHT_SPARK_2);
+	public static Spark right_drive_spark_3 = new Spark(RIGHT_SPARK_3);
 	
 	/**
 	 * Creating Gyro object
@@ -65,13 +57,6 @@ public class RobotMap {
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static void init() {
-		
-		left_drive_talon_2.follow(left_drive_talon_1);
-		left_drive_talon_3.follow(left_drive_talon_1);
-		right_drive_talon_2.follow(right_drive_talon_1);
-		right_drive_talon_3.follow(right_drive_talon_1);	
-
-		left_drive_talon_1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,PID_MODE,0);
-		right_drive_talon_1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,PID_MODE,0);
+		////
 	}
 }

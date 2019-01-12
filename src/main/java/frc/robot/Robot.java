@@ -37,8 +37,12 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
+		/**
+		 * Spark appears to not have any sort of sensors
+		 * 
 		SmartDashboard.putNumber("Left Encoder", Robot.drivetrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder", Robot.drivetrain.getRightEncoderPosition());
+		 */
 	}
 
 	public void enabledInit() {
@@ -52,7 +56,9 @@ public class Robot extends TimedRobot {
 		oi.init();
 		RobotMap.init();
 		gyro.calibrate();
-    	
+		
+		/**
+		 * 
     	position_chooser.addDefault("Select", -1);
 		position_chooser.addObject("Left", 0);
 		position_chooser.addObject("Center", 1);
@@ -76,11 +82,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Secondary Target", secondary_autonomous_target_chooser);
 		
 		SmartDashboard.putBoolean("Only do close side", false);
+		*/
 	}
 
 	@Override
 	public void disabledInit() {
-
+		////
 	}
 
 	@Override
@@ -142,5 +149,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
+		////
 	}
 }

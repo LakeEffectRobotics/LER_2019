@@ -78,7 +78,7 @@ public class GyroTurnCommand extends Command {
     	}
     	r = calculated_speed;
     	l = -calculated_speed;
-    	Robot.drivetrain.setPercentVoltage(l, r);
+    	Robot.drivetrain.setSpeed(l, r);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -91,12 +91,12 @@ public class GyroTurnCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.setPercentVoltage(0, 0);
+    	Robot.drivetrain.setSpeed(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drivetrain.setPercentVoltage(0, 0);
+    	Robot.drivetrain.setSpeed(0, 0);
     }
 }

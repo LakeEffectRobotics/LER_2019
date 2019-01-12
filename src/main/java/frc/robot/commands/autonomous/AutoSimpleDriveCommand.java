@@ -23,12 +23,12 @@ public class AutoSimpleDriveCommand extends Command {
 
 	protected void initialize() {
 		//Robot.gyro.resetAngle();
-		Robot.drivetrain.resetEncoderPosition();
-		Robot.drivetrain.setPercentVoltage(left*K_LEFT, right*K_RIGHT);
+		//Robot.drivetrain.resetEncoderPosition();
+		Robot.drivetrain.setSpeed(left*K_LEFT, right*K_RIGHT);
 	}
 
 	protected void execute() {
-		Robot.drivetrain.setPercentVoltage(left*K_LEFT, right*K_RIGHT);
+		Robot.drivetrain.setSpeed(left*K_LEFT, right*K_RIGHT);
 	}
 
 	protected boolean isFinished() {
@@ -36,10 +36,10 @@ public class AutoSimpleDriveCommand extends Command {
 	}
 
 	protected void end() {
-		Robot.drivetrain.setPercentVoltage(0, 0);
+		Robot.drivetrain.setSpeed(0, 0);
 	}
 
 	protected void interrupted() {
-		Robot.drivetrain.setPercentVoltage(0, 0);
+		Robot.drivetrain.setSpeed(0, 0);
 	}
 }

@@ -45,31 +45,34 @@ public class CurveDriveCommand extends Command {
     }
     
     protected void initialize() {
-    	Robot.drivetrain.resetEncoderPosition();
+    	//Robot.drivetrain.resetEncoderPosition();
     	Robot.gyro.resetAngle();
     	
     	finished = false;
     }
     protected void execute() {
-    	Object[] auto_drive_output;
-    	if (slow_down == 0) {
-    		auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop);
+    	//Object[] auto_drive_output;
+		Object[] auto_drive_output = null;
+		if (slow_down == 0) {
+    		//auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop);
     	}
     	else {
-    		auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop, slow_down);
+    		//auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop, slow_down);
     	}
     	
     	finished = (boolean) auto_drive_output[2];
     	
     	double l = (double) auto_drive_output[0];
     	double r = (double) auto_drive_output[1];
-    	
+		
+		/**
     	double current_angle = Robot.gyro.getAngle();
     	double target_degrees = degrees_per_inch * (Robot.drivetrain.getLeftEncoderPosition() + Robot.drivetrain.getLeftEncoderPosition()) / 2;
     	double modifier = (target_degrees - current_angle) * k_p;
 		l -= modifier;
 		r += modifier;
-		
+		 */
+
     	if (distance > 0) {
 	    	if (l < MIN_SPEED_LIMIT) {
 	    		l = MIN_SPEED_LIMIT;
@@ -87,7 +90,7 @@ public class CurveDriveCommand extends Command {
 	    	}
     	}
     	
-    	Robot.drivetrain.setPercentVoltage(l, r);
+    	Robot.drivetrain.setSpeed(l, r);
 
     }
 
@@ -98,10 +101,10 @@ public class CurveDriveCommand extends Command {
         return finished || isTimedOut();
     }
     protected void end() {
-    	Robot.drivetrain.setPercentVoltage(0, 0);
+    	Robot.drivetrain.setSpeed(0, 0);
     }
     
     protected void interrupted() {
-    	Robot.drivetrain.setPercentVoltage(0, 0);
+    	Robot.drivetrain.setSpeed(0, 0);
     }
 }
