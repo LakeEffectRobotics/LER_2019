@@ -76,20 +76,19 @@ public class AutoGyroDriveCommand extends Command {
 
 	protected void initialize() {
 		Robot.gyro.resetAngle();
-		//Robot.drivetrain.resetEncoderPosition();
+		Robot.drivetrain.resetEncoderPosition();
 		target_angle = Tools.closestEquivalentAngle(target_angle);
 		finished = false;
 
 	}
 
 	protected void execute() {
-		//Object[] auto_drive_output;
-		Object[] auto_drive_output = null;
+		Object[] auto_drive_output;
     	if (slow_down == 0) {
-    		//auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop);
+    		auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop);
     	}
     	else {
-    		//auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop, slow_down);
+    		auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop, slow_down);
     	}
     	
 		finished = (boolean) auto_drive_output[2];

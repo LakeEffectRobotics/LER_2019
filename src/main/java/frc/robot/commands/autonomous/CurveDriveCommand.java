@@ -45,19 +45,18 @@ public class CurveDriveCommand extends Command {
     }
     
     protected void initialize() {
-    	//Robot.drivetrain.resetEncoderPosition();
+    	Robot.drivetrain.resetEncoderPosition();
     	Robot.gyro.resetAngle();
     	
     	finished = false;
     }
     protected void execute() {
-    	//Object[] auto_drive_output;
-		Object[] auto_drive_output = null;
+    	Object[] auto_drive_output;
 		if (slow_down == 0) {
-    		//auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop);
+    		auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop);
     	}
     	else {
-    		//auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop, slow_down);
+    		auto_drive_output = Robot.drivetrain.getAutoDrive(speed, distance, line_stop, slow_down);
     	}
     	
     	finished = (boolean) auto_drive_output[2];
@@ -65,13 +64,11 @@ public class CurveDriveCommand extends Command {
     	double l = (double) auto_drive_output[0];
     	double r = (double) auto_drive_output[1];
 		
-		/**
     	double current_angle = Robot.gyro.getAngle();
     	double target_degrees = degrees_per_inch * (Robot.drivetrain.getLeftEncoderPosition() + Robot.drivetrain.getLeftEncoderPosition()) / 2;
     	double modifier = (target_degrees - current_angle) * k_p;
 		l -= modifier;
 		r += modifier;
-		 */
 
     	if (distance > 0) {
 	    	if (l < MIN_SPEED_LIMIT) {

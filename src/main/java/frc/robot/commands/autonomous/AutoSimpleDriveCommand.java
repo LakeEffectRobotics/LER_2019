@@ -22,8 +22,8 @@ public class AutoSimpleDriveCommand extends Command {
 	}
 
 	protected void initialize() {
-		//Robot.gyro.resetAngle();
-		//Robot.drivetrain.resetEncoderPosition();
+		Robot.gyro.resetAngle();
+		Robot.drivetrain.resetEncoderPosition();
 		Robot.drivetrain.setSpeed(left*K_LEFT, right*K_RIGHT);
 	}
 

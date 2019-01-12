@@ -10,7 +10,7 @@ package frc.robot.subsystems;
 import frc.robot.RobotMap;
 import frc.robot.commands.DefaultTeleopDriveCommand;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Drivetrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	private final double NATIVE_TO_INCHES = 212.77777777777777777777777777778; // TODO Make this an actually real value
+	private final double NATIVE_TO_INCHES = 212.77777777777777777777777777778; // TODO Make sure that this still works
 	public final double MAX_INCHES_PER_SECOND = 20;
 	private double l_prev_value = 0;
 	private double r_prev_value = 0;
@@ -29,38 +29,22 @@ public class Drivetrain extends Subsystem {
 		setDefaultCommand(new DefaultTeleopDriveCommand());
 	}
 	
-	public void setPosition(double l, double r) {
-		RobotMap.left_drive_spark_1.setPosition(l * NATIVE_TO_INCHES);
-		RobotMap.left_drive_spark_2.setPosition(l * NATIVE_TO_INCHES);
-		RobotMap.left_drive_spark_3.setPosition(l * NATIVE_TO_INCHES);
-		RobotMap.right_drive_spark_1.setPosition(-r * NATIVE_TO_INCHES);
-		RobotMap.right_drive_spark_2.setPosition(-r * NATIVE_TO_INCHES);
-		RobotMap.right_drive_spark_3.setPosition(-r * NATIVE_TO_INCHES);
-	}
-	
 	public void setSpeed(double l, double r) {
-		RobotMap.left_drive_spark_1.setPosition(l);
-		RobotMap.left_drive_spark_2.setPosition(l);
-		RobotMap.left_drive_spark_3.setPosition(l);
-		RobotMap.right_drive_spark_1.setPosition(-r);
-		RobotMap.right_drive_spark_2.setPosition(-r);
-		RobotMap.right_drive_spark_3.setPosition(-r);
+		RobotMap.left_drive_spark_1.set(l);
+		RobotMap.right_drive_spark_1.set(-r);
 	}
 	
-	/**
-	 * Spark appears to not have any sort of sensors
-	 * 
 	public double getLeftEncoderPosition() {
-		return (-RobotMap.left_drive_spark_1.getSelectedSensorPosition(0) / NATIVE_TO_INCHES) - l_prev_value; // TODO May need to make negative
+		return (-RobotMap.left_drive_spark_1.getEncoder().getPosition() / NATIVE_TO_INCHES) - l_prev_value; // TODO May need to make negative
 	}
 	
 	public double getRightEncoderPosition() {
-		return (RobotMap.right_drive_talon_1.getSelectedSensorPosition(0) / NATIVE_TO_INCHES) - r_prev_value; // TODO May need to make negative
+		return (RobotMap.right_drive_spark_1.getEncoder().getPosition() / NATIVE_TO_INCHES) - r_prev_value; // TODO May need to make negative
 	}
 	
 	public void resetEncoderPosition() {
-		r_prev_value = RobotMap.right_drive_talon_1.getSelectedSensorPosition(0) / NATIVE_TO_INCHES;
-		l_prev_value = -RobotMap.left_drive_talon_1.getSelectedSensorPosition(0) / NATIVE_TO_INCHES;
+		l_prev_value = -RobotMap.left_drive_spark_1.getEncoder().getPosition() / NATIVE_TO_INCHES;
+		r_prev_value = RobotMap.right_drive_spark_1.getEncoder().getPosition() / NATIVE_TO_INCHES;
 	}
 
 	public Object[] getAutoDrive(double speed, double distance, boolean line_stop) {
@@ -96,5 +80,4 @@ public class Drivetrain extends Subsystem {
     	
     	return new Object[] {l, r, finished};
 	}
-	 */
 }

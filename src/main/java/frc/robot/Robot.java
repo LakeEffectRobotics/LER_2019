@@ -37,12 +37,9 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
-		/**
-		 * Spark appears to not have any sort of sensors
-		 * 
+		
 		SmartDashboard.putNumber("Left Encoder", Robot.drivetrain.getLeftEncoderPosition());
 		SmartDashboard.putNumber("Right Encoder", Robot.drivetrain.getRightEncoderPosition());
-		 */
 	}
 
 	public void enabledInit() {

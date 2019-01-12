@@ -7,7 +7,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Spark;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 /**
@@ -17,7 +19,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
  * floating around.
  */
 public class RobotMap {
-	// For example to map the left and right motors, you could define the
+	// For example to map the right and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
@@ -31,7 +33,7 @@ public class RobotMap {
 
 	/**
 	 * Declaring pins
-	 * TODO: Update pin once Sparks are physically mounted
+	 * TODO: Update pins once Sparks are physically mounted
 	 */
 	private static final int LEFT_SPARK_1 = 1;
 	private static final int LEFT_SPARK_2 = 2;
@@ -44,12 +46,12 @@ public class RobotMap {
 	/**
 	 * Creating motor controller objects
 	 */
-	public static Spark left_drive_spark_1 = new Spark(LEFT_SPARK_1);
-	public static Spark left_drive_spark_2 = new Spark(LEFT_SPARK_2);
-	public static Spark left_drive_spark_3 = new Spark(LEFT_SPARK_3);
-	public static Spark right_drive_spark_1 = new Spark(RIGHT_SPARK_1);
-	public static Spark right_drive_spark_2 = new Spark(RIGHT_SPARK_2);
-	public static Spark right_drive_spark_3 = new Spark(RIGHT_SPARK_3);
+	public static CANSparkMax left_drive_spark_1 = new CANSparkMax(LEFT_SPARK_1,CANSparkMaxLowLevel.MotorType.kBrushless);
+	public static CANSparkMax left_drive_spark_2 = new CANSparkMax(LEFT_SPARK_2,CANSparkMaxLowLevel.MotorType.kBrushless);
+	public static CANSparkMax left_drive_spark_3 = new CANSparkMax(LEFT_SPARK_3,CANSparkMaxLowLevel.MotorType.kBrushless);
+	public static CANSparkMax right_drive_spark_1 = new CANSparkMax(RIGHT_SPARK_1,CANSparkMaxLowLevel.MotorType.kBrushless);
+	public static CANSparkMax right_drive_spark_2 = new CANSparkMax(RIGHT_SPARK_2,CANSparkMaxLowLevel.MotorType.kBrushless);
+	public static CANSparkMax right_drive_spark_3 = new CANSparkMax(RIGHT_SPARK_3,CANSparkMaxLowLevel.MotorType.kBrushless);
 	
 	/**
 	 * Creating Gyro object
@@ -57,6 +59,9 @@ public class RobotMap {
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static void init() {
-		////
+		left_drive_spark_2.follow(left_drive_spark_1);
+		left_drive_spark_3.follow(left_drive_spark_1);
+		right_drive_spark_2.follow(right_drive_spark_1);
+		right_drive_spark_3.follow(right_drive_spark_1);
 	}
 }
