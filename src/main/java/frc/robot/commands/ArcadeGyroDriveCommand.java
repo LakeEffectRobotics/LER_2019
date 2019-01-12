@@ -26,7 +26,7 @@ public class ArcadeGyroDriveCommand extends Command {
     	double r_y = Robot.oi.r_joy.getY();
     	
     	double[] arcade_gyro_output = Robot.gyro.getArcadeGyroOutput(r_x, r_y);
-    	Robot.drivetrain.setPercentVoltage(arcade_gyro_output[0], arcade_gyro_output[1]);
+    	Robot.drivetrain.setSpeed(arcade_gyro_output[0], arcade_gyro_output[1]);
     }
 
     // Make this return true when this Command no longer needs to run execute()
