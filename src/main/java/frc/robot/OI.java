@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.commands.ArcadeGyroDriveCommand;
 import frc.robot.commands.StraightGyroDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
