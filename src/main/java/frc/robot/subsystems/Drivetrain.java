@@ -20,18 +20,28 @@ public class Drivetrain extends Subsystem {
 	// here. Call these from Commands.
 	private final double NATIVE_TO_INCHES = 212.77777777777777777777777777778; // TODO Make sure that this still works
 	public final double MAX_INCHES_PER_SECOND = 20;
+
 	private double l_prev_value = 0;
 	private double r_prev_value = 0;
+
+	public boolean shawn_drive_active = false;
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new DefaultTeleopDriveCommand());
 	}
-	
+
 	public void setSpeed(double l, double r) {
-		RobotMap.left_drive_spark_1.set(l);
-		RobotMap.right_drive_spark_1.set(-r);
+		if (!shawn_drive_active) {
+			//  Standard drive
+			RobotMap.left_drive_spark_1.set(l);
+			RobotMap.right_drive_spark_1.set(-r);
+		} else {
+			//  Drive with robot's front/back switched
+			RobotMap.left_drive_spark_1.set(r);
+			RobotMap.right_drive_spark_1.set(-l);
+		}
 	}
 	
 	public double getLeftEncoderPosition() {

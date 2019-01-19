@@ -9,6 +9,7 @@ package frc.robot;
 
 import frc.robot.commands.ArcadeGyroDriveCommand;
 import frc.robot.commands.StraightGyroDriveCommand;
+import frc.robot.commands.instant.ToggleShawnDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
 // import frc.robot.commands.instant.IntakeOpenCommand;
@@ -32,6 +33,7 @@ public class OI {
 	final int STRAIGHT_GYRO = 1;
 	final int ARCADE_GYRO = 2;
 	final int CANCEL_AUTO = 2;
+	final int TOGGLE_SHAWN_DRIVE = 1;  //  TODO: Update this pin
 
 	// left joystick buttons
 	final int RESET_ODOM = 2;
@@ -59,6 +61,7 @@ public class OI {
 	public Button straight_gyro_button = new JoystickButton(r_joy, STRAIGHT_GYRO);
 	public Button arcade_gyro_button = new JoystickButton(r_joy, ARCADE_GYRO);
 	public Button cancel_auto_button = new JoystickButton(l_joy, CANCEL_AUTO);
+	public Button toggle_shawn_drive_button = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
 	public Button drop_override = new JoystickButton(l_joy, DROP_OVERRIDE);
 
 	// public XBoxButton eject_button = new XBoxButton(xbox, EJECT);
@@ -78,6 +81,7 @@ public class OI {
 	public void init() {
 		straight_gyro_button.whileHeld(new StraightGyroDriveCommand());
 		arcade_gyro_button.whileHeld(new ArcadeGyroDriveCommand());
+		toggle_shawn_drive_button.whenPressed(new ToggleShawnDriveCommand());
 		// toggle_claw_position_button.toggleWhenPressed(new ToggleClawPositionCommand());
 		// reset_lift_position.whenPressed(new ResetLiftPositionCommand());
 		// toggle_intake_open.whenPressed(new IntakeOpenCommand());
