@@ -7,11 +7,13 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveCommand;
 
-
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import com.revrobotics.CANSparkMax;
 
 
 public class Drivetrain extends Subsystem {
@@ -23,7 +25,9 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void drive(double l, double r) {
-		//Add code to drive motors here (Will need spark max libraries)
+		//Other motors are followers
+		RobotMap.leftDriveMax1.set(l);
+		RobotMap.rightDriveMax1.set(r);
 	}
 	
 }

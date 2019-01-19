@@ -7,16 +7,9 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.PWM;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -41,37 +34,32 @@ public class RobotMap {
 	 * Declaring pins
 	 * TODO: Update pin mapping
 	 */
-	private static final int LEFT_TALON_1 = 1;
-	private static final int LEFT_TALON_2 = 2;
-	private static final int LEFT_TALON_3 = 3;
-	private static final int RIGHT_TALON_1 = 12;
-	private static final int RIGHT_TALON_2 = 11;//Victor SPX
-	private static final int RIGHT_TALON_3 = 10;
-	
+		final static int RIGHT_MAX_1 = 2;
+		final static int RIGHT_MAX_2 = 3;
+		final static int RIGHT_MAX_3 = 4;
+		final static int LEFT_MAX_1 = 5;
+		final static int LEFT_MAX_2 = 6;
+		final static int LEFT_MAX_3 = 7;	
 
 	/**
 	 * Creating motor controller objects
 	 */
-	public static TalonSRX left_drive_talon_1 = new TalonSRX(LEFT_TALON_1);
-	public static TalonSRX left_drive_talon_2 = new TalonSRX(LEFT_TALON_2);
-	public static TalonSRX left_drive_talon_3 = new TalonSRX(LEFT_TALON_3);
-	public static TalonSRX right_drive_talon_1 = new TalonSRX(RIGHT_TALON_1);
-	public static VictorSPX right_drive_talon_2 = new VictorSPX(RIGHT_TALON_2);
-	public static TalonSRX right_drive_talon_3 = new TalonSRX(RIGHT_TALON_3);
-	
+		public static CANSparkMax rightDriveMax1 = new CANSparkMax(RIGHT_MAX_1, MotorType.kBrushless);
+		public static CANSparkMax rightDriveMax2 = new CANSparkMax(RIGHT_MAX_2, MotorType.kBrushless);
+		public static CANSparkMax rightDriveMax3 = new CANSparkMax(RIGHT_MAX_3, MotorType.kBrushless);
+		public static CANSparkMax leftDriveMax1 = new CANSparkMax(LEFT_MAX_1, MotorType.kBrushless);
+		public static CANSparkMax leftDriveMax2 = new CANSparkMax(LEFT_MAX_2, MotorType.kBrushless);
+		public static CANSparkMax leftDriveMax3 = new CANSparkMax(LEFT_MAX_3, MotorType.kBrushless);
 	/**
 	 * Creating Gyro object
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static void init() {
-		
-		left_drive_talon_2.follow(left_drive_talon_1);
-		left_drive_talon_3.follow(left_drive_talon_1);
-		right_drive_talon_2.follow(right_drive_talon_1);
-		right_drive_talon_3.follow(right_drive_talon_1);	
-
-		left_drive_talon_1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,PID_MODE,0);
-		right_drive_talon_1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,PID_MODE,0);
+		//Set followers
+		rightDriveMax2.follow(rightDriveMax1);
+		rightDriveMax3.follow(rightDriveMax1);
+		leftDriveMax2.follow(leftDriveMax1);
+		leftDriveMax3.follow(leftDriveMax1);
 	}
 }
