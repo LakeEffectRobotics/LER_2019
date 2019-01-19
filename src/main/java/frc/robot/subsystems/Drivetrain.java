@@ -8,9 +8,8 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
-import frc.robot.commands.DefaultTeleopDriveCommand;
+import frc.robot.commands.DriveCommand;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -20,7 +19,7 @@ public class Drivetrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DefaultTeleopDriveCommand());
+		setDefaultCommand(new DriveCommand());
 	}
 	
 	public void drive(double l, double r) {

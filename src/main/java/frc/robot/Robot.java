@@ -8,7 +8,6 @@
 package frc.robot;
 
 import frc.robot.commands.SetGear;
-import frc.robot.commands.autonomous.AutoCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Gyro;
 
