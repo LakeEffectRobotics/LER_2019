@@ -30,7 +30,7 @@ public class StraightGyroDriveCommand extends Command {
     	
     	double[] straight_gyro_output = Robot.gyro.getStraightOutput(l, r);
     	
-    	Robot.drivetrain.setSpeed(straight_gyro_output[0], straight_gyro_output[1]);
+    	Robot.drivetrain.drive(straight_gyro_output[0], straight_gyro_output[1]);
     }
 
     protected boolean isFinished() {

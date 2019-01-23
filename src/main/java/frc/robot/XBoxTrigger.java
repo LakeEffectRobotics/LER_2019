@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 
+//This class is used to interface with the XBox controller triggers
 public class XBoxTrigger extends Button {
 	XBoxController controller;
 	int button;

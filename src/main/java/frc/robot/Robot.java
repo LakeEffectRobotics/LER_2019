@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.commands.SetGear;
-import frc.robot.commands.autonomous.AutoCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Gyro;
 
@@ -19,31 +17,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
-	public static final double AUTO_TIMEOUT = 5;
+
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Gyro gyro = new Gyro();
 	public static OI oi;
 	
-	public static AutoCommandGroup autonomous_command_group;
-
-	public static enum AutonomousTarget {
-		SWITCH, SCALE, AUTO_LINE, AUTO_LINE_SIMPLE, SWITCH_SIMPLE, VAULT, MOTION_PROFILE, NOTHING
-	}
-
-	public static SendableChooser<Integer> position_chooser = new SendableChooser<Integer>();
-	public static SendableChooser<AutonomousTarget> autonomous_target_chooser = new SendableChooser<AutonomousTarget>();
-	public static SendableChooser<AutonomousTarget> secondary_autonomous_target_chooser = new SendableChooser<AutonomousTarget>();
-	
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
-		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
-		
-		SmartDashboard.putNumber("Left Encoder", Robot.drivetrain.getLeftEncoderPosition());
-		SmartDashboard.putNumber("Right Encoder", Robot.drivetrain.getRightEncoderPosition());
+		//Called periodically, use to interface with dashboard
 	}
 
 	public void enabledInit() {
-		new SetGear(SetGear.Position.LOW).start();
 		RobotMap.gyro.reset();
 	}
 
@@ -54,32 +37,7 @@ public class Robot extends TimedRobot {
 		RobotMap.init();
 		gyro.calibrate();
 		
-		/**
-		 * 
-    	position_chooser.addDefault("Select", -1);
-		position_chooser.addObject("Left", 0);
-		position_chooser.addObject("Center", 1);
-		position_chooser.addObject("Right", 2);
-		SmartDashboard.putData("Position", position_chooser);
-		
-		autonomous_target_chooser.addDefault("Nothing", AutonomousTarget.NOTHING);
-		autonomous_target_chooser.addObject("Scale", AutonomousTarget.SCALE);
-		autonomous_target_chooser.addObject("Switch", AutonomousTarget.SWITCH);
-		autonomous_target_chooser.addObject("Auto Line", AutonomousTarget.AUTO_LINE);
-		autonomous_target_chooser.addObject("Auto Line Simple", AutonomousTarget.AUTO_LINE_SIMPLE);
-		autonomous_target_chooser.addObject("Switch Simple", AutonomousTarget.SWITCH_SIMPLE);
-
-		SmartDashboard.putData("Target", autonomous_target_chooser);
-		
-		secondary_autonomous_target_chooser.addDefault("Nothing", AutonomousTarget.NOTHING);
-		secondary_autonomous_target_chooser.addObject("Scale", AutonomousTarget.SCALE);
-		secondary_autonomous_target_chooser.addObject("Switch", AutonomousTarget.SWITCH);
-		secondary_autonomous_target_chooser.addObject("Vault", AutonomousTarget.VAULT);
-
-		SmartDashboard.putData("Secondary Target", secondary_autonomous_target_chooser);
-		
-		SmartDashboard.putBoolean("Only do close side", false);
-		*/
+		//Setup dashboard
 	}
 
 	@Override
@@ -95,17 +53,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
-		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-		 * ExampleCommand(); break; }
-		 */
 		enabledInit();
-		autonomous_command_group = new AutoCommandGroup();
-		autonomous_command_group.start();
-		//count=0;
-		//drivetrain.resetEncoderPosition(); //MR WOOD
 	}
 
 	//private int count=0;
@@ -114,7 +62,6 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-//		System.out.println(drivetrain.getLeftEncoderPosition()+","+drivetrain.getRightEncoderPosition());
 	}
 
 	@Override
@@ -127,21 +74,12 @@ public class Robot extends TimedRobot {
 //			autonomous_command_group.cancel();
 //		}
 		enabledInit();
-		//count=0;
-		//drivetrain.resetEncoderPosition(); //MR WOOD
 	}
 
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-		
-		//Debug output used to fix issues with the elevator encoder
-//		System.out.println(RobotMap.lift_talon_1.getSelectedSensorPosition(0) + "\t" + Lift.GROUND_HEIGHT);
-//		System.out.println(RobotMap.right_drive_talon_1.getSelectedSensorPosition(0));
-		//if (count++%10==0) {
-		//	System.out.println(count*0.02+","+drivetrain.getLeftEncoderPosition()+","+drivetrain.getRightEncoderPosition());
-		//}
 	}
 
 	@Override

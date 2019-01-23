@@ -15,6 +15,6 @@ public class ToggleShawnDriveCommand extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.drivetrain.shawn_drive_active = !Robot.drivetrain.shawn_drive_active;
+    	Robot.drivetrain.shawnDriveIsActive = !Robot.drivetrain.shawnDriveIsActive;
     }
 }

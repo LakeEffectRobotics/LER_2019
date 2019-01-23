@@ -2,6 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+
+//This class is used to interface with the XBox controller
 public class XBoxController extends Joystick {
 	// buttons
 	public static final int XBOX_A = 1;
