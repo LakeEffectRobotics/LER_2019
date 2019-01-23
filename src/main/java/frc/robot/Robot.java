@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.commands.SetGear;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Gyro;
 
