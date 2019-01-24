@@ -57,9 +57,9 @@ public class RobotMap {
 	
 	public static void init() {
 		//Set followers
-		rightDriveMax2.follow(rightDriveSpark1);
-		rightDriveMax3.follow(rightDriveSpark1);
-		leftDriveMax2.follow(leftDriveSpark1);
-		leftDriveMax3.follow(leftDriveSpark1);
+		rightDriveSpark2.follow(rightDriveSpark1);
+		rightDriveSpark3.follow(rightDriveSpark1);
+		leftDriveSpark2.follow(leftDriveSpark1);
+		leftDriveSpark3.follow(leftDriveSpark1);
 	}
 }
