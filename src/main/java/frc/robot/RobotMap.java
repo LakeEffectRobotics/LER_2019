@@ -34,22 +34,22 @@ public class RobotMap {
 	 * Declaring pins
 	 * TODO: Update pins once Sparks are physically mounted
 	 */
-		final static int RIGHT_MAX_1 = 2;
-		final static int RIGHT_MAX_2 = 3;
-		final static int RIGHT_MAX_3 = 4;
-		final static int LEFT_MAX_1 = 5;
-		final static int LEFT_MAX_2 = 6;
-		final static int LEFT_MAX_3 = 7;	
+		final static int RIGHT_SPARK_1 = 2;
+		final static int RIGHT_SPARK_2 = 3;
+		final static int RIGHT_SPARK_3 = 4;
+		final static int LEFT_SPARK_1 = 5;
+		final static int LEFT_SPARK_2 = 6;
+		final static int LEFT_SPARK_3 = 7;	
 
 	/**
 	 * Creating motor controller objects
 	 */
-		public static CANSparkMax rightDriveMax1 = new CANSparkMax(RIGHT_MAX_1, MotorType.kBrushless);
-		public static CANSparkMax rightDriveMax2 = new CANSparkMax(RIGHT_MAX_2, MotorType.kBrushless);
-		public static CANSparkMax rightDriveMax3 = new CANSparkMax(RIGHT_MAX_3, MotorType.kBrushless);
-		public static CANSparkMax leftDriveMax1 = new CANSparkMax(LEFT_MAX_1, MotorType.kBrushless);
-		public static CANSparkMax leftDriveMax2 = new CANSparkMax(LEFT_MAX_2, MotorType.kBrushless);
-		public static CANSparkMax leftDriveMax3 = new CANSparkMax(LEFT_MAX_3, MotorType.kBrushless);
+		public static CANSparkMax rightDriveSpark1 = new CANSparkMax(RIGHT_SPARK_1, MotorType.kBrushless);
+		public static CANSparkMax rightDriveSpark2 = new CANSparkMax(RIGHT_SPARK_2, MotorType.kBrushless);
+		public static CANSparkMax rightDriveSpark3 = new CANSparkMax(RIGHT_SPARK_3, MotorType.kBrushless);
+		public static CANSparkMax leftDriveSpark1 = new CANSparkMax(LEFT_SPARK_1, MotorType.kBrushless);
+		public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_SPARK_2, MotorType.kBrushless);
+		public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_SPARK_3, MotorType.kBrushless);
 	/**
 	 * Creating Gyro object
 	 */	
@@ -57,9 +57,9 @@ public class RobotMap {
 	
 	public static void init() {
 		//Set followers
-		rightDriveMax2.follow(rightDriveMax1);
-		rightDriveMax3.follow(rightDriveMax1);
-		leftDriveMax2.follow(leftDriveMax1);
-		leftDriveMax3.follow(leftDriveMax1);
+		rightDriveSpark2.follow(rightDriveSpark1);
+		rightDriveSpark3.follow(rightDriveSpark1);
+		leftDriveSpark2.follow(leftDriveSpark1);
+		leftDriveSpark3.follow(leftDriveSpark1);
 	}
 }
