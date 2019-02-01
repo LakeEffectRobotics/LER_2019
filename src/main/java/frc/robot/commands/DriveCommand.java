@@ -29,8 +29,9 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double lSpeed = Robot.oi.l_joy.getY();
-    double rSpeed = Robot.oi.r_joy.getY();
+    //  Pushing the joysticks forward gives a negative Y value, whereas pushing them backward gives a positive Y value
+    double lSpeed = -Robot.oi.l_joy.getY();
+    double rSpeed = -Robot.oi.r_joy.getY();
 
     if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
     if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
