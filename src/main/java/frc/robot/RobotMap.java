@@ -18,7 +18,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  * floating around.
  */
 public class RobotMap {
-	// For example to map the left and right motors, you could define the
+	// For example to map the right and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
@@ -32,14 +32,14 @@ public class RobotMap {
 
 	/**
 	 * Declaring pins
-	 * TODO: Update pin mapping
+	 * TODO: Update pins once Sparks are physically mounted
 	 */
-		final static int RIGHT_SPARK_1 = 2;
-		final static int RIGHT_SPARK_2 = 3;
-		final static int RIGHT_SPARK_3 = 4;
-		final static int LEFT_SPARK_1 = 5;
-		final static int LEFT_SPARK_2 = 6;
-		final static int LEFT_SPARK_3 = 7;	
+		final static int RIGHT_SPARK_1 = 1;
+		final static int RIGHT_SPARK_2 = 2;
+		final static int RIGHT_SPARK_3 = 3;
+		final static int LEFT_SPARK_1 = 4;
+		final static int LEFT_SPARK_2 = 5;
+		final static int LEFT_SPARK_3 = 6;	
 
 	/**
 	 * Creating motor controller objects

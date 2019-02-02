@@ -6,18 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveCommand;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-import com.revrobotics.CANSparkMax;
 
 
 public class Drivetrain extends Subsystem {
-	
+	public boolean shawnDriveIsActive = false;
+
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -26,8 +22,15 @@ public class Drivetrain extends Subsystem {
 	
 	public void drive(double l, double r) {
 		//Other motors are followers
-		RobotMap.leftDriveSpark1.set(l);
-		RobotMap.rightDriveSpark1.set(r);
+
+		if (!shawnDriveIsActive) {
+			//  Standard drive
+			RobotMap.leftDriveSpark1.set(l);
+			RobotMap.rightDriveSpark1.set(-r);  //  r is inverted because the left and right motors are oriented in opposite directions
+		} else {
+			//  Drive with robot's front/back switched
+			RobotMap.leftDriveSpark1.set(r);
+			RobotMap.rightDriveSpark1.set(-l);
+		}
 	}
-	
 }

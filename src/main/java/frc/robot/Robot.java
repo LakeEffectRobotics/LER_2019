@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-
+		////
 	}
 
 	@Override
@@ -84,5 +84,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
+		////
 	}
 }

@@ -8,6 +8,7 @@
 package frc.robot;
 
 import frc.robot.commands.StraightGyroDriveCommand;
+import frc.robot.commands.instant.ToggleShawnDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
 // import frc.robot.commands.instant.IntakeOpenCommand;
@@ -28,6 +29,7 @@ public class OI {
 	// button number definitions
 	
 	// right joystick buttons
+	final int TOGGLE_SHAWN_DRIVE = 1;  //  TODO: Update this pin
 	// -- final int BUTTON_NAME = number;
 
 	// left joystick buttons
@@ -38,10 +40,12 @@ public class OI {
 	public XBoxController xbox = new XBoxController(XBOX);
 
 	// button initialization 
+	public Button toggleShawnDriveButton = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
 	// -- public Button buttonName = new JoystickButton(controller, BUTTON_NAME);
 
 	public void init() {
 		//Inithalise event handling
+		toggleShawnDriveButton.whenPressed(new ToggleShawnDriveCommand());
 		// -- buttonName.whenHeld(new Command())
 	}
 }
