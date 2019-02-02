@@ -26,8 +26,9 @@ public class Drivetrain extends Subsystem {
 	
 	public void drive(double l, double r) {
 		//Other motors are followers
-		RobotMap.leftDriveSpark1.set(l);
-		RobotMap.rightDriveSpark1.set(r);
+		System.out.println(l+"\t"+r);
+		RobotMap.leftDriveMax1.set(-l);
+		RobotMap.rightDriveMax1.set(r);
 	}
 	
 }
