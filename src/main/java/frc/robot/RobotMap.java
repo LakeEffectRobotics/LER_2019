@@ -34,12 +34,12 @@ public class RobotMap {
 	 * Declaring pins
 	 * TODO: Update pin mapping
 	 */
-		final static int RIGHT_SPARK_1 = 2;
-		final static int RIGHT_SPARK_2 = 3;
-		final static int RIGHT_SPARK_3 = 4;
-		final static int LEFT_SPARK_1 = 5;
-		final static int LEFT_SPARK_2 = 6;
-		final static int LEFT_SPARK_3 = 7;	
+		final static int RIGHT_SPARK_1 = 1;
+		final static int RIGHT_SPARK_2 = 2;
+		final static int RIGHT_SPARK_3 = 3;
+		final static int LEFT_SPARK_1 = 4;
+		final static int LEFT_SPARK_2 = 5;
+		final static int LEFT_SPARK_3 = 6;	
 
 	/**
 	 * Creating motor controller objects
