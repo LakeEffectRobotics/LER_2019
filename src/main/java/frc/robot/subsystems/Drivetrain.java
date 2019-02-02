@@ -23,7 +23,6 @@ public class Drivetrain extends Subsystem {
 	public void drive(double l, double r) {
 		//Other motors are followers
 		
-		System.out.println(shawnDriveIsActive);
 		if (!shawnDriveIsActive) {
 			//  Standard drive
 			RobotMap.leftDriveSpark1.set(l);
