@@ -22,15 +22,15 @@ public class Drivetrain extends Subsystem {
 	
 	public void drive(double l, double r) {
 		//Other motors are followers
-
+		
 		if (!shawnDriveIsActive) {
 			//  Standard drive
 			RobotMap.leftDriveSpark1.set(l);
 			RobotMap.rightDriveSpark1.set(-r);  //  r is inverted because the left and right motors are oriented in opposite directions
 		} else {
 			//  Drive with robot's front/back switched
-			RobotMap.leftDriveSpark1.set(r);
-			RobotMap.rightDriveSpark1.set(-l);
+			RobotMap.leftDriveSpark1.set(-r);
+			RobotMap.rightDriveSpark1.set(l);
 		}
 	}
 }
