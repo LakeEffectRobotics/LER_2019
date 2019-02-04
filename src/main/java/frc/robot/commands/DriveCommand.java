@@ -35,7 +35,13 @@ public class DriveCommand extends Command {
 
     if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
     if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
-    Robot.drivetrain.drive(Math.pow(lSpeed, 3), Math.pow(rSpeed, 3));
+    if(Robot.oi.l_joy.getRawButton(2)){
+      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/10, Math.pow(rSpeed, 3)/10);
+
+    }
+    else{
+      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/2, Math.pow(rSpeed, 3)/2);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

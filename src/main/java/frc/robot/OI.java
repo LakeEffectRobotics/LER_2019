@@ -31,7 +31,7 @@ public class OI {
 	
 	// right joystick buttons
 	final int TOGGLE_SHAWN_DRIVE = 1;  //  TODO: Update this pin
-	final int HOLD_SHAWN_DRIVE = 2;
+	final int HOLD_SHAWN_DRIVE = 3;
 	// -- final int BUTTON_NAME = number;
 
 	// left joystick buttons
