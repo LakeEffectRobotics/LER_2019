@@ -9,7 +9,7 @@ package frc.robot;
 
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.instant.SetShawnDriveCommand;
-import frc.robot.commands.instant.ToggleShawnDriveCommand;
+import frc.robot.commands.instant.SetShawnDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
 // import frc.robot.commands.instant.IntakeOpenCommand;
