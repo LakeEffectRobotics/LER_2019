@@ -25,6 +25,7 @@ public class SetShawnDriveCommand extends InstantCommand {
     protected void initialize() {
         switch(mode){
             case ON:
+            
                 Robot.drivetrain.shawnDriveIsActive = true;
                 break;
             case OFF:

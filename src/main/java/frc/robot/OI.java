@@ -9,7 +9,7 @@ package frc.robot;
 
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.instant.SetShawnDriveCommand;
-import frc.robot.commands.instant.SetShawnDriveCommand;
+import frc.robot.commands.LockDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
 // import frc.robot.commands.instant.IntakeOpenCommand;
@@ -31,7 +31,8 @@ public class OI {
 	
 	// right joystick buttons
 	final int TOGGLE_SHAWN_DRIVE = 1;  //  TODO: Update this pin
-	final int HOLD_SHAWN_DRIVE = 3;
+	final int HOLD_SHAWN_DRIVE = 2;
+	final int LOCK_DRIVE = 3;
 	// -- final int BUTTON_NAME = number;
 
 	// left joystick buttons
@@ -45,6 +46,8 @@ public class OI {
 	public Button toggleShawnDriveButton = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
 	
 	public Button holdShawnDriveButton = new JoystickButton(r_joy, HOLD_SHAWN_DRIVE);
+
+	public Button lockDriveButton = new JoystickButton(r_joy, LOCK_DRIVE);
 	// -- public Button buttonName = new JoystickButton(controller, BUTTON_NAME);
 
 	public void init() {
@@ -53,6 +56,8 @@ public class OI {
 
 		holdShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.ON));
 		holdShawnDriveButton.whenReleased(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.OFF));
+
+		lockDriveButton.whileHeld(new LockDriveCommand());
 		// -- buttonName.whenHeld(new Command())
 	}
 }
