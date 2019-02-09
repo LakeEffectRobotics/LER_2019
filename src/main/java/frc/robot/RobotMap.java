@@ -8,6 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.subsystems.Outtake;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -41,6 +44,11 @@ public class RobotMap {
 		final static int LEFT_SPARK_2 = 5;
 		final static int LEFT_SPARK_3 = 6;	
 
+
+		final static int LEFT_FLIPPER_IN = 0;
+		final static int LEFT_FLIPPER_OUT = 1;
+		final static int RIGHT_FLIPPER_IN = 2;
+		final static int RIGHT_FLIPPER_OUT = 3;
 	/**
 	 * Creating motor controller objects
 	 */
@@ -50,6 +58,13 @@ public class RobotMap {
 		public static CANSparkMax leftDriveSpark1 = new CANSparkMax(LEFT_SPARK_1, MotorType.kBrushless);
 		public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_SPARK_2, MotorType.kBrushless);
 		public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_SPARK_3, MotorType.kBrushless);
+
+	/**
+	 * Creating solenoids
+	 */
+		public static DoubleSolenoid leftFlipper = new DoubleSolenoid(LEFT_FLIPPER_IN, LEFT_FLIPPER_OUT);
+		public static DoubleSolenoid rightFlipper = new DoubleSolenoid(RIGHT_FLIPPER_IN, RIGHT_FLIPPER_OUT);
+
 	/**
 	 * Creating Gyro object
 	 */	
@@ -61,5 +76,7 @@ public class RobotMap {
 		rightDriveSpark3.follow(rightDriveSpark1);
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
+
+		Robot.outtake.setPostition(Outtake.Position.IN);
 	}
 }
