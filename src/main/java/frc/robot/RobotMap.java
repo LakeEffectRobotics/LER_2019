@@ -39,7 +39,7 @@ public class RobotMap {
 		final static int RIGHT_SPARK_3 = 3;
 		final static int LEFT_SPARK_1 = 4;
 		final static int LEFT_SPARK_2 = 5;
-		final static int LEFT_SPARK_3 = 6;	
+		final static int LEFT_SPARK_3 = 6;
 
 	/**
 	 * Creating motor controller objects
