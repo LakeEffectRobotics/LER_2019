@@ -7,9 +7,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -41,6 +43,12 @@ public class RobotMap {
 		final static int LEFT_SPARK_2 = 5;
 		final static int LEFT_SPARK_3 = 6;	
 
+	//LED pins
+	//TODO set proper pins
+	private static final int R_CHANNEL_RELAY_INT = 2;
+	private static final int G_CHANNEL_RELAY_INT = 0;
+	private static final int B_CHANNEL_RELAY_INT = 1;
+
 	/**
 	 * Creating motor controller objects
 	 */
@@ -54,6 +62,11 @@ public class RobotMap {
 	 * Creating Gyro object
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
+	//LED lights
+	public static Relay r_channel_relay;
+	public static Relay g_channel_relay;
+	public static Relay b_channel_relay;
 	
 	public static void init() {
 		//Set followers
@@ -61,5 +74,10 @@ public class RobotMap {
 		rightDriveSpark3.follow(rightDriveSpark1);
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
+
+		//set LEDs
+		r_channel_relay = new Relay(R_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
+		g_channel_relay = new Relay(G_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
+		b_channel_relay = new Relay(B_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
 	}
 }

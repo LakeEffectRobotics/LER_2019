@@ -7,19 +7,17 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Gyro;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Glow;
+import frc.robot.subsystems.Gyro;
 
 public class Robot extends TimedRobot {
 
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Gyro gyro = new Gyro();
+	public static final Glow glow = new Glow();
 	public static OI oi;
 	
 	public void robotPeriodic() {
