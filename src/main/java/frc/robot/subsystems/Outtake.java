@@ -18,11 +18,28 @@ public class Outtake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public enum Position{
-    IN,LEFT,RIGHT,BOTH
+  public enum Position{		  
+    IN(DoubleSolenoid.Value.kReverse),
+    OUT(DoubleSolenoid.Value.kForward),
+    OFF(DoubleSolenoid.Value.kOff);
+
+    private DoubleSolenoid.Value value;    
+
+    private Position(DoubleSolenoid.Value value) {
+      this.value = value;
+    }
+
+    public DoubleSolenoid.Value getValue() {
+      return value;
+    }
   };
 
-  Position currentPos = Position.IN;
+  public enum Side {
+    LEFT,RIGHT
+  }
+
+  Position lPosition = Position.IN;
+  Position rPosition = Position.IN;
 
   @Override
   public void initDefaultCommand() {
@@ -30,29 +47,45 @@ public class Outtake extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void setPostition(Position p){
-    if(currentPos == p) return;
-
-    switch(p){
-      case IN:
-        RobotMap.leftFlipper.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.rightFlipper.set(DoubleSolenoid.Value.kReverse);
+  public void setPosition(Position p, Side s){
+    switch(s){
       case LEFT:
-        RobotMap.leftFlipper.set(DoubleSolenoid.Value.kForward);
-        RobotMap.rightFlipper.set(DoubleSolenoid.Value.kReverse);
+        RobotMap.leftFlipper.set(p.getValue());
+        lPosition = p;
       case RIGHT:
-        RobotMap.leftFlipper.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.rightFlipper.set(DoubleSolenoid.Value.kForward);
-      case BOTH:
-        RobotMap.leftFlipper.set(DoubleSolenoid.Value.kForward);
-        RobotMap.rightFlipper.set(DoubleSolenoid.Value.kForward);
+        RobotMap.rightFlipper.set(p.getValue());
+        rPosition = p;
     }
-
-    currentPos = p;
   } 
 
-  public void retract(){
-    setPostition(Position.IN);
+  public void extend(Side s){
+    setPosition(Position.OUT, s);
+  }
+
+  public void retract(Side s){
+    setPosition(Position.IN, s);
+  }
+
+  public void retractAll(){
+    setPosition(Position.IN, Side.LEFT);
+    setPosition(Position.IN, Side.RIGHT);
+  }
+  
+  public void extendAll(){
+    setPosition(Position.OUT, Side.LEFT);
+    setPosition(Position.OUT, Side.RIGHT);
+  }
+
+
+  public Position getPosition(Side s){
+    switch(s){
+      case LEFT:
+        return lPosition;
+      case RIGHT:
+       return rPosition;
+      default:
+        return Position.OFF;
+    }
   }
 
 }
