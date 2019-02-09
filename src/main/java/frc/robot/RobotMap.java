@@ -77,6 +77,6 @@ public class RobotMap {
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
 
-		Robot.outtake.setPostition(Outtake.Position.IN);
+		Robot.outtake.retractAll();
 	}
 }
