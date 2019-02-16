@@ -12,6 +12,14 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class AutoGyroDriveCommand extends Command {
+    final static double WHEEL_RADIUS = 0.08;                        //  8 cm, or 0.08 m
+    final static double RADIANS_TO_ROTATIONS = 1 / (2 * Math.PI);   //  1 rotation has 2π radians
+    final static double GEAR_RATIO = 14 / 50;                       //  Ratio of wheel rotations to motor rotations (or motor gear teeth to wheel gear teeth)
+    //  Dividing by wheel radius (in meters) gives angular distance (in radians)
+    //  Dividing by 2π gives number of wheel rotations
+    //  Dividing by gear ratio gives the number of motor rotations
+    final static double LINEAR_TO_ROTATION = 1 / WHEEL_RADIUS * RADIANS_TO_ROTATIONS / GEAR_RATIO;
+    
     private double speed;
     private double distance;
     private boolean finished = false;
@@ -24,7 +32,7 @@ public class AutoGyroDriveCommand extends Command {
         // eg. requires(chassis);
         requires(Robot.drivetrain);
         this.speed = speed;
-        this.distance = distance;
+        this.distance = distance * LINEAR_TO_ROTATION;
         this.line_stop = line_stop;
     }
 

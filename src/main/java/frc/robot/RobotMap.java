@@ -6,8 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import frc.robot.sensors.TapeSensor;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -32,28 +34,46 @@ public class RobotMap {
 
 	/**
 	 * Declaring pins
-	 * TODO: Update pins once Sparks are physically mounted
+	 * TODO: Update pins once tape sensors are physically mounted
 	 */
-		final static int RIGHT_SPARK_1 = 1;
-		final static int RIGHT_SPARK_2 = 2;
-		final static int RIGHT_SPARK_3 = 3;
-		final static int LEFT_SPARK_1 = 4;
-		final static int LEFT_SPARK_2 = 5;
-		final static int LEFT_SPARK_3 = 6;
+	final static int RIGHT_SPARK_1 = 1;
+	final static int RIGHT_SPARK_2 = 2;
+	final static int RIGHT_SPARK_3 = 3;
+	final static int LEFT_SPARK_1 = 4;
+	final static int LEFT_SPARK_2 = 5;
+	final static int LEFT_SPARK_3 = 6;
+
+	//	Sensor 1 is in the front, Sensor 2 is in the center, Sensor 3 is in the back
+	final static int LEFT_TAPE_SENSOR_1 = 2708;
+	final static int LEFT_TAPE_SENSOR_2 = 2708;
+	final static int LEFT_TAPE_SENSOR_3 = 2708;
+	final static int RIGHT_TAPE_SENSOR_1 = 2708;
+	final static int RIGHT_TAPE_SENSOR_2 = 2708;
+	final static int RIGHT_TAPE_SENSOR_3 = 2708;
 
 	/**
 	 * Creating motor controller objects
 	 */
-		public static CANSparkMax rightDriveSpark1 = new CANSparkMax(RIGHT_SPARK_1, MotorType.kBrushless);
-		public static CANSparkMax rightDriveSpark2 = new CANSparkMax(RIGHT_SPARK_2, MotorType.kBrushless);
-		public static CANSparkMax rightDriveSpark3 = new CANSparkMax(RIGHT_SPARK_3, MotorType.kBrushless);
-		public static CANSparkMax leftDriveSpark1 = new CANSparkMax(LEFT_SPARK_1, MotorType.kBrushless);
-		public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_SPARK_2, MotorType.kBrushless);
-		public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_SPARK_3, MotorType.kBrushless);
+	public static CANSparkMax rightDriveSpark1 = new CANSparkMax(RIGHT_SPARK_1, MotorType.kBrushless);
+	public static CANSparkMax rightDriveSpark2 = new CANSparkMax(RIGHT_SPARK_2, MotorType.kBrushless);
+	public static CANSparkMax rightDriveSpark3 = new CANSparkMax(RIGHT_SPARK_3, MotorType.kBrushless);
+	public static CANSparkMax leftDriveSpark1 = new CANSparkMax(LEFT_SPARK_1, MotorType.kBrushless);
+	public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_SPARK_2, MotorType.kBrushless);
+	public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_SPARK_3, MotorType.kBrushless);
 	/**
 	 * Creating Gyro object
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	/**
+	 * Creating sensor objects
+	 */
+	public static TapeSensor leftTapeSensor1 = new TapeSensor(LEFT_TAPE_SENSOR_1);
+	public static TapeSensor leftTapeSensor2 = new TapeSensor(LEFT_TAPE_SENSOR_2);
+	public static TapeSensor leftTapeSensor3 = new TapeSensor(LEFT_TAPE_SENSOR_3);
+	
+	public static TapeSensor rightTapeSensor1 = new TapeSensor(RIGHT_TAPE_SENSOR_1);
+	public static TapeSensor rightTapeSensor2 = new TapeSensor(RIGHT_TAPE_SENSOR_2);
+	public static TapeSensor rightTapeSensor3 = new TapeSensor(RIGHT_TAPE_SENSOR_3);
 	
 	public static void init() {
 		//Set followers

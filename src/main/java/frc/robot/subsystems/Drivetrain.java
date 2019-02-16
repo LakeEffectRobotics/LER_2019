@@ -54,8 +54,9 @@ public class Drivetrain extends Subsystem {
     	boolean finished = false;
     	double l = 0;
     	double r = 0;
-		
-		//	double average_encoder_position = time;	//	Unsure as to why time is being used in place of the encoders; perhaps because it's a good approximation? 
+		/*
+		double average_encoder_position = time;	//	Unsure as to why time is being used in place of the encoders; perhaps because it's a good approximation? Or were the encoders having issues?
+		*/
 		double average_encoder_position = getAverageEncoderPosition(initial_encoder_positions);
 		double distance_left = distance - average_encoder_position;
     	if (distance_left > SLOW_DOWN_THRESHOLD) {
@@ -74,9 +75,7 @@ public class Drivetrain extends Subsystem {
     		l = -MIN_SPEED;
 		}
 		
-    	//	I'll re-add the line stop conditional once we get the light sensors on the 2019 -Shawn
-    	//	if (Math.abs(distance_left) < FINISHED_TOLERANCE || (Robot.distance_sensors.isOverLine() && line_stop)) {
-		if (Math.abs(distance_left) < FINISHED_TOLERANCE) {
+    	if (Math.abs(distance_left) < FINISHED_TOLERANCE || ((RobotMap.leftTapeSensor2.get() || RobotMap.rightTapeSensor2.get()) && line_stop)) {
 			finished = true;
     	}
     	
