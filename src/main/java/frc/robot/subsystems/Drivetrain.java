@@ -47,9 +47,10 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public Object[] getAutoDriveOutput(double speed, double distance, double[] initial_encoder_positions, double time, boolean line_stop) {
-		final double SLOW_DOWN_THRESHOLD = 0.4;
+		//	TODO: Test and update the new threshold/tolerance values
+		final double SLOW_DOWN_THRESHOLD = 15.75;	//	Originally 0.4 m or 40 cm, now 15.75"
     	final double MIN_SPEED = 0.2;
-		final double FINISHED_TOLERANCE = 0.05;
+		final double FINISHED_TOLERANCE = 2;		//	Originally 0.05 m or 5 cm, now 2"
 		
     	boolean finished = false;
     	double l = 0;

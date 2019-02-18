@@ -7,8 +7,11 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.CargoIntake;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Gyro;
+import frc.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -20,6 +23,9 @@ public class Robot extends TimedRobot {
 
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Gyro gyro = new Gyro();
+	public static final CargoIntake cargoIntake = new CargoIntake();
+	public static final Lift lift = new Lift();
+	public static final Climber climber = new Climber();
 	public static OI oi;
 	
 	public void robotPeriodic() {

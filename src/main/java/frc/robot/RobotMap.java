@@ -10,6 +10,8 @@ import frc.robot.sensors.TapeSensor;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -34,46 +36,73 @@ public class RobotMap {
 
 	/**
 	 * Declaring pins
-	 * TODO: Update pins once tape sensors are physically mounted
+	 * TODO: Update pins once everything is physically mounted
 	 */
-	final static int RIGHT_SPARK_1 = 1;
-	final static int RIGHT_SPARK_2 = 2;
-	final static int RIGHT_SPARK_3 = 3;
-	final static int LEFT_SPARK_1 = 4;
-	final static int LEFT_SPARK_2 = 5;
-	final static int LEFT_SPARK_3 = 6;
+	final static int RIGHT_DRIVE_SPARK_1 = 1;
+	final static int RIGHT_DRIVE_SPARK_2 = 2;
+	final static int RIGHT_DRIVE_SPARK_3 = 3;
+	final static int LEFT_DRIVE_SPARK_1 = 4;
+	final static int LEFT_DRIVE_SPARK_2 = 5;
+	final static int LEFT_DRIVE_SPARK_3 = 6;
+
+	final static int ROLLER_VICTOR = 2708;
+	final static int CARGO_INTAKE_TALON = 2708;
+	final static int CARGO_INTAKE_VICTOR = 2708;
+	final static int CONVEYOR_VICTOR = 2708;
+	final static int LIFT_TALON = 2708;
+	final static int CLIMBER_TALON_1 = 2708;
+	final static int CLIMBER_TALON_2 = 2708;
 
 	//	Sensor 1 is in the front, Sensor 2 is in the center, Sensor 3 is in the back
 	final static int LEFT_TAPE_SENSOR_1 = 2708;
 	final static int LEFT_TAPE_SENSOR_2 = 2708;
-	final static int LEFT_TAPE_SENSOR_3 = 2708;
+	//	final static int LEFT_TAPE_SENSOR_3 = 2708;
+
+	//	final static int CENTER_TAPE_SENSOR_1 = 2708;
+	//	final static int CENTER_TAPE_SENSOR_2 = 2708;
+	//	final static int CENTER_TAPE_SENSOR_3 = 2708;
+
 	final static int RIGHT_TAPE_SENSOR_1 = 2708;
 	final static int RIGHT_TAPE_SENSOR_2 = 2708;
-	final static int RIGHT_TAPE_SENSOR_3 = 2708;
+	//	final static int RIGHT_TAPE_SENSOR_3 = 2708;
 
 	/**
 	 * Creating motor controller objects
 	 */
-	public static CANSparkMax rightDriveSpark1 = new CANSparkMax(RIGHT_SPARK_1, MotorType.kBrushless);
-	public static CANSparkMax rightDriveSpark2 = new CANSparkMax(RIGHT_SPARK_2, MotorType.kBrushless);
-	public static CANSparkMax rightDriveSpark3 = new CANSparkMax(RIGHT_SPARK_3, MotorType.kBrushless);
-	public static CANSparkMax leftDriveSpark1 = new CANSparkMax(LEFT_SPARK_1, MotorType.kBrushless);
-	public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_SPARK_2, MotorType.kBrushless);
-	public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_SPARK_3, MotorType.kBrushless);
+	public static CANSparkMax rightDriveSpark1 = new CANSparkMax(RIGHT_DRIVE_SPARK_1, MotorType.kBrushless);
+	public static CANSparkMax rightDriveSpark2 = new CANSparkMax(RIGHT_DRIVE_SPARK_2, MotorType.kBrushless);
+	public static CANSparkMax rightDriveSpark3 = new CANSparkMax(RIGHT_DRIVE_SPARK_3, MotorType.kBrushless);
+	public static CANSparkMax leftDriveSpark1 = new CANSparkMax(LEFT_DRIVE_SPARK_1, MotorType.kBrushless);
+	public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_DRIVE_SPARK_2, MotorType.kBrushless);
+	public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_DRIVE_SPARK_3, MotorType.kBrushless);
+
+	public static VictorSPX rollerVictor = new VictorSPX(ROLLER_VICTOR);
+	public static TalonSRX cargoIntakeTalon = new TalonSRX(CARGO_INTAKE_TALON);
+	public static VictorSPX cargoIntakeVictor = new VictorSPX(CARGO_INTAKE_VICTOR);
+	public static VictorSPX conveyerVictor = new VictorSPX(CONVEYOR_VICTOR);
+	public static TalonSRX liftTalon = new TalonSRX(LIFT_TALON);
+	public static TalonSRX climberTalon1 = new TalonSRX(CLIMBER_TALON_1);
+	public static TalonSRX climberTalon2 = new TalonSRX(CLIMBER_TALON_2);
+
 	/**
 	 * Creating Gyro object
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	
 	/**
 	 * Creating sensor objects
 	 */
 	public static TapeSensor leftTapeSensor1 = new TapeSensor(LEFT_TAPE_SENSOR_1);
 	public static TapeSensor leftTapeSensor2 = new TapeSensor(LEFT_TAPE_SENSOR_2);
-	public static TapeSensor leftTapeSensor3 = new TapeSensor(LEFT_TAPE_SENSOR_3);
-	
+	//	public static TapeSensor leftTapeSensor3 = new TapeSensor(LEFT_TAPE_SENSOR_3);
+
+	//	public static TapeSensor centerTapeSensor1 = new TapeSensor(CENTER_TAPE_SENSOR_1);
+	//	public static TapeSensor centerTapeSensor2 = new TapeSensor(CENTER_TAPE_SENSOR_2);
+	//	public static TapeSensor centerTapeSensor3 = new TapeSensor(CENTER_TAPE_SENSOR_3);
+
 	public static TapeSensor rightTapeSensor1 = new TapeSensor(RIGHT_TAPE_SENSOR_1);
 	public static TapeSensor rightTapeSensor2 = new TapeSensor(RIGHT_TAPE_SENSOR_2);
-	public static TapeSensor rightTapeSensor3 = new TapeSensor(RIGHT_TAPE_SENSOR_3);
+	//	public static TapeSensor rightTapeSensor3 = new TapeSensor(RIGHT_TAPE_SENSOR_3);
 	
 	public static void init() {
 		//Set followers
@@ -81,5 +110,8 @@ public class RobotMap {
 		rightDriveSpark3.follow(rightDriveSpark1);
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
+
+		cargoIntakeVictor.follow(cargoIntakeTalon);
+		climberTalon2.follow(climberTalon1);
 	}
 }
