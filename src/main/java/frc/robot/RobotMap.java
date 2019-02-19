@@ -7,9 +7,12 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.IntakeArm;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Talon;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
@@ -74,6 +77,6 @@ public class RobotMap {
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
 
-		intakeRollerVictor.follow(intakeArmTalon);
+		intakeArmVictor.follow(intakeArmTalon);
 	}
 }
