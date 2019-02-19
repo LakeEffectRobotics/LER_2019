@@ -8,6 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Talon;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -31,8 +35,7 @@ public class RobotMap {
 	public static final int PID_MODE = 0;  //0 for closed loop 1 for cascaded closed loop
 
 	/**
-	 * Declaring pins
-	 * TODO: Update pins once Sparks are physically mounted
+	 * Declaring CANIDs
 	 */
 		final static int RIGHT_SPARK_1 = 1;
 		final static int RIGHT_SPARK_2 = 2;
@@ -41,6 +44,10 @@ public class RobotMap {
 		final static int LEFT_SPARK_2 = 5;
 		final static int LEFT_SPARK_3 = 6;	
 
+
+		final static int INTAKE_ARM_TALON = 7;
+		final static int INTAKE_ARM_VICTOR = 8;
+		final static int INTAKE_ROLLER_VICTOR = 9;
 	/**
 	 * Creating motor controller objects
 	 */
@@ -50,6 +57,11 @@ public class RobotMap {
 		public static CANSparkMax leftDriveSpark1 = new CANSparkMax(LEFT_SPARK_1, MotorType.kBrushless);
 		public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_SPARK_2, MotorType.kBrushless);
 		public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_SPARK_3, MotorType.kBrushless);
+
+		public static TalonSRX intakeArmTalon = new TalonSRX(INTAKE_ARM_TALON);
+		public static VictorSPX intakeArmVictor = new VictorSPX(INTAKE_ARM_VICTOR);
+
+		public static VictorSPX intakeRollerVictor = new VictorSPX(INTAKE_ROLLER_VICTOR);
 	/**
 	 * Creating Gyro object
 	 */	
@@ -61,5 +73,7 @@ public class RobotMap {
 		rightDriveSpark3.follow(rightDriveSpark1);
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
+
+		intakeRollerVictor.follow(intakeArmTalon);
 	}
 }

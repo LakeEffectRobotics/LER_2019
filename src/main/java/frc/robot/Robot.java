@@ -10,6 +10,8 @@ package frc.robot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Gyro;
 
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -80,6 +82,10 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
+	}
+
+
+	public void testInit() {
 	}
 
 	@Override
