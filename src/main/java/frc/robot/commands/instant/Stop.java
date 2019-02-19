@@ -16,7 +16,7 @@ public class Stop extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.drivetrain.setPercentVoltage(0, 0);
+    	Robot.drivetrain.drive(0, 0);
     }
 
 }
