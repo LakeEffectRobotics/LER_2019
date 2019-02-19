@@ -17,21 +17,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class Lift extends Subsystem {
-  //  TODO: Experimentally determine the following constant values
-  final static double MIN_POSITION = 2708;
-  final static double MAX_POSITION = 2708;
+  //  TODO: Update these values
+  public final static int MIN_POSITION = 2708;
+  public final static int MAX_POSITION = 2708;
 
-  final static double ROCKET_PORT_HEIGHT_1 = 2708;
-  final static double ROCKET_PORT_HEIGHT_2 = 2708;
-  final static double ROCKET_PORT_HEIGHT_3 = 2708;
-  final static double SHIP_PORT_HEIGHT = 2708;
+  public final static int ROCKET_PORT_HEIGHT_1 = 2708;
+  public final static int ROCKET_PORT_HEIGHT_2 = 2708;
+  public final static int ROCKET_PORT_HEIGHT_3 = 2708;
+  public final static int SHIP_PORT_HEIGHT = 2708;
 
-  final static double ROCKET_HATCH_HEIGHT_1 = 2708;
-  final static double ROCKET_HATCH_HEIGHT_2 = 2708;
-  final static double ROCKET_HATCH_HEIGHT_3 = 2708;
-  final static double SHIP_HATCH_HEIGHT = ROCKET_HATCH_HEIGHT_1;
+  public final static int ROCKET_HATCH_HEIGHT_1 = 2708;
+  public final static int ROCKET_HATCH_HEIGHT_2 = 2708;
+  public final static int ROCKET_HATCH_HEIGHT_3 = 2708;
+  public final static int SHIP_HATCH_HEIGHT = ROCKET_HATCH_HEIGHT_1;
 
-  final static double GROUND_HEIGHT = 2708;
+  public final static int GROUND_HEIGHT = 2708;
   
   @Override
   public void initDefaultCommand() {
@@ -40,16 +40,4 @@ public class Lift extends Subsystem {
     setDefaultCommand(new LiftCommand());
   }
   
-  public double getPosition() {
-    return RobotMap.liftTalon.getSelectedSensorPosition(0);
-  }
-  
-  public double getTargetPosition() {
-    return RobotMap.liftTalon.getActiveTrajectoryPosition();
-  }
-  
-  public void setTargetPosition(double position) {
-    position = Tools.fitToRange(position, MIN_POSITION, MAX_POSITION);
-    RobotMap.liftTalon.setSelectedSensorPosition((int) position, 0, 0);
-  }
 }

@@ -6,11 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import frc.robot.sensors.TapeSensor;
-
+import frc.robot.components.TalonSRX_2;
+import frc.robot.components.TapeSensor;
+import frc.robot.subsystems.CargoIntake;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Lift;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -77,12 +79,12 @@ public class RobotMap {
 	public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_DRIVE_SPARK_3, MotorType.kBrushless);
 
 	public static VictorSPX rollerVictor = new VictorSPX(ROLLER_VICTOR);
-	public static TalonSRX cargoIntakeTalon = new TalonSRX(CARGO_INTAKE_TALON);
+	public static TalonSRX_2 cargoIntakeTalon = new TalonSRX_2(CARGO_INTAKE_TALON, CargoIntake.DOWN_POSITION, CargoIntake.UP_POSITION);
 	public static VictorSPX cargoIntakeVictor = new VictorSPX(CARGO_INTAKE_VICTOR);
 	public static VictorSPX conveyerVictor = new VictorSPX(CONVEYOR_VICTOR);
-	public static TalonSRX liftTalon = new TalonSRX(LIFT_TALON);
-	public static TalonSRX climberTalon1 = new TalonSRX(CLIMBER_TALON_1);
-	public static TalonSRX climberTalon2 = new TalonSRX(CLIMBER_TALON_2);
+	public static TalonSRX_2 liftTalon = new TalonSRX_2(LIFT_TALON, Lift.MIN_POSITION, Lift.MAX_POSITION);
+	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DOWN_POSITION, Climber.UP_POSITION);
+	public static TalonSRX_2 climberTalon2 = new TalonSRX_2(CLIMBER_TALON_2, Climber.DOWN_POSITION, Climber.UP_POSITION);
 
 	/**
 	 * Creating Gyro object

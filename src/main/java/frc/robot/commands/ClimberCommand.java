@@ -9,13 +9,14 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CargoIntakeCommand extends Command {
-  public CargoIntakeCommand() {
+public class ClimberCommand extends Command {
+  public ClimberCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.cargoIntake);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
@@ -26,14 +27,7 @@ public class CargoIntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.oi.xbox.getTriggerRight() > Robot.oi.xbox.getTriggerLeft()) {
-      Robot.cargoIntake.setSpeed(Robot.oi.xbox.getTriggerRight());
-    }
-    else {
-      Robot.cargoIntake.setSpeed(-Robot.oi.xbox.getTriggerLeft());
-    }
-    
-    int targetPosition = RobotMap.cargoIntakeTalon.getTargetPosition();
+    int targetPosition = RobotMap.climberTalon1.getTargetPosition();
     /*
     TODO: Create controls similar to those on the 2018 lift
     --------------------------------------------------------------
@@ -51,7 +45,7 @@ public class CargoIntakeCommand extends Command {
     public final static int UP_POSITION = 2708;
     public final static int DOWN_POSITION = 2708;
     */
-    RobotMap.cargoIntakeTalon.setTargetPosition(targetPosition);
+    RobotMap.climberTalon1.setTargetPosition(targetPosition);
   }
 
   // Make this return true when this Command no longer needs to run execute()

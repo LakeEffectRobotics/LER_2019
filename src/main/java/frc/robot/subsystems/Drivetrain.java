@@ -40,14 +40,14 @@ public class Drivetrain extends Subsystem {
 		return new double[] {l, r};
 	}
 
-	public double getAverageEncoderPosition(double[] initial_encoder_positions) {
-		double l = RobotMap.leftDriveSpark1.getEncoder().getPosition() - initial_encoder_positions[0];
-		double r = -RobotMap.rightDriveSpark1.getEncoder().getPosition() - initial_encoder_positions[1];
+	public double getAverageEncoderPosition(double[] initialEncoderPositions) {
+		double l = RobotMap.leftDriveSpark1.getEncoder().getPosition() - initialEncoderPositions[0];
+		double r = -RobotMap.rightDriveSpark1.getEncoder().getPosition() - initialEncoderPositions[1];
 		return (l + r) / 2;
 	}
 
-	public Object[] getAutoDriveOutput(double speed, double distance, double[] initial_encoder_positions, double time, boolean line_stop) {
-		//	TODO: Test and update the new threshold/tolerance values
+	public Object[] getAutoDriveOutput(double speed, double distance, double[] initialEncoderPositions, double time, boolean line_stop) {
+		//	TODO: Update these values
 		final double SLOW_DOWN_THRESHOLD = 15.75;	//	Originally 0.4 m or 40 cm, now 15.75"
     	final double MIN_SPEED = 0.2;
 		final double FINISHED_TOLERANCE = 2;		//	Originally 0.05 m or 5 cm, now 2"
@@ -56,18 +56,18 @@ public class Drivetrain extends Subsystem {
     	double l = 0;
     	double r = 0;
 		/*
-		double average_encoder_position = time;	//	Unsure as to why time is being used in place of the encoders; perhaps because it's a good approximation? Or were the encoders having issues?
+		double averageEncoderPosition = time;	//	Unsure as to why time is being used in place of the encoders; perhaps because it's a good approximation? Or were the encoders having issues?
 		*/
-		double average_encoder_position = getAverageEncoderPosition(initial_encoder_positions);
-		double distance_left = distance - average_encoder_position;
-    	if (distance_left > SLOW_DOWN_THRESHOLD) {
+		double averageEncoderPosition = getAverageEncoderPosition(initialEncoderPositions);
+		double distanceLeft = distance - averageEncoderPosition;
+    	if (distanceLeft > SLOW_DOWN_THRESHOLD) {
     		l = speed;
-    	} else if (distance_left < -SLOW_DOWN_THRESHOLD) {
+    	} else if (distanceLeft < -SLOW_DOWN_THRESHOLD) {
     		l = -speed;
-		} else if (distance_left > 0) {
-    		l = speed * (distance_left / SLOW_DOWN_THRESHOLD);
+		} else if (distanceLeft > 0) {
+    		l = speed * (distanceLeft / SLOW_DOWN_THRESHOLD);
     	} else {
-			l = -speed * (distance_left / SLOW_DOWN_THRESHOLD);
+			l = -speed * (distanceLeft / SLOW_DOWN_THRESHOLD);
 		}
 		
     	if (l < MIN_SPEED && l > 0) {
@@ -76,7 +76,7 @@ public class Drivetrain extends Subsystem {
     		l = -MIN_SPEED;
 		}
 		
-    	if (Math.abs(distance_left) < FINISHED_TOLERANCE || ((RobotMap.leftTapeSensor2.get() || RobotMap.rightTapeSensor2.get()) && line_stop)) {
+    	if (Math.abs(distanceLeft) < FINISHED_TOLERANCE || ((RobotMap.leftTapeSensor2.get() || RobotMap.rightTapeSensor2.get()) && line_stop)) {
 			finished = true;
     	}
     	

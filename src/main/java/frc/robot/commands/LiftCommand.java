@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,7 +24,7 @@ public class LiftCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        double target_position = Robot.lift.getTargetPosition();
+        int targetPosition = RobotMap.liftTalon.getTargetPosition();
         /*
         TODO: Recreate the 2018 code with this year's scoring heights
         --------------------------------------------------------------
@@ -36,6 +37,7 @@ public class LiftCommand extends Command {
     	else if (Robot.oi.ground_height_button.get()) {
     		target_position = Lift.GROUND_HEIGHT;
         }
+    	target_position += Robot.oi.xbox.getJoyRightY() * MULTIPLIER;
         --------------------------------------------------------------
         final static double ROCKET_PORT_HEIGHT_1 = 2708;
         final static double ROCKET_PORT_HEIGHT_2 = 2708;
@@ -49,8 +51,7 @@ public class LiftCommand extends Command {
 
         final static double GROUND_HEIGHT = 2708;
         */
-    	target_position += Robot.oi.xbox.getJoyRightY() * MULTIPLIER;
-    	Robot.lift.setTargetPosition(target_position);
+    	RobotMap.liftTalon.setTargetPosition(targetPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -29,8 +29,8 @@ public class OI {
 
 	// button number definitions
 	
-	// right joystick buttons
-	final int TOGGLE_SHAWN_DRIVE = 1;  //  TODO: Update this pin
+	// right joystick buttons	//  TODO: Update all controls
+	final int TOGGLE_SHAWN_DRIVE = 1;
 	final int HOLD_SHAWN_DRIVE = 2;
 	final int LOCK_DRIVE = 3;
 	// -- final int BUTTON_NAME = number;

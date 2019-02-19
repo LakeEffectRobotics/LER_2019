@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.commands.ClimberCommand;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,12 +17,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  
+  //  TODO: Update these values
+  public final static int UP_POSITION = 2708;
+  public final static int DOWN_POSITION = 2708;
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    
-    //  TODO: Figure out what goes here (and what commands are needed)
+    setDefaultCommand(new ClimberCommand());
   }
 }
