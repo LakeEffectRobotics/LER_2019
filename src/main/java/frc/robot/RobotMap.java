@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Talon;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
@@ -50,7 +51,10 @@ public class RobotMap {
 
 		final static int INTAKE_ARM_TALON = 7;
 		final static int INTAKE_ARM_VICTOR = 8;
-		final static int INTAKE_ROLLER_VICTOR = 9;
+		final static int INTAKE_ROLLER_TALON = 9;
+
+		final static int ELEVATOR_TALON = 10;
+		final static int ELEVATOR_VICTOR = 11;
 	/**
 	 * Creating motor controller objects
 	 */
@@ -63,8 +67,10 @@ public class RobotMap {
 
 		public static TalonSRX intakeArmTalon = new TalonSRX(INTAKE_ARM_TALON);
 		public static VictorSPX intakeArmVictor = new VictorSPX(INTAKE_ARM_VICTOR);
+		public static TalonSRX intakeRollerTalon = new TalonSRX(INTAKE_ROLLER_TALON);
 
-		public static VictorSPX intakeRollerVictor = new VictorSPX(INTAKE_ROLLER_VICTOR);
+		public static TalonSRX elevatorTalon = new TalonSRX(ELEVATOR_TALON);
+		public static VictorSPX elevatoVictor = new VictorSPX(ELEVATOR_VICTOR);
 	/**
 	 * Creating Gyro object
 	 */	
@@ -78,5 +84,9 @@ public class RobotMap {
 		leftDriveSpark3.follow(leftDriveSpark1);
 
 		intakeArmVictor.follow(intakeArmTalon);
+		
+		elevatoVictor.follow(elevatorTalon);
+		elevatorTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_MODE, 0);
+		elevatorTalon.config_kP(0, 2, 0);
 	}
 }

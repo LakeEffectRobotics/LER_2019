@@ -19,6 +19,7 @@ public class IntakeArm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  //TODO: Set positions
   public static final int POSITION_UP = 0;
   public static final int POSITION_DOWN = 0;
 
