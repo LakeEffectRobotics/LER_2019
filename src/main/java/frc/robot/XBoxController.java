@@ -16,7 +16,7 @@ public class XBoxController extends Joystick {
 	public static final int XBOX_START = 8;
 	public static final int XBOX_L3 = 9;
 	public static final int XBOX_R3 = 10;
-	// axes
+	// axis
 	public static final int XBOX_LEFT_X = 0;
 	public static final int XBOX_LEFT_Y = 1;
 	public static final int XBOX_LEFT_TRIGGER = 2;
@@ -27,14 +27,14 @@ public class XBoxController extends Joystick {
 	public static final int XBOX_DPAD_UP_ANGLE = 0;
 	public static final int XBOX_DPAD_RIGHT_ANGLE = 90;
 	public static final int XBOX_DPAD_DOWN_ANGLE = 180;
-	public static final int XBOX_DPAD_LEFT_ANGLE = 270;	
-
+    public static final int XBOX_DPAD_LEFT_ANGLE = 270;
+    
 	public XBoxController(int port) {
 		super(port);
 	}
 	
 	public boolean getL3() {
-		return this.getRawButton(XBOX_L3);
+        return this.getRawButton(XBOX_L3);
 	}
 	
 	public boolean getR3() {
