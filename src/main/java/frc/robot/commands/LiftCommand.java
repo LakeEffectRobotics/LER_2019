@@ -25,6 +25,9 @@ public class LiftCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         int targetPosition = RobotMap.liftTalon.getTargetPosition();
+        if (Robot.oi.highLiftButton.get()) {
+            targetPosition = Lift.ROCKET_PORT_HEIGHT_3; //  Or should this be Lift.ROCKET_HATCH_HEIGHT_3?
+        }
         /*
         TODO: Recreate the 2018 code with this year's scoring heights
         --------------------------------------------------------------

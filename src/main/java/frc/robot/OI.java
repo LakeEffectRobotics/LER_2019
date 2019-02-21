@@ -9,10 +9,15 @@ package frc.robot;
 
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.instant.SetShawnDriveCommand;
+import frc.robot.subsystems.Climber;
+import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.LockDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
 // import frc.robot.commands.instant.IntakeOpenCommand;
+
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
+import javax.print.attribute.standard.Media;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -51,6 +56,7 @@ public class OI {
 	public Button toggleShawnDriveButton = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
 	public Button climberButton = new XBoxButton(xbox, XBoxController.XBOX_BACK);
 	//Lift controls
+	public Button rStickLift = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_Y);
 	
 	public Button highLiftButton = new XBoxButton(xbox, XBoxController.XBOX_Y);
 	public Button mediumLiftButton = new XBoxButton(xbox, XBoxController.XBOX_X);
@@ -74,6 +80,10 @@ public class OI {
 
 		holdShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.ON));
 		holdShawnDriveButton.whenReleased(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.OFF));
+
+		//	TODO: Figure out button mapping for cargo intake, lift, and climber
+		//	climberButton.whenPressed(new ClimberCommand());
+		//	highLiftButton.whenPressed(new )
 
 		lockDriveButton.whileHeld(new LockDriveCommand());
 		// -- buttonName.whenHeld(new Command())

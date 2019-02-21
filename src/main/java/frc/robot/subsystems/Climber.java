@@ -17,16 +17,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
   
   //  TODO: Update these values
-  public final static int UP_POSITION = 2708;
-  public final static int DOWN_POSITION = 2708;
+  public final static int DEFAULT_POSITION = 2708;
+  public final static int DEPLOYED_POSITION = 2708;
+
+  boolean deployed = false;
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new ClimberCommand());
+  }
+
+  public boolean isDeployed() {
+    return deployed;
   }
 }

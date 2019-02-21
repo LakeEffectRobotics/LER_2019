@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-
+import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberCommand extends Command {
@@ -28,6 +28,13 @@ public class ClimberCommand extends Command {
   @Override
   protected void execute() {
     int targetPosition = RobotMap.climberTalon1.getTargetPosition();
+    if (Robot.oi.climberButton.get()) {
+      if (!Robot.climber.isDeployed()) {
+        targetPosition = Climber.DEPLOYED_POSITION;
+      } else {
+        targetPosition = Climber.DEFAULT_POSITION;
+      }
+    }
     /*
     TODO: Create controls similar to those on the 2018 lift
     --------------------------------------------------------------
@@ -39,7 +46,7 @@ public class ClimberCommand extends Command {
     }
     else if (Robot.oi.ground_height_button.get()) {
       target_position = Lift.GROUND_HEIGHT;
-      }
+    }
     target_position += Robot.oi.xbox.getJoyRightY() * MULTIPLIER;
     --------------------------------------------------------------
     public final static int UP_POSITION = 2708;
