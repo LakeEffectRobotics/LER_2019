@@ -7,9 +7,15 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.ADXL345_I2C.Axes;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeRoller;
@@ -22,6 +28,7 @@ public class Robot extends TimedRobot {
 
 	public static final IntakeArm intakeArm = new IntakeArm();
 	public static final IntakeRoller intakeRoller = new IntakeRoller();
+	public static final Elevator elevator = new Elevator();
 	
 	public void robotPeriodic() {
 		//Called periodically, use to interface with dashboard
@@ -83,12 +90,14 @@ public class Robot extends TimedRobot {
 		robotPeriodic();
 	}
 
-
+	TalonSRX t = new TalonSRX(7);
+	VictorSPX v = new VictorSPX(13);
 	public void testInit() {
+		v.follow(t);
 	}
 
 	@Override
 	public void testPeriodic() {
-		////
+		t.set(ControlMode.PercentOutput, Robot.oi.l_joy.getY()/2);
 	}
 }

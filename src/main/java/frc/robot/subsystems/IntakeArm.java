@@ -22,6 +22,7 @@ public class IntakeArm extends Subsystem {
   //TODO: Set positions
   public static final int POSITION_UP = 0;
   public static final int POSITION_DOWN = 0;
+  
 
   @Override
   public void initDefaultCommand() {

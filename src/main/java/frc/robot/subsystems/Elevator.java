@@ -20,8 +20,8 @@ public class Elevator extends Subsystem {
   // here. Call these from Commands.
 
   //TODO: Set heights
-  final double GROUND_HEIGHT = 0;
-  final double MAX_HEIGHT = 0;
+  public static final double GROUND_HEIGHT = 0;
+  public static final double MAX_HEIGHT = 0;
 
 
   double targetHeight = GROUND_HEIGHT;
