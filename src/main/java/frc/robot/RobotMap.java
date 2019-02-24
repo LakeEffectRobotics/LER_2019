@@ -86,7 +86,6 @@ public class RobotMap {
 	public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
 	public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
 
-	public static VictorSPX conveyerVictor = new VictorSPX(CONVEYOR_VICTOR);
 	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DOWN_POSITION,
 			Climber.UP_POSITION);
 	public static TalonSRX_2 climberTalon2 = new TalonSRX_2(CLIMBER_TALON_2, Climber.DOWN_POSITION, Climber.UP_POSITION);
