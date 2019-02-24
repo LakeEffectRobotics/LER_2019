@@ -37,6 +37,8 @@ public class ElevatorCommand extends Command {
     //Offset for grabbing+releasing hatches
     if(Robot.oi.xbox.getTriggerRight() > DEADZONE){
       Robot.elevator.setOffset(Robot.oi.xbox.getTriggerRight()*2);
+    } else {
+      Robot.elevator.setOffset(0);
     }
 
   }
