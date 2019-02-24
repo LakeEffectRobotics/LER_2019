@@ -10,6 +10,9 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -91,14 +94,10 @@ public class Robot extends TimedRobot {
 		robotPeriodic();
 	}
 
-	TalonSRX t = new TalonSRX(7);
-	VictorSPX v = new VictorSPX(13);
 	public void testInit() {
-		v.follow(t);
 	}
 
 	@Override
 	public void testPeriodic() {
-		t.set(ControlMode.PercentOutput, Robot.oi.l_joy.getY()/2);
 	}
 }

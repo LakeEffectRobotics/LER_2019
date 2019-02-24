@@ -56,16 +56,16 @@ public class RobotMap {
 	final static int CLIMBER_TALON_2 = 2708;
 
 	//	Sensor 1 is in the front, Sensor 2 is in the center, Sensor 3 is in the back
-	final static int LEFT_TAPE_SENSOR_1 = 2708;
-	final static int LEFT_TAPE_SENSOR_2 = 2708;
+	final static int LEFT_TAPE_SENSOR_1 = 0;
+	final static int LEFT_TAPE_SENSOR_2 = 1;
 	//	final static int LEFT_TAPE_SENSOR_3 = 2708;
 
 	//	final static int CENTER_TAPE_SENSOR_1 = 2708;
 	//	final static int CENTER_TAPE_SENSOR_2 = 2708;
 	//	final static int CENTER_TAPE_SENSOR_3 = 2708;
 
-	final static int RIGHT_TAPE_SENSOR_1 = 2708;
-	final static int RIGHT_TAPE_SENSOR_2 = 2708;
+	final static int RIGHT_TAPE_SENSOR_1 = 2;
+	final static int RIGHT_TAPE_SENSOR_2 = 3;
 	//	final static int RIGHT_TAPE_SENSOR_3 = 2708;
 
 	final static int INTAKE_ARM_TALON = 7;
