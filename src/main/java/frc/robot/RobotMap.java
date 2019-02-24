@@ -47,11 +47,6 @@ public class RobotMap {
 	final static int LEFT_DRIVE_SPARK_2 = 5;
 	final static int LEFT_DRIVE_SPARK_3 = 6;
 
-	final static int ROLLER_VICTOR = 2708;
-	final static int CARGO_INTAKE_TALON = 2708;
-	final static int CARGO_INTAKE_VICTOR = 2708;
-	final static int CONVEYOR_VICTOR = 2708;
-	final static int LIFT_TALON = 2708;
 	final static int CLIMBER_TALON_1 = 2708;
 	final static int CLIMBER_TALON_2 = 2708;
 
@@ -68,12 +63,12 @@ public class RobotMap {
 	final static int RIGHT_TAPE_SENSOR_2 = 3;
 	//	final static int RIGHT_TAPE_SENSOR_3 = 2708;
 
-	final static int INTAKE_ARM_TALON = 7;
-	final static int INTAKE_ARM_VICTOR = 8;
-	final static int INTAKE_ROLLER_TALON = 9;
+	final static int INTAKE_ARM_TALON = 99;
+	final static int INTAKE_ARM_VICTOR = 99;
+	final static int INTAKE_ROLLER_TALON = 99;
 
-	final static int ELEVATOR_TALON = 10;
-	final static int ELEVATOR_VICTOR = 11;
+	final static int ELEVATOR_SPARK_1 = 7;
+	final static int ELEVATOR_SPARK_2 = 8;
 	/**
 	 * Creating motor controller objects
 	 */
@@ -88,8 +83,8 @@ public class RobotMap {
 	public static VictorSPX intakeArmVictor = new VictorSPX(INTAKE_ARM_VICTOR);
 	public static TalonSRX intakeRollerTalon = new TalonSRX(INTAKE_ROLLER_TALON);
 
-	public static TalonSRX elevatorTalon = new TalonSRX(ELEVATOR_TALON);
-	public static VictorSPX elevatorVictor = new VictorSPX(ELEVATOR_VICTOR);
+	public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
+	public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
 
 	public static VictorSPX conveyerVictor = new VictorSPX(CONVEYOR_VICTOR);
 	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DOWN_POSITION,
@@ -124,9 +119,8 @@ public class RobotMap {
 
 		intakeArmVictor.follow(intakeArmTalon);
 		
-		elevatorVictor.follow(elevatorTalon);
-		elevatorTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_MODE, 0);
-		elevatorTalon.config_kP(0, 2, 0);
+		elevatorSpark2.follow(elevatorSpark1, true);
+
 		climberTalon2.follow(climberTalon1);
 	}
 }
