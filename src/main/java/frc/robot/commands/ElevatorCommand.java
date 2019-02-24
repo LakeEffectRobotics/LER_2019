@@ -12,6 +12,9 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
 public class ElevatorCommand extends Command {
+
+  final double DEADZONE = 0.2;
+
   public ElevatorCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -27,6 +30,14 @@ public class ElevatorCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //Manual control using left stick
+    if(Math.abs(Robot.oi.xbox.getJoyLeftX()) > DEADZONE){
+      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()+Robot.oi.xbox.getJoyLeftX()/2, 0);
+    }
+    //Offset for grabbing+releasing hatches
+    if(Robot.oi.xbox.getTriggerRight() > DEADZONE){
+      Robot.elevator.setOffset(Robot.oi.xbox.getTriggerRight()*2);
+    }
 
   }
 

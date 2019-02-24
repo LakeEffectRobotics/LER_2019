@@ -21,6 +21,10 @@ public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  public enum Mode{
+    CARGO, HATCH
+  }
+
   //TODO: Set heights
   public static final double GROUND_HEIGHT = 1;
   public static final double MAX_HEIGHT = 49.60;
@@ -31,9 +35,13 @@ public class Elevator extends Subsystem {
 
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
+  public static final double HATCH_OFFSET = -5;
+
+
   public static final double acceleration = 1;
 
   double targetHeight = GROUND_HEIGHT;
+  public Mode currentMode = Mode.CARGO;
 
   @Override
   public void initDefaultCommand() {
@@ -55,10 +63,26 @@ public class Elevator extends Subsystem {
 
   public void setTargetHeight(double target, double offset){
     target += offset;
+    if(currentMode == Mode.HATCH) target += HATCH_OFFSET;
+
     if(target > MAX_HEIGHT) target=MAX_HEIGHT;
     if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
     targetHeight = target;  
 
     RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
+  }
+
+  public void setOffset(double offset){
+    setTargetHeight(getTargetHeight(), offset);
+  }
+
+  public Mode getMode(){
+    return(currentMode);
+  }
+
+  public void setMode(Mode m){
+    currentMode = m;
+    //Update height to current mode
+    setTargetHeight(targetHeight, 0);
   }
 }
