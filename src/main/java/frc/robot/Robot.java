@@ -94,10 +94,17 @@ public class Robot extends TimedRobot {
 		robotPeriodic();
 	}
 
+	TalonSRX a = new TalonSRX(10);
+	TalonSRX b = new TalonSRX(11);
+
 	public void testInit() {
 	}
 
 	@Override
 	public void testPeriodic() {
+		//BACK IS DOWN
+		a.set(ControlMode.PercentOutput, Robot.oi.l_joy.getY()/2);
+		b.set(ControlMode.PercentOutput, -Robot.oi.l_joy.getY()/2);
 	}
 }
+
