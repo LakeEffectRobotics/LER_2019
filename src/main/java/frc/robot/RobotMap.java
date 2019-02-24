@@ -83,8 +83,8 @@ public class RobotMap {
 	public static VictorSPX cargoIntakeVictor = new VictorSPX(CARGO_INTAKE_VICTOR);
 	public static VictorSPX conveyerVictor = new VictorSPX(CONVEYOR_VICTOR);
 	public static TalonSRX_2 liftTalon = new TalonSRX_2(LIFT_TALON, Lift.MIN_POSITION, Lift.MAX_POSITION);
-	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DOWN_POSITION, Climber.UP_POSITION);
-	public static TalonSRX_2 climberTalon2 = new TalonSRX_2(CLIMBER_TALON_2, Climber.DOWN_POSITION, Climber.UP_POSITION);
+	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DEPLOYED_POSITION, Climber.DEFAULT_POSITION);
+	public static TalonSRX_2 climberTalon2 = new TalonSRX_2(CLIMBER_TALON_2, Climber.DEPLOYED_POSITION, Climber.DEFAULT_POSITION);
 
 	/**
 	 * Creating Gyro object
