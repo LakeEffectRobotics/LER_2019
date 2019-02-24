@@ -7,19 +7,14 @@
 
 package frc.robot;
 
-import frc.robot.commands.StraightGyroDriveCommand;
-import frc.robot.commands.instant.SetShawnDriveCommand;
-import frc.robot.commands.LockDriveCommand;
-import frc.robot.commands.IntakeRoller;
-import frc.robot.commands.Elevator;
-import frc.robot.commands.BumpElevatorHeight;
-import frc.robot.commands.ToggleHatchMode;
-import frc.robot.commands.IntakeHeight;
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.XBoxController;
-import frc.robot.XBoxPOVButton;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.LockDriveCommand;
+import frc.robot.commands.instant.BumpElevatorHeight;
+import frc.robot.commands.instant.IntakeHeight;
+import frc.robot.commands.instant.SetShawnDriveCommand;
+import frc.robot.commands.instant.ToggleHatchMode;
 
 public class OI {
 	
@@ -87,7 +82,7 @@ public class OI {
 		stepUpButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.UP));
 		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
 		intakeHeightButton.whenPressed(new IntakeHeight());
-		toggleIntakeArmButton.whenPressed(new toggleIntakeArmButton());
+		// toggleIntakeArmButton.whenPressed(new toggleIntakeArm());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
 		
 		// -- buttonName.whenHeld(new Command())

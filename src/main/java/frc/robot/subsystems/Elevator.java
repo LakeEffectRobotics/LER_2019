@@ -47,7 +47,9 @@ public class Elevator extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new ElevatorCommand());
+  }
 
+  public void init(){
     RobotMap.elevatorSpark1.getPIDController().setP(1);
     RobotMap.elevatorSpark1.getPIDController().setOutputRange(-acceleration, acceleration);
     RobotMap.elevatorSpark1.getPIDController().setReference(GROUND_HEIGHT, ControlType.kPosition);

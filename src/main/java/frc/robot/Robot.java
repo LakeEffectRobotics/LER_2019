@@ -48,6 +48,8 @@ public class Robot extends TimedRobot {
 		oi.init();
 		RobotMap.init();
 		gyro.calibrate();
+
+		elevator.init();
 		
 		//Setup dashboard
 	}

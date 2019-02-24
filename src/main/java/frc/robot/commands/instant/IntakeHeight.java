@@ -21,14 +21,13 @@ public class IntakeHeight extends InstantCommand {
   public IntakeHeight() {
     super();
     // Use requires() here to declare subsystem dependencies
-    requires(robot.Elevator);
+    requires(Robot.elevator);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-      setTargetHeight(Elevator.GROUND_HEIGHT,0);
-    }
+      Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT,0);
   }
 
 }

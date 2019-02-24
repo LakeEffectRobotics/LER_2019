@@ -21,7 +21,7 @@ public class ToggleIntakeArm extends InstantCommand {
   public ToggleIntakeArm() {
     super();
     // Use requires() here to declare subsystem dependencies
-    requires(robot.IntakeArm);
+    requires(Robot.intakeArm);
   }
 
   // Called once when the command executes
@@ -29,6 +29,4 @@ public class ToggleIntakeArm extends InstantCommand {
   protected void initialize() {
     
     }
-  }
-
 }
