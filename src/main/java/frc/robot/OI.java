@@ -10,10 +10,11 @@ package frc.robot;
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.instant.SetShawnDriveCommand;
 import frc.robot.commands.LockDriveCommand;
-// import frc.robot.commands.instant.ResetLiftPositionCommand;
-// import frc.robot.commands.instant.ToggleClawPositionCommand;
-// import frc.robot.commands.instant.IntakeOpenCommand;
-
+import frc.robot.commands.IntakeRoller;
+import frc.robot.commands.Elevator;
+import frc.robot.commands.BumpElevatorHeight;
+import frc.robot.commands.ToggleHatchMode;
+import frc.robot.commands.IntakeHeight;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.XBoxController;
 import frc.robot.XBoxPOVButton;
@@ -48,16 +49,47 @@ public class OI {
 	public Button holdShawnDriveButton = new JoystickButton(r_joy, HOLD_SHAWN_DRIVE);
 
 	public Button lockDriveButton = new JoystickButton(r_joy, LOCK_DRIVE);
+	//XBox Button initialization
+
+	//Start and Back
+	public Button climberButton = new XBoxButton(xbox, XBoxController.XBOX_BACK);
+
+	//Lettered Buttons
+	public Button stepUpButton = new XBoxButton(xbox, XBoxController.XBOX_Y);
+	public Button stepDownButton = new XBoxButton(xbox, XBoxController.XBOX_X);
+	public Button intakeHeightButton = new XBoxButton(xbox, XBoxController.XBOX_A);
+	public Button toggleIntakeArmButton = new XBoxButton(xbox, XBoxController.XBOX_B);
+
+	//Bumpers and Triggers
+	public Button toggleHatchModeButton = new XBoxButton(xbox, XBoxController.XBOX_RB);
+	public Button autoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
+	public Button hatchOffsetButton = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
+	public Button intakeButton = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
+
+	//D-pad
+	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_DPAD_LEFT_ANGLE);
+	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_DPAD_RIGHT_ANGLE);
+	
+
+
 	// -- public Button buttonName = new JoystickButton(controller, BUTTON_NAME);
 
 	public void init() {
-		//Inithalise event handling
-		toggleShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.TOGGLE));
+		//Initialize event handling
 
+		//Joystick Buttons
+		toggleShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.TOGGLE));
 		holdShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.ON));
 		holdShawnDriveButton.whenReleased(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.OFF));
-
 		lockDriveButton.whileHeld(new LockDriveCommand());
+
+		//XBox Buttons
+		stepUpButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.UP));
+		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
+		intakeHeightButton.whenPressed(new IntakeHeight());
+		toggleIntakeArmButton.whenPressed(new toggleIntakeArmButton());
+		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
+		
 		// -- buttonName.whenHeld(new Command())
 	}
 }
