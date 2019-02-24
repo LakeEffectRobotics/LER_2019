@@ -14,10 +14,7 @@ import frc.robot.commands.IntakeRoller;
 import frc.robot.commands.Elevator;
 import frc.robot.commands.BumpElevatorHeight;
 import frc.robot.commands.ToggleHatchMode;
-// import frc.robot.commands.instant.ResetLiftPositionCommand;
-// import frc.robot.commands.instant.ToggleClawPositionCommand;
-// import frc.robot.commands.instant.IntakeOpenCommand;
-
+import frc.robot.commands.IntakeHeight;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.XBoxController;
 import frc.robot.XBoxPOVButton;
@@ -64,10 +61,10 @@ public class OI {
 	public Button toggleIntakeArmButton = new XBoxButton(xbox, XBoxController.XBOX_B);
 
 	//Bumpers and Triggers
-	public Button toggleCargoHatchHeight = new XBoxButton(xbox, XBoxController.XBOX_RB);
-	public Button autoOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
-	public Button hatchOffset = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
-	public Button intake = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
+	public Button toggleHatchModeButton = new XBoxButton(xbox, XBoxController.XBOX_RB);
+	public Button autoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
+	public Button hatchOffsetButton = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
+	public Button intakeButton = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
 
 	//D-pad
 	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_DPAD_LEFT_ANGLE);
@@ -87,6 +84,11 @@ public class OI {
 		lockDriveButton.whileHeld(new LockDriveCommand());
 
 		//XBox Buttons
+		stepUpButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.UP));
+		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
+		intakeHeightButton.whenPressed(new IntakeHeight());
+		toggleIntakeArmButton.whenPressed(new toggleIntakeArmButton());
+		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
 		
 		// -- buttonName.whenHeld(new Command())
 	}

@@ -29,8 +29,7 @@ public class IntakeArm extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-
-  public void set(int position){
+  public void setArmPosition(int position){
     RobotMap.intakeArmTalon.set(ControlMode.Position, position);
   }
 
