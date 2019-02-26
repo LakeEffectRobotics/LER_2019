@@ -7,16 +7,14 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
 import frc.robot.subsystems.Climber;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -69,6 +67,12 @@ public class RobotMap {
 
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
+	//LED pins
+	//TODO set proper pins
+	private static final int R_CHANNEL_RELAY_INT = 2;
+	private static final int G_CHANNEL_RELAY_INT = 0;
+	private static final int B_CHANNEL_RELAY_INT = 1;
+
 	/**
 	 * Creating motor controller objects
 	 */
@@ -93,6 +97,11 @@ public class RobotMap {
 	 * Creating Gyro object
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+
+	//LED lights
+	public static Relay r_channel_relay;
+	public static Relay g_channel_relay;
+	public static Relay b_channel_relay;
 	
 	/**
 	 * Creating sensor objects
@@ -121,5 +130,9 @@ public class RobotMap {
 		elevatorSpark2.follow(elevatorSpark1, true);
 
 		climberTalon2.follow(climberTalon1);
+		//set LEDs
+		r_channel_relay = new Relay(R_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
+		g_channel_relay = new Relay(G_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
+		b_channel_relay = new Relay(B_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
 	}
 }
