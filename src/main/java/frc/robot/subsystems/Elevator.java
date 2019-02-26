@@ -50,13 +50,14 @@ public class Elevator extends Subsystem {
   }
 
   public void init(){
-    RobotMap.elevatorSpark1.getPIDController().setP(1);
-    RobotMap.elevatorSpark1.getPIDController().setOutputRange(-acceleration, acceleration);
-    RobotMap.elevatorSpark1.getPIDController().setReference(GROUND_HEIGHT, ControlType.kPosition);
+    // RobotMap.elevatorSpark1.getPIDController().setP(1);
+    // RobotMap.elevatorSpark1.getPIDController().setOutputRange(-acceleration, acceleration);
+    // RobotMap.elevatorSpark1.getPIDController().setReference(GROUND_HEIGHT, ControlType.kPosition);
   }
 
   public double getHeight(){
-    return(RobotMap.elevatorSpark1.getEncoder().getPosition());
+    // return(RobotMap.elevatorSpark1.getEncoder().getPosition());
+    return 0;
   }
 
   public double getTargetHeight(){
@@ -74,7 +75,9 @@ public class Elevator extends Subsystem {
     if(target > MAX_HEIGHT) target=MAX_HEIGHT;
     if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
 
-    RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
+    System.out.println(target);
+
+    // RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
   }
 
   public void setOffset(double offset){

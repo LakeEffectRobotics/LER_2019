@@ -30,10 +30,9 @@ public class ElevatorCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println(Robot.oi.xbox.getJoyLeftX());
     //Manual control using left stick
-    if(Math.abs(Robot.oi.xbox.getJoyLeftX()) > DEADZONE){
-      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()+Robot.oi.xbox.getJoyLeftX()/2, 0);
+    if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > DEADZONE){
+      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()+Robot.oi.xbox.getJoyLeftY()/2, 0);
     }
     //Offset for grabbing+releasing hatches
     if(Robot.oi.xbox.getTriggerRight() > DEADZONE){

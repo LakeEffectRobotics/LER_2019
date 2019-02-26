@@ -83,8 +83,8 @@ public class RobotMap {
 	public static VictorSPX intakeArmVictor = new VictorSPX(INTAKE_ARM_VICTOR);
 	public static TalonSRX intakeRollerTalon = new TalonSRX(INTAKE_ROLLER_TALON);
 
-	public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
-	public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
+	// public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
+	// public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
 
 	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DOWN_POSITION,
 			Climber.UP_POSITION);
@@ -118,7 +118,7 @@ public class RobotMap {
 
 		intakeArmVictor.follow(intakeArmTalon);
 		
-		elevatorSpark2.follow(elevatorSpark1, true);
+		// elevatorSpark2.follow(elevatorSpark1, true);
 
 		climberTalon2.follow(climberTalon1);
 	}

@@ -96,17 +96,22 @@ public class Robot extends TimedRobot {
 		robotPeriodic();
 	}
 
-	TalonSRX a = new TalonSRX(10);
-	TalonSRX b = new TalonSRX(11);
+	CANSparkMax a = new CANSparkMax(8, MotorType.kBrushless);
+	CANSparkMax b = new CANSparkMax(7, MotorType.kBrushless);
 
 	public void testInit() {
+		a.setInverted(true);
+		b.follow(a, true);
+
+		a.getPIDController().setP(1);
+		a.getPIDController().setOutputRange(-1,1);
 	}
 
 	@Override
 	public void testPeriodic() {
-		//BACK IS DOWN
-		a.set(ControlMode.PercentOutput, Robot.oi.l_joy.getY()/2);
-		b.set(ControlMode.PercentOutput, -Robot.oi.l_joy.getY()/2);
+		System.out.println(Robot.oi.l_joy.getY()+"\t"+a.getEncoder().getPosition());
+
+		a.getPIDController().setReference(49, ControlType.kPosition);
 	}
 }
 
