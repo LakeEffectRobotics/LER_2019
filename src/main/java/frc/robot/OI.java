@@ -16,6 +16,8 @@ import frc.robot.commands.instant.ElevatorToIntakeHeight;
 import frc.robot.commands.instant.SetShawnDriveCommand;
 import frc.robot.commands.instant.ToggleHatchMode;
 import frc.robot.commands.instant.ToggleIntakeArm;
+import frc.robot.commands.instant.ToggleOuttake;
+import frc.robot.subsystems.Outtake;
 
 public class OI {
 	
@@ -85,6 +87,8 @@ public class OI {
 		intakeHeightButton.whenPressed(new ElevatorToIntakeHeight());
 		toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
+		leftOuttake.whenPressed(new ToggleOuttake(Outtake.LEFT));
+		rightOuttake.whenPressed(new ToggleOuttake(Outtake.RIGHT));
 		
 		// -- buttonName.whenHeld(new Command())
 	}

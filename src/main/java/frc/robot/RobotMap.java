@@ -15,6 +15,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Servo;
 import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
 import frc.robot.subsystems.Climber;
@@ -71,6 +72,11 @@ public class RobotMap {
 
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
+
+	final static int LEFT_SERVO = 0;
+	final static int RIGHT_SERVO = 1;
+
+
 	/**
 	 * Creating motor controller objects
 	 */
@@ -91,6 +97,9 @@ public class RobotMap {
 	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DOWN_POSITION,
 			Climber.UP_POSITION);
 	public static TalonSRX_2 climberTalon2 = new TalonSRX_2(CLIMBER_TALON_2, Climber.DOWN_POSITION, Climber.UP_POSITION);
+
+	public static Servo leftServo = new Servo(LEFT_SERVO);
+	public static Servo rightServo = new Servo(RIGHT_SERVO);
 	/**
 	 * Creating Gyro object
 	 */	

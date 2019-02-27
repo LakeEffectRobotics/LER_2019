@@ -22,6 +22,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.Outtake;
 
 public class Robot extends TimedRobot {
 
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
 	public static final IntakeArm intakeArm = new IntakeArm();
 	public static final IntakeRoller intakeRoller = new IntakeRoller();
 	public static final Elevator elevator = new Elevator();
+	public static final Outtake outtake = new Outtake();
 	
 	public void robotPeriodic() {
 		//Called periodically, use to interface with dashboard
@@ -83,11 +85,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-//		if (autonomous_command_group != null) {
-//			autonomous_command_group.cancel();
-//		}
 
-	//Prevent old target height from causing issues
+		//Prevent old target height from causing issues
 		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(), ControlType.kPosition);
 		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
 		enabledInit();
