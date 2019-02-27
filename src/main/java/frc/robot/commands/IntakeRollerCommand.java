@@ -24,7 +24,7 @@ public class IntakeRollerCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeRoller.spin(Robot.oi.xbox.getTriggerRight()-Robot.oi.xbox.getTriggerLeft());
+    Robot.intakeRoller.spin(Robot.oi.xbox.getTriggerLeft()/2);
   }
 
   // Make this return true when this Command no longer needs to run execute()

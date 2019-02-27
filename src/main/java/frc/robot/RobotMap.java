@@ -67,7 +67,7 @@ public class RobotMap {
 
 	final static int INTAKE_ARM_TALON = 99;
 	final static int INTAKE_ARM_VICTOR = 99;
-	final static int INTAKE_ROLLER_TALON = 99;
+	final static int INTAKE_ROLLER_TALON = 12;
 
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
@@ -122,9 +122,9 @@ public class RobotMap {
 		
 		elevatorSpark2.follow(elevatorSpark1, true);
 		
-		RobotMap.elevatorSpark1.getPIDController().setP(1);
-		RobotMap.elevatorSpark1.getPIDController().setOutputRange(-0.1, 0.25);
-		RobotMap.elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
+		elevatorSpark1.getPIDController().setP(1);
+		elevatorSpark1.getPIDController().setOutputRange(-0.1, 0.25);
+		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
 		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
 		climberTalon2.follow(climberTalon1);

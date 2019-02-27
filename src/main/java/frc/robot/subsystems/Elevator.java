@@ -26,7 +26,7 @@ public class Elevator extends Subsystem {
   }
 
   //TODO: Set heights
-  public static final double GROUND_HEIGHT = 6;
+  public static final double GROUND_HEIGHT = 0.5;
   public static final double MAX_HEIGHT = 51.25;
   
   public static final double LOW_HEIGHT = 15;
@@ -88,6 +88,14 @@ public class Elevator extends Subsystem {
 
   public Mode getMode(){
     return(currentMode);
+  }
+
+  public void coast(){
+    RobotMap.elevatorSpark1.set(0);
+  }
+
+  public void resume(){
+    RobotMap.elevatorSpark1.getPIDController().setReference(targetHeight, ControlType.kPosition);
   }
 
   public void setMode(Mode m){

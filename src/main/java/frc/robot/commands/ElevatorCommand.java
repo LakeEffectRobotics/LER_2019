@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.Elevator;
 
 public class ElevatorCommand extends Command {
@@ -39,6 +40,12 @@ public class ElevatorCommand extends Command {
       Robot.elevator.setOffset(Robot.oi.xbox.getTriggerRight()*Elevator.HATCH_RELEASE_OFFSET);
     } else {
       Robot.elevator.setOffset(0);
+    }
+
+    if(Math.abs(Robot.elevator.getHeight() - Robot.elevator.getTargetHeight()) > 2 && Robot.elevator.getTargetHeight() == Elevator.GROUND_HEIGHT){
+      Robot.elevator.coast();
+    } else {
+      Robot.elevator.resume();
     }
 
   }

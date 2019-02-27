@@ -28,7 +28,7 @@ public class IntakeRoller extends Subsystem {
   }
 
   public void spin(double speed){
-    RobotMap.intakeRollerTalon.set(ControlMode.PercentOutput, speed);
+    RobotMap.intakeRollerTalon.set(ControlMode.PercentOutput, -speed);
   }
 
 }
