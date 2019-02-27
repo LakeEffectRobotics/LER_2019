@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.LockDriveCommand;
 import frc.robot.commands.instant.BumpElevatorHeight;
-import frc.robot.commands.instant.IntakeHeight;
+import frc.robot.commands.instant.ElevatorToIntakeHeight;
 import frc.robot.commands.instant.SetShawnDriveCommand;
 import frc.robot.commands.instant.ToggleHatchMode;
+import frc.robot.commands.instant.ToggleIntakeArm;
 
 public class OI {
 	
@@ -81,8 +82,8 @@ public class OI {
 		//XBox Buttons
 		stepUpButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.UP));
 		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
-		intakeHeightButton.whenPressed(new IntakeHeight());
-		// toggleIntakeArmButton.whenPressed(new toggleIntakeArm());
+		intakeHeightButton.whenPressed(new ElevatorToIntakeHeight());
+		toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
 		
 		// -- buttonName.whenHeld(new Command())

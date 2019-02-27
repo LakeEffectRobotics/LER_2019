@@ -118,8 +118,9 @@ public class RobotMap {
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
 
+		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		intakeArmVictor.follow(intakeArmTalon);
-		
+
 		elevatorSpark2.follow(elevatorSpark1, true);
 		
 		elevatorSpark1.getPIDController().setP(1);

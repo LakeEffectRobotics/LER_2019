@@ -20,8 +20,12 @@ public class IntakeArm extends Subsystem {
   // here. Call these from Commands.
 
   //TODO: Set positions
-  public static final int POSITION_UP = 0;
-  public static final int POSITION_DOWN = 0;
+  public static final double POSITION_MAX = 0;
+  public static final double POSITION_UP = 0;
+  public static final double POSITION_DOWN = 0;
+  public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
+  
+  public double targetPosition;
   
 
   @Override
@@ -29,8 +33,21 @@ public class IntakeArm extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-  public void setArmPosition(int position){
-    RobotMap.intakeArmTalon.set(ControlMode.Position, position);
+  public void setTargetPosition(double position){
+
+    if(position > POSITION_MAX) position=POSITION_MAX;
+    if(position < POSITION_DOWN) position=POSITION_DOWN;
+    targetPosition = position; 
+
+    RobotMap.intakeArmTalon.set(ControlMode.Position, targetPosition);
+  }
+
+  public double getTargetPosition(){
+    return(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+  }
+
+  public double getPosition(){
+    return(targetPosition);
   }
 
   

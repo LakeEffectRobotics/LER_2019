@@ -7,17 +7,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
-import frc.robot.RobotMap;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class IntakeRollerCommand extends Command {
-  public IntakeRollerCommand() {
+public class IntakeArmCommand extends Command {
+  public IntakeArmCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.intakeRoller);
+    // eg. requires(chassis);
+    requires(Robot.intakeArm);
   }
 
   // Called just before this Command runs the first time
@@ -28,7 +25,9 @@ public class IntakeRollerCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeRoller.spin(Robot.oi.xbox.getTriggerLeft()/2);
+    if(Robot.oi.xbox.getJoyRightY() > 0.2){
+      Robot.intakeArm.setTargetPosition(Robot.intakeArm.getTargetPosition()+Robot.oi.xbox.getJoyRightY()/5);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

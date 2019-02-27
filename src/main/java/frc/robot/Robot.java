@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
+		System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
 		// System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 

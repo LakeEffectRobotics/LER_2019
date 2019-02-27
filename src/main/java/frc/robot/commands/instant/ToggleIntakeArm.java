@@ -27,6 +27,15 @@ public class ToggleIntakeArm extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
+    double currentPos = Robot.intakeArm.getTargetPosition();
     
-    }
+    if(currentPos > IntakeArm.POSITION_UP) // If it's past up
+      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
+    else if(currentPos > IntakeArm.POSITION_MID) // If it's between half and up
+      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
+    else if(currentPos < IntakeArm.POSITION_MID) // If it's between half and down
+      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
+    
+  }
+
 }
