@@ -24,7 +24,7 @@ public class ElevatorCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0);
+    //F greg
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -32,11 +32,11 @@ public class ElevatorCommand extends Command {
   protected void execute() {
     //Manual control using left stick
     if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > DEADZONE){
-      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()+Robot.oi.xbox.getJoyLeftY()/2, 0);
+      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()+Robot.oi.xbox.getJoyLeftY()/2, 0, "Joy");
     }
     //Offset for grabbing+releasing hatches
     if(Robot.oi.xbox.getTriggerRight() > DEADZONE){
-      Robot.elevator.setOffset(Robot.oi.xbox.getTriggerRight()*2);
+      Robot.elevator.setOffset(Robot.oi.xbox.getTriggerRight()*Elevator.HATCH_RELEASE_OFFSET);
     } else {
       Robot.elevator.setOffset(0);
     }

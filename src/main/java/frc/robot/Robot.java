@@ -49,8 +49,6 @@ public class Robot extends TimedRobot {
 		RobotMap.init();
 		gyro.calibrate();
 
-		elevator.init();
-		
 		//Setup dashboard
 	}
 
@@ -63,6 +61,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
+		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
@@ -94,24 +93,25 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
+		// System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
-	CANSparkMax a = new CANSparkMax(8, MotorType.kBrushless);
-	CANSparkMax b = new CANSparkMax(7, MotorType.kBrushless);
+	// CANSparkMax a = new CANSparkMax(8, MotorType.kBrushless);
+	// CANSparkMax b = new CANSparkMax(7, MotorType.kBrushless);
 
 	public void testInit() {
-		a.setInverted(true);
-		b.follow(a, true);
+		// a.setInverted(true);
+		// b.follow(a, true);
 
-		a.getPIDController().setP(1);
-		a.getPIDController().setOutputRange(-1,1);
+		// a.getPIDController().setP(1);
+		// a.getPIDController().setOutputRange(-1,1);
 	}
 
 	@Override
 	public void testPeriodic() {
-		System.out.println(Robot.oi.l_joy.getY()+"\t"+a.getEncoder().getPosition());
-
-		a.getPIDController().setReference(49, ControlType.kPosition);
+		// System.out.println(a.getEncoder().getPosition());
+		// a.set(Robot.oi.l_joy.getY()/2);
+		// // a.getPIDController().setReference(49, ControlType.kPosition);
 	}
 }
 

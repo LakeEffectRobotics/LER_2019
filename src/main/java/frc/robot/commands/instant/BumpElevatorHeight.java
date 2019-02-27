@@ -7,6 +7,8 @@
 
 package frc.robot.commands.instant;
 
+import java.time.format.SignStyle;
+
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
@@ -34,7 +36,8 @@ public class BumpElevatorHeight extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    double height = Robot.elevator.getHeight();
+    double height = Robot.elevator.getTargetHeight();
+    System.out.println(height);
     
     if(height > Elevator.MAX_HEIGHT && direction == UP){
       return;
@@ -43,18 +46,26 @@ public class BumpElevatorHeight extends InstantCommand {
       return;
     }
 
+    System.out.println(direction ==  DOWN);
+
     for(int i = 0; i<Elevator.HEIGHTS.length; i++){
       //If step is lower then current, and next step is higher
       if(height >= Elevator.HEIGHTS[i] && height <= Elevator.HEIGHTS[i+1]){
+        if(direction == UP && height==Elevator.HEIGHTS[i+1]) continue;
+
+        System.out.println(height+" is between "+Elevator.HEIGHTS[i]+" and "+Elevator.HEIGHTS[i+1]);
         if(direction == UP){
+          System.out.println("UP to"+Elevator.HEIGHTS[i+1]);
           //Go to higher step
-          Robot.elevator.setTargetHeight(Elevator.HEIGHTS[i+1], 0);
+          Robot.elevator.setTargetHeight(Elevator.HEIGHTS[i+1], 0, "Bump up");
+          break;
         }else if(direction == DOWN){
           //Go to lower step
-          Robot.elevator.setTargetHeight(Elevator.HEIGHTS[i], 0);
+          System.out.println("DOWN to"+Elevator.HEIGHTS[i]);
+          Robot.elevator.setTargetHeight(Elevator.HEIGHTS[i], 0, "Bump down");
+          break;
         }
       }
-
     }
   }
 

@@ -26,17 +26,17 @@ public class Elevator extends Subsystem {
   }
 
   //TODO: Set heights
-  public static final double GROUND_HEIGHT = 1;
-  public static final double MAX_HEIGHT = 49.60;
+  public static final double GROUND_HEIGHT = 37;
+  public static final double MAX_HEIGHT = 80.75;
   
-  public static final double LOW_HEIGHT = 10;
-  public static final double MID_HEIGHT = 25;
-  public static final double HIGH_HEIGHT = 35;
+  public static final double LOW_HEIGHT = 50;
+  public static final double MID_HEIGHT = 60;
+  public static final double HIGH_HEIGHT = 70;
 
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
   public static final double HATCH_OFFSET = -5;
-
+  public static final double HATCH_RELEASE_OFFSET = -5;
 
   public static final double acceleration = 1;
 
@@ -49,11 +49,6 @@ public class Elevator extends Subsystem {
     setDefaultCommand(new ElevatorCommand());
   }
 
-  public void init(){
-    // RobotMap.elevatorSpark1.getPIDController().setP(1);
-    // RobotMap.elevatorSpark1.getPIDController().setOutputRange(-acceleration, acceleration);
-    // RobotMap.elevatorSpark1.getPIDController().setReference(GROUND_HEIGHT, ControlType.kPosition);
-  }
 
   public double getHeight(){
     // return(RobotMap.elevatorSpark1.getEncoder().getPosition());
@@ -64,24 +59,32 @@ public class Elevator extends Subsystem {
     return(targetHeight);
   }
 
-  public void setTargetHeight(double target, double offset){
-    if(target > MAX_HEIGHT) target=MAX_HEIGHT;
-    if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
+  public void setTargetHeight(double target, double offset, String src){
+    if(target > MAX_HEIGHT){
+      target=MAX_HEIGHT;
+    }
+    if(target < GROUND_HEIGHT){
+      System.out.println(target+"is less than"+GROUND_HEIGHT);
+      target = GROUND_HEIGHT;
+    }
     targetHeight = target;  
 
-    //Add offset here so it doesn't affect the sav ed target
+    // System.out.print("T0:"+src+"\t");
+
+    // System.out.print("T1:"+targetHeight+"\t");
+
+    //Add offset here so it doesn't affect the saved target
     target += offset;
     if(currentMode == Mode.HATCH) target += HATCH_OFFSET;
     if(target > MAX_HEIGHT) target=MAX_HEIGHT;
     if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
 
-    System.out.println(target);
-
-    // RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
+    // System.out.println("T2:"+target);
+    RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
   }
 
   public void setOffset(double offset){
-    setTargetHeight(getTargetHeight(), offset);
+    setTargetHeight(getTargetHeight(), offset, "Offset");
   }
 
   public Mode getMode(){
@@ -91,6 +94,6 @@ public class Elevator extends Subsystem {
   public void setMode(Mode m){
     currentMode = m;
     //Update height to current mode
-    setTargetHeight(targetHeight, 0);
+    setTargetHeight(targetHeight, 0, "Setmode");
   }
 }

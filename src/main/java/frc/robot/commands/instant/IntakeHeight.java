@@ -27,7 +27,7 @@ public class IntakeHeight extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-      Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT,0);
+      //Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT,0);
   }
 
 }

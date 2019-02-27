@@ -11,12 +11,14 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Elevator;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -83,8 +85,8 @@ public class RobotMap {
 	public static VictorSPX intakeArmVictor = new VictorSPX(INTAKE_ARM_VICTOR);
 	public static TalonSRX intakeRollerTalon = new TalonSRX(INTAKE_ROLLER_TALON);
 
-	// public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
-	// public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
+	public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
+	public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
 
 	public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DOWN_POSITION,
 			Climber.UP_POSITION);
@@ -109,7 +111,7 @@ public class RobotMap {
 	public static TapeSensor rightTapeSensor2 = new TapeSensor(RIGHT_TAPE_SENSOR_2);
 	//	public static TapeSensor rightTapeSensor3 = new TapeSensor(RIGHT_TAPE_SENSOR_3);
 	
-	public static void init() {
+	public static void init() { //r/outoftheloop
 		//Set followers
 		rightDriveSpark2.follow(rightDriveSpark1);
 		rightDriveSpark3.follow(rightDriveSpark1);
@@ -118,7 +120,12 @@ public class RobotMap {
 
 		intakeArmVictor.follow(intakeArmTalon);
 		
-		// elevatorSpark2.follow(elevatorSpark1, true);
+		elevatorSpark2.follow(elevatorSpark1, true);
+		
+		RobotMap.elevatorSpark1.getPIDController().setP(1);
+		RobotMap.elevatorSpark1.getPIDController().setOutputRange(-0.1, 0.25);
+		RobotMap.elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
+		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
 		climberTalon2.follow(climberTalon1);
 	}
