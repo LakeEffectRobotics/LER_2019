@@ -27,7 +27,7 @@ public class Elevator extends Subsystem {
 
   //TODO: Set heights
   public static final double GROUND_HEIGHT = 0.5;
-  public static final double MAX_HEIGHT = 51.25;
+  public static final double MAX_HEIGHT = 45;
   
   public static final double LOW_HEIGHT = 15;
   public static final double MID_HEIGHT = 25;
@@ -38,7 +38,7 @@ public class Elevator extends Subsystem {
   public static final double HATCH_OFFSET = -5;
   public static final double HATCH_RELEASE_OFFSET = -5;
 
-  public static final double acceleration = 1;
+  public static final double acceleration = 0.75;
 
   double targetHeight = GROUND_HEIGHT;
   public Mode currentMode = Mode.CARGO;
@@ -92,6 +92,7 @@ public class Elevator extends Subsystem {
 
   public void coast(){
     RobotMap.elevatorSpark1.set(0);
+    System.out.println("Coast");
   }
 
   public void resume(){

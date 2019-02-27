@@ -100,22 +100,16 @@ public class Robot extends TimedRobot {
 		// System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
-	// CANSparkMax a = new CANSparkMax(8, MotorType.kBrushless);
-	// CANSparkMax b = new CANSparkMax(7, MotorType.kBrushless);
+	TalonSRX a = new TalonSRX(11);
+	VictorSPX b = new VictorSPX(21);
 
 	public void testInit() {
-		// a.setInverted(true);
-		// b.follow(a, true);
-
-		// a.getPIDController().setP(1);
-		// a.getPIDController().setOutputRange(-1,1);
+		b.follow(a);
 	}
 
 	@Override
 	public void testPeriodic() {
-		// System.out.println(a.getEncoder().getPosition());
-		// a.set(Robot.oi.l_joy.getY()/2);
-		// // a.getPIDController().setReference(49, ControlType.kPosition);
+		a.set(ControlMode.PercentOutput ,Robot.oi.l_joy.getY());
 	}
 }
 

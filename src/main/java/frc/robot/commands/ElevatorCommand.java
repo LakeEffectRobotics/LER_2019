@@ -35,17 +35,21 @@ public class ElevatorCommand extends Command {
     if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > DEADZONE){
       Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()+Robot.oi.xbox.getJoyLeftY()/2, 0, "Joy");
     }
+
+    
+    if(Math.abs(Robot.elevator.getHeight() - Robot.elevator.getTargetHeight()) < 3 && Robot.elevator.getTargetHeight() == Elevator.GROUND_HEIGHT){
+      Robot.elevator.coast();
+      return;
+    } else {
+      Robot.elevator.resume();
+    }
+
+
     //Offset for grabbing+releasing hatches
     if(Robot.oi.xbox.getTriggerRight() > DEADZONE){
       Robot.elevator.setOffset(Robot.oi.xbox.getTriggerRight()*Elevator.HATCH_RELEASE_OFFSET);
     } else {
       Robot.elevator.setOffset(0);
-    }
-
-    if(Math.abs(Robot.elevator.getHeight() - Robot.elevator.getTargetHeight()) > 2 && Robot.elevator.getTargetHeight() == Elevator.GROUND_HEIGHT){
-      Robot.elevator.coast();
-    } else {
-      Robot.elevator.resume();
     }
 
   }

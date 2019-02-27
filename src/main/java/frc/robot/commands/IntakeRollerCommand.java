@@ -8,6 +8,10 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
+import frc.robot.RobotMap;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeRollerCommand extends Command {
@@ -25,6 +29,8 @@ public class IntakeRollerCommand extends Command {
   @Override
   protected void execute() {
     Robot.intakeRoller.spin(Robot.oi.xbox.getTriggerLeft()/2);
+
+    RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, Robot.oi.xbox.getJoyRightY()/2);
   }
 
   // Make this return true when this Command no longer needs to run execute()

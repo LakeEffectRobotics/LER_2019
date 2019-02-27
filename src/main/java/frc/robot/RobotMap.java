@@ -65,8 +65,8 @@ public class RobotMap {
 	final static int RIGHT_TAPE_SENSOR_2 = 3;
 	//	final static int RIGHT_TAPE_SENSOR_3 = 2708;
 
-	final static int INTAKE_ARM_TALON = 99;
-	final static int INTAKE_ARM_VICTOR = 99;
+	final static int INTAKE_ARM_TALON = 11;
+	final static int INTAKE_ARM_VICTOR = 21;
 	final static int INTAKE_ROLLER_TALON = 12;
 
 	final static int ELEVATOR_SPARK_1 = 7;
@@ -123,7 +123,8 @@ public class RobotMap {
 		elevatorSpark2.follow(elevatorSpark1, true);
 		
 		elevatorSpark1.getPIDController().setP(1);
-		elevatorSpark1.getPIDController().setOutputRange(-0.1, 0.25);
+		//Down is halved to prevent damage (somewhat)
+		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration/2, Elevator.acceleration);
 		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
 		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
