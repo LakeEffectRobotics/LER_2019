@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
@@ -86,6 +86,10 @@ public class Robot extends TimedRobot {
 //		if (autonomous_command_group != null) {
 //			autonomous_command_group.cancel();
 //		}
+
+	//Prevent old target height from causing issues
+		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(), ControlType.kPosition);
+		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
 		enabledInit();
 	}
 

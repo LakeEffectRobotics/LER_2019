@@ -26,12 +26,12 @@ public class Elevator extends Subsystem {
   }
 
   //TODO: Set heights
-  public static final double GROUND_HEIGHT = 37;
-  public static final double MAX_HEIGHT = 80.75;
+  public static final double GROUND_HEIGHT = 6;
+  public static final double MAX_HEIGHT = 51.25;
   
-  public static final double LOW_HEIGHT = 50;
-  public static final double MID_HEIGHT = 60;
-  public static final double HIGH_HEIGHT = 70;
+  public static final double LOW_HEIGHT = 15;
+  public static final double MID_HEIGHT = 25;
+  public static final double HIGH_HEIGHT = 35;
 
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
@@ -51,8 +51,7 @@ public class Elevator extends Subsystem {
 
 
   public double getHeight(){
-    // return(RobotMap.elevatorSpark1.getEncoder().getPosition());
-    return 0;
+    return(RobotMap.elevatorSpark1.getEncoder().getPosition());
   }
 
   public double getTargetHeight(){
