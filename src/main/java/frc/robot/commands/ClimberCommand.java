@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-
+import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimberCommand extends Command {
@@ -27,25 +27,6 @@ public class ClimberCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    int targetPosition = RobotMap.climberTalon1.getTargetPosition();
-    /*
-    TODO: Create controls similar to those on the 2018 lift
-    --------------------------------------------------------------
-    if (Robot.oi.scale_height_button.get()) {
-      target_position = Lift.SCALE_HEIGHT;
-    }
-    else if (Robot.oi.switch_height_button.get()) {
-      target_position = Lift.SWITCH_HEIGHT;
-    }
-    else if (Robot.oi.ground_height_button.get()) {
-      target_position = Lift.GROUND_HEIGHT;
-      }
-    target_position += Robot.oi.xbox.getJoyRightY() * MULTIPLIER;
-    --------------------------------------------------------------
-    public final static int UP_POSITION = 2708;
-    public final static int DOWN_POSITION = 2708;
-    */
-    RobotMap.climberTalon1.setTargetPosition(targetPosition);
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -68,17 +68,12 @@ public class Elevator extends Subsystem {
     }
     targetHeight = target;  
 
-    // System.out.print("T0:"+src+"\t");
-
-    // System.out.print("T1:"+targetHeight+"\t");
-
     //Add offset here so it doesn't affect the saved target
     target += offset;
     if(currentMode == Mode.HATCH) target += HATCH_OFFSET;
     if(target > MAX_HEIGHT) target=MAX_HEIGHT;
     if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
 
-    // System.out.println("T2:"+target);
     RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
   }
 

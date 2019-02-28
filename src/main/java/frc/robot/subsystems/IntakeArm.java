@@ -48,7 +48,7 @@ public class IntakeArm extends Subsystem {
     if(targetPosition==POSITION_DOWN && getPosition()<POSITION_MID)
       speed /= 10;
     RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, speed);
-    System.out.println("Speed: "+(targetPosition - RobotMap.intakePot.getValue())/1000+"\tTarget: "+targetPosition+"\tCurrent"+RobotMap.intakePot.getValue());
+    // System.out.println("Speed: "+(targetPosition - RobotMap.intakePot.getValue())/1000+"\tTarget: "+targetPosition+"\tCurrent"+RobotMap.intakePot.getValue());
 
   }
 

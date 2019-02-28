@@ -6,9 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-
+import frc.robot.RobotMap;
 import frc.robot.commands.ClimberCommand;
-
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -19,13 +19,19 @@ public class Climber extends Subsystem {
   // here. Call these from Commands.
   
   //  TODO: Update these values
-  public final static int UP_POSITION = 2708;
-  public final static int DOWN_POSITION = 2708;
+  public final static int DEFAULT_POSITION = 2708;
+  public final static int DEPLOYED_POSITION = 2708;
+
+  boolean deployed = false;
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new ClimberCommand());
+  }
+
+  public boolean isDeployed() {
+    return deployed;
   }
 }

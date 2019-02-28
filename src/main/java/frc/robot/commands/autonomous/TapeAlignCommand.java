@@ -8,11 +8,12 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.Tools;
 
-public class ShipCargoAlignCommand extends Command {
+public class TapeAlignCommand extends Command {
   //  TODO: Update these values
   final static double MAX_DRIVE_DISTANCE = 15;
   final static double SENSOR_SPACING = 12;
@@ -23,10 +24,11 @@ public class ShipCargoAlignCommand extends Command {
   double[] initialEncoderPositions;
   double averageEncoderPosition;
   double distanceLeft;
+  boolean isLeftSide;
   boolean tapeDetected = false;
   boolean finished = false;
 
-  public ShipCargoAlignCommand(double speed) {
+  public TapeAlignCommand(double speed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);
@@ -42,12 +44,18 @@ public class ShipCargoAlignCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    SmartDashboard.putBoolean("Detected Tape", tapeDetected);
     averageEncoderPosition = Tools.rotationsToInches(Robot.drivetrain.getAverageEncoderPosition(initialEncoderPositions));
     if (!tapeDetected) {
       if (averageEncoderPosition < MAX_DRIVE_DISTANCE) {
         Robot.drivetrain.drive(speed, speed);
       }
-      if (RobotMap.leftTapeSensor1.isOnTape() || RobotMap.rightTapeSensor1.isOnTape()) {
+      if (RobotMap.leftTapeSensor1.isOnTape()) {
+        isLeftSide = true;
+        tapeDetected = true;
+        initialEncoderPositions = Robot.drivetrain.getInitialEncoderPositions();
+      } else if (RobotMap.rightTapeSensor1.isOnTape()) {
+        isLeftSide = false;
         tapeDetected = true;
         initialEncoderPositions = Robot.drivetrain.getInitialEncoderPositions();
       } else if (averageEncoderPosition >= MAX_DRIVE_DISTANCE) {
@@ -58,7 +66,7 @@ public class ShipCargoAlignCommand extends Command {
       speed *= (distanceLeft / SENSOR_SPACING);
       speed = Tools.forceMaximum(speed, MIN_SPEED);
       Robot.drivetrain.drive(speed, speed);
-      if (RobotMap.leftTapeSensor2.isOnTape() || RobotMap.rightTapeSensor2.isOnTape() || Math.abs(distanceLeft) < FINISHED_TOLERANCE) {
+      if (centeredOnTape() || -distanceLeft >= FINISHED_TOLERANCE) {
         finished = true;
       }
     }
@@ -79,5 +87,9 @@ public class ShipCargoAlignCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+  }
+
+  protected boolean centeredOnTape() {
+    return (isLeftSide && RobotMap.leftTapeSensor2.isOnTape()) || (!isLeftSide && RobotMap.rightTapeSensor2.isOnTape());
   }
 }

@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.IntakeArm;
 
 public class IntakeArmCommand extends Command {
   public IntakeArmCommand() {
@@ -30,7 +31,7 @@ public class IntakeArmCommand extends Command {
     }
     //Retract the arm for defence
     if(Robot.oi.xbox.getDpadUp()){
-      Robot.intakeArm.setTargetPosition(Robot.intakeArm.POSITION_MAX);
+      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_MAX);
     }
     Robot.intakeArm.drive();
   }

@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.LockDriveCommand;
+// import frc.robot.commands.instant.ResetLiftPositionCommand;
+// import frc.robot.commands.instant.ToggleClawPositionCommand;
+// import frc.robot.commands.instant.IntakeOpenCommand;
 import frc.robot.commands.instant.BumpElevatorHeight;
 import frc.robot.commands.instant.ElevatorToIntakeHeight;
 import frc.robot.commands.instant.SetShawnDriveCommand;
@@ -24,6 +27,7 @@ public class OI {
 	// input number definitions
 	final int L_JOY = 0;
 	final int R_JOY = 1;
+	
 	final int XBOX = 2;
 
 	// button number definitions
@@ -36,14 +40,30 @@ public class OI {
 
 	// left joystick buttons
 
+
 	// controller initialization
 	public Joystick l_joy = new Joystick(L_JOY);
 	public Joystick r_joy = new Joystick(R_JOY);
 	public XBoxController xbox = new XBoxController(XBOX);
 
 	// button initialization 
-	public Button toggleShawnDriveButton = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
 	
+	// can be changed to driver's preferences
+	public Button toggleShawnDriveButton = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
+	//Lift controls
+	public Button rStickLift = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_Y);
+	
+	public Button highLiftButton = new XBoxButton(xbox, XBoxController.XBOX_Y);
+	public Button mediumLiftButton = new XBoxButton(xbox, XBoxController.XBOX_X);
+	public Button lowLiftButton = new XBoxButton(xbox, XBoxController.XBOX_A);
+	public Button cargoIntakeButton = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
+	public Button cargoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
+	public Button rightFlipperButton = new XBoxButton(xbox, XBoxController.XBOX_RB);
+	public Button leftFlipperButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
+	
+
+
+
 	public Button holdShawnDriveButton = new JoystickButton(r_joy, HOLD_SHAWN_DRIVE);
 
 	public Button lockDriveButton = new JoystickButton(r_joy, LOCK_DRIVE);
