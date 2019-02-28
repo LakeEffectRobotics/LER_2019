@@ -2,23 +2,20 @@
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                             */
+/* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.IntakeArm;
 
-
-public class DriveCommand extends Command {
-
-  final double DEADZONE = 0.1;
-
-  public DriveCommand() {
+public class IntakeArmCommand extends Command {
+  public IntakeArmCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.drivetrain);
+    requires(Robot.intakeArm);
   }
 
   // Called just before this Command runs the first time
@@ -29,18 +26,14 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //  Pushing the joysticks forward gives a negative Y value, whereas pushing them backward gives a positive Y value
-    double lSpeed = -Robot.oi.l_joy.getY();
-    double rSpeed = -Robot.oi.r_joy.getY();
-
-    if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
-    if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
-    if(Robot.oi.l_joy.getRawButton(2)){
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/10, Math.pow(rSpeed, 3)/10);
+    if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.2){
+      Robot.intakeArm.setTargetPosition(Robot.intakeArm.getTargetPosition()+Robot.oi.xbox.getJoyRightY());
     }
-    else{
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/2, Math.pow(rSpeed, 3)/2);
+    //Retract the arm for defence
+    if(Robot.oi.xbox.getDpadUp()){
+      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_MAX);
     }
+    Robot.intakeArm.drive();
   }
 
   // Make this return true when this Command no longer needs to run execute()

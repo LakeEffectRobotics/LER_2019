@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class XBoxPOVButton extends Button {
 	public int angle;
@@ -14,5 +15,4 @@ public class XBoxPOVButton extends Button {
 	public boolean get() {
 		return xbox.getPOV() == angle;
 	}
-
 }

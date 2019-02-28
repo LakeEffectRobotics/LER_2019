@@ -7,20 +7,31 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Gyro;
+import com.revrobotics.ControlType;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Glow;
+import frc.robot.subsystems.Gyro;
+import frc.robot.subsystems.IntakeArm;
+import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.Outtake;
 
 public class Robot extends TimedRobot {
 
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Gyro gyro = new Gyro();
+	public static final Climber climber = new Climber();
+	public static final Glow glow = new Glow();
 	public static OI oi;
+
+	public static final IntakeArm intakeArm = new IntakeArm();
+	public static final IntakeRoller intakeRoller = new IntakeRoller();
+	public static final Elevator elevator = new Elevator();
+	public static final Outtake outtake = new Outtake();
 	
 	public void robotPeriodic() {
 		//Called periodically, use to interface with dashboard
@@ -36,7 +47,7 @@ public class Robot extends TimedRobot {
 		oi.init();
 		RobotMap.init();
 		gyro.calibrate();
-		
+
 		//Setup dashboard
 	}
 
@@ -49,6 +60,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
+		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
@@ -70,9 +82,13 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-//		if (autonomous_command_group != null) {
-//			autonomous_command_group.cancel();
-//		}
+
+		//Prevent old target height from causing issues
+		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(), ControlType.kPosition);
+		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
+
+		Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
+
 		enabledInit();
 	}
 
@@ -80,10 +96,21 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
+		// System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
+	}
+
+	//3653,3967
+	// public static TalonSRX intakeArmTalon = new TalonSRX(11);
+	// public static VictorSPX intakeArmVictor = new VictorSPX(21);
+	
+	public void testInit() {
+	
 	}
 
 	@Override
 	public void testPeriodic() {
-		////
+		// System.out.println(intakeArmTalon.getSelectedSensorPosition());
+		// System.out.println(RobotMap.intakePot.getValue()+"\t"+RobotMap.intakePot.getVoltage());
 	}
 }
+
