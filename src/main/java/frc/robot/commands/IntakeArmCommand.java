@@ -28,6 +28,10 @@ public class IntakeArmCommand extends Command {
     if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.2){
       Robot.intakeArm.setTargetPosition(Robot.intakeArm.getTargetPosition()+Robot.oi.xbox.getJoyRightY());
     }
+    //Retract the arm for defence
+    if(Robot.oi.xbox.getDpadUp()){
+      Robot.intakeArm.setTargetPosition(Robot.intakeArm.POSITION_MAX);
+    }
     Robot.intakeArm.drive();
   }
 
