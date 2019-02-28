@@ -7,18 +7,17 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
 import frc.robot.subsystems.Climber;
@@ -80,6 +79,11 @@ public class RobotMap {
 	final static int LEFT_SERVO = 0;
 	final static int RIGHT_SERVO = 1;
 
+	//LED pins
+	//TODO set proper pins
+	private static final int R_CHANNEL_RELAY_INT = 2;
+	private static final int G_CHANNEL_RELAY_INT = 0;
+	private static final int B_CHANNEL_RELAY_INT = 1;
 
 	/**
 	 * Creating motor controller objects
@@ -110,6 +114,11 @@ public class RobotMap {
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
 	public static final AnalogInput intakePot = new AnalogInput(2);
+
+	//LED lights
+	public static Relay r_channel_relay;
+	public static Relay g_channel_relay;
+	public static Relay b_channel_relay;
 	
 	/**
 	 * Creating sensor objects
@@ -144,5 +153,9 @@ public class RobotMap {
 		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
 		climberTalon2.follow(climberTalon1);
+		//set LEDs
+		r_channel_relay = new Relay(R_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
+		g_channel_relay = new Relay(G_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
+		b_channel_relay = new Relay(B_CHANNEL_RELAY_INT, Relay.Direction.kBoth);
 	}
 }
