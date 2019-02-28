@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.IntakeArmCommand;
 
 /**
  * Add your docs here.
@@ -20,33 +21,41 @@ public class IntakeArm extends Subsystem {
   // here. Call these from Commands.
 
   //TODO: Set positions
-  public static final double POSITION_MAX = 0;
-  public static final double POSITION_UP = 0;
-  public static final double POSITION_DOWN = 0;
+  public static final double POSITION_MAX = 3967;
+  public static final double POSITION_UP = 3620;
+  public static final double POSITION_DOWN = 2577;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
   public double targetPosition;
+  public static final double ACCEL = 1;
   
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new IntakeArmCommand());
   }
-  public void setTargetPosition(double position){
 
+  public void setTargetPosition(double position){
     if(position > POSITION_MAX) position=POSITION_MAX;
     if(position < POSITION_DOWN) position=POSITION_DOWN;
     targetPosition = position; 
-
-    RobotMap.intakeArmTalon.set(ControlMode.Position, targetPosition);
   }
 
-  public double getTargetPosition(){
-    return(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+  public void drive(){
+    double speed = Math.max(Math.min((targetPosition - RobotMap.intakePot.getValue())/1000, 1), -1);
+
+    RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, speed/2);
+    System.out.println("Speed: "+(targetPosition - RobotMap.intakePot.getValue())/1000+"\tTarget: "+targetPosition+"\tCurrent"+RobotMap.intakePot.getValue());
+
   }
 
   public double getPosition(){
+    return(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+  }
+
+  public double getTargetPosition(){
     return(targetPosition);
   }
 

@@ -5,16 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 
-public class IntakeArmCommand extends Command {
-  public IntakeArmCommand() {
+public class WaitForSensor extends Command {
+  
+  DigitalInput sensor;
+  boolean state;
+
+  public WaitForSensor(DigitalInput i, boolean state) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.intakeArm);
+    sensor = i;
+    this.state = state;
   }
 
   // Called just before this Command runs the first time
@@ -25,16 +30,12 @@ public class IntakeArmCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.2){
-      Robot.intakeArm.setTargetPosition(Robot.intakeArm.getTargetPosition()+Robot.oi.xbox.getJoyRightY());
-    }
-    Robot.intakeArm.drive();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return sensor.get()==state;
   }
 
   // Called once after isFinished returns true

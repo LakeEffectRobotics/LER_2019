@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
@@ -89,6 +90,9 @@ public class Robot extends TimedRobot {
 		//Prevent old target height from causing issues
 		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(), ControlType.kPosition);
 		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
+
+		Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
+
 		enabledInit();
 	}
 
@@ -96,20 +100,21 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-		System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
 		// System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
-	TalonSRX a = new TalonSRX(11);
-	VictorSPX b = new VictorSPX(21);
-
+	//3653,3967
+	// public static TalonSRX intakeArmTalon = new TalonSRX(11);
+	// public static VictorSPX intakeArmVictor = new VictorSPX(21);
+	
 	public void testInit() {
-		b.follow(a);
+	
 	}
 
 	@Override
 	public void testPeriodic() {
-		a.set(ControlMode.PercentOutput ,Robot.oi.l_joy.getY());
+		// System.out.println(intakeArmTalon.getSelectedSensorPosition());
+		// System.out.println(RobotMap.intakePot.getValue()+"\t"+RobotMap.intakePot.getVoltage());
 	}
 }
 

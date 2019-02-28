@@ -92,7 +92,7 @@ public class Elevator extends Subsystem {
 
   public void coast(){
     RobotMap.elevatorSpark1.set(0);
-    System.out.println("Coast");
+    // System.out.println("Coast");
   }
 
   public void resume(){

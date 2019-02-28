@@ -15,7 +15,10 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
 import frc.robot.subsystems.Climber;
@@ -69,6 +72,7 @@ public class RobotMap {
 	final static int INTAKE_ARM_TALON = 11;
 	final static int INTAKE_ARM_VICTOR = 21;
 	final static int INTAKE_ROLLER_TALON = 12;
+	final static int INTAKE_LIMIT_SWITCH = 4;
 
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
@@ -104,6 +108,8 @@ public class RobotMap {
 	 * Creating Gyro object
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
+	public static final AnalogInput intakePot = new AnalogInput(2);
 	
 	/**
 	 * Creating sensor objects
@@ -127,7 +133,6 @@ public class RobotMap {
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
 
-		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		intakeArmVictor.follow(intakeArmTalon);
 
 		elevatorSpark2.follow(elevatorSpark1, true);
