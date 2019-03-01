@@ -76,8 +76,8 @@ public class RobotMap {
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
 
-	final static int LEFT_SERVO = 0;
-	final static int RIGHT_SERVO = 1;
+	final static int LEFT_SERVO = 5;
+	final static int RIGHT_SERVO = 6;
 
 	//LED pins
 	//TODO set proper pins
@@ -119,7 +119,7 @@ public class RobotMap {
 	public static Relay r_channel_relay;
 	public static Relay g_channel_relay;
 	public static Relay b_channel_relay;
-	
+
 	/**
 	 * Creating sensor objects
 	 */

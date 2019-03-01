@@ -9,12 +9,12 @@ package frc.robot;
 
 import com.revrobotics.ControlType;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Glow;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeRoller;
@@ -25,7 +25,6 @@ public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Gyro gyro = new Gyro();
 	public static final Climber climber = new Climber();
-	public static final Glow glow = new Glow();
 	public static OI oi;
 
 	public static final IntakeArm intakeArm = new IntakeArm();
@@ -100,17 +99,18 @@ public class Robot extends TimedRobot {
 	}
 
 	//3653,3967
-	// public static TalonSRX intakeArmTalon = new TalonSRX(11);
-	// public static VictorSPX intakeArmVictor = new VictorSPX(21);
-	
+	Servo s = new Servo(0);
+	double d = 0;
+
 	public void testInit() {
 	
 	}
 
 	@Override
 	public void testPeriodic() {
-		// System.out.println(intakeArmTalon.getSelectedSensorPosition());
-		// System.out.println(RobotMap.intakePot.getValue()+"\t"+RobotMap.intakePot.getVoltage());
+		d += Robot.oi.xbox.getJoyLeftY()/50;
+		System.out.println(d);
+		s.set(d);
 	}
 }
 
