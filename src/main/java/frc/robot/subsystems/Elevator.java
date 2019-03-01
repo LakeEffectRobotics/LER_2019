@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorCommand;
 
@@ -59,20 +60,20 @@ public class Elevator extends Subsystem {
   }
 
   public void setTargetHeight(double target, double offset, String src){
-    if(target > MAX_HEIGHT){
-      target=MAX_HEIGHT;
-    }
-    if(target < GROUND_HEIGHT){
-      System.out.println(target+"is less than"+GROUND_HEIGHT);
-      target = GROUND_HEIGHT;
+    if(!Robot.oi.xbox.getButtonBack()){ // Override limits
+      if(target > MAX_HEIGHT) target=MAX_HEIGHT;
+      if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
     }
     targetHeight = target;  
 
     //Add offset here so it doesn't affect the saved target
     target += offset;
     if(currentMode == Mode.HATCH) target += HATCH_OFFSET;
-    if(target > MAX_HEIGHT) target=MAX_HEIGHT;
-    if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
+    
+    if(!Robot.oi.xbox.getButtonBack()){ // Override limits
+      if(target > MAX_HEIGHT) target=MAX_HEIGHT;
+      if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
+    }
 
     RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
   }
