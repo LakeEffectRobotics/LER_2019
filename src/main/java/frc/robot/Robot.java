@@ -7,8 +7,12 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ControlType;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -104,15 +108,17 @@ public class Robot extends TimedRobot {
 	Servo s = new Servo(0);
 	double d = 0;
 
+	// AnalogInput a = new AnalogInput(0);
+
 	public void testInit() {
-	
 	}
 
 	@Override
 	public void testPeriodic() {
-		d += Robot.oi.xbox.getJoyLeftY()/50;
+		d += Robot.oi.xbox.getJoyLeftY()/200;
 		System.out.println(d);
 		s.set(d);
+		// System.out.println(a.getValue());
 	}
 }
 
