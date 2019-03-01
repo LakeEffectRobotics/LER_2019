@@ -18,6 +18,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Outtake;
 
 public class Robot extends TimedRobot {
@@ -25,6 +26,7 @@ public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Gyro gyro = new Gyro();
 	public static final Climber climber = new Climber();
+	public static final Lights lights = new Lights();
 	public static OI oi;
 
 	public static final IntakeArm intakeArm = new IntakeArm();
@@ -46,7 +48,7 @@ public class Robot extends TimedRobot {
 		oi.init();
 		RobotMap.init();
 		gyro.calibrate();
-
+		lights.setBoth(Lights.Colour.PURPLE);
 		//Setup dashboard
 	}
 
