@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.HoldOuttake;
 import frc.robot.commands.LockDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
@@ -19,7 +20,6 @@ import frc.robot.commands.instant.ElevatorToIntakeHeight;
 import frc.robot.commands.instant.SetShawnDriveCommand;
 import frc.robot.commands.instant.ToggleHatchMode;
 import frc.robot.commands.instant.ToggleIntakeArm;
-import frc.robot.commands.instant.ToggleOuttake;
 import frc.robot.subsystems.Outtake;
 
 public class OI {
@@ -107,8 +107,8 @@ public class OI {
 		intakeHeightButton.whenPressed(new ElevatorToIntakeHeight());
 		toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
-		leftOuttake.whenPressed(new ToggleOuttake(Outtake.LEFT));
-		rightOuttake.whenPressed(new ToggleOuttake(Outtake.RIGHT));
+		leftOuttake.whileHeld(new HoldOuttake(Outtake.LEFT));
+		rightOuttake.whileHeld(new HoldOuttake(Outtake.RIGHT));
 		
 		// -- buttonName.whenHeld(new Command())
 	}
