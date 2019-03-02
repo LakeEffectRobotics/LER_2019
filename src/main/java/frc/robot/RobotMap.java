@@ -68,16 +68,17 @@ public class RobotMap {
 	final static int RIGHT_TAPE_SENSOR_2 = 3;
 	//	final static int RIGHT_TAPE_SENSOR_3 = 2708;
 
-	final static int INTAKE_ARM_TALON = 11;
-	final static int INTAKE_ARM_VICTOR = 21;
+	final static int INTAKE_ARM_TALON = 10;
+	final static int INTAKE_ARM_VICTOR = 20;
 	final static int INTAKE_ROLLER_TALON = 12;
 	final static int INTAKE_LIMIT_SWITCH = 4;
+	final static int INTAKE_POT = 2;
 
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
 
-	final static int LEFT_SERVO = 5;
-	final static int RIGHT_SERVO = 6;
+	final static int LEFT_SERVO = 1;
+	final static int RIGHT_SERVO = 2;
 
 	//LED pins
 	//TODO set proper pins
@@ -114,7 +115,7 @@ public class RobotMap {
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
-	public static final AnalogInput intakePot = new AnalogInput(2);
+	public static final AnalogInput intakePot = new AnalogInput(INTAKE_POT);
 
 	//LED lights
 	public static Relay leftRed = new Relay(LEFT_RED_RELAY, Relay.Direction.kForward);
@@ -155,5 +156,6 @@ public class RobotMap {
 		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
 		climberTalon2.follow(climberTalon1);
+
 	}
 }

@@ -79,14 +79,14 @@ public class OI {
 	public Button toggleIntakeArmButton = new XBoxButton(xbox, XBoxController.XBOX_B);
 
 	//Bumpers and Triggers
-	public Button toggleHatchModeButton = new XBoxButton(xbox, XBoxController.XBOX_RB);
-	public Button autoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
+	public Button toggleHatchModeButton = new XBoxButton(xbox, XBoxController.XBOX_L3);
+	// public Button autoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
 	public Button hatchOffsetButton = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
 	public Button intakeButton = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
 
 	//D-pad
-	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_DPAD_LEFT_ANGLE);
-	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_DPAD_RIGHT_ANGLE);
+	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
+	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
 	
 
 

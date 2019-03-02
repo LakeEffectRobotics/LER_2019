@@ -21,9 +21,9 @@ public class IntakeArm extends Subsystem {
   // here. Call these from Commands.
 
   //TODO: Set positions
-  public static final double POSITION_MAX = 3967;
-  public static final double POSITION_UP = 3620;
-  public static final double POSITION_DOWN = 2577;
+  public static final double POSITION_MAX = 3507;
+  public static final double POSITION_UP = 3072;
+  public static final double POSITION_DOWN = 2021;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
   public double targetPosition;
@@ -37,6 +37,15 @@ public class IntakeArm extends Subsystem {
     setDefaultCommand(new IntakeArmCommand());
   }
 
+  public void init(){
+    if(getPosition() < POSITION_MID){
+      setTargetPosition(getPosition());
+    }
+    else{
+      setTargetPosition(POSITION_UP);
+    }
+  }
+
   public void setTargetPosition(double position){
     if(position > POSITION_MAX) position=POSITION_MAX;
     if(position < POSITION_DOWN) position=POSITION_DOWN;
@@ -45,15 +54,15 @@ public class IntakeArm extends Subsystem {
 
   public void drive(){
     double speed = Math.max(Math.min((targetPosition - getPosition())/1000, 1), -1)/2;
-    if(targetPosition==POSITION_DOWN && getPosition()<POSITION_MID)
-      speed /= 10;
-    RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, speed);
-    // System.out.println("Speed: "+(targetPosition - RobotMap.intakePot.getValue())/1000+"\tTarget: "+targetPosition+"\tCurrent"+RobotMap.intakePot.getValue());
+    if(targetPosition==POSITION_DOWN && getPosition()<POSITION_UP)
+      speed /= 5;
+    RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, -speed);
+    // System.out.println("Speed: "+speed+"\tTarget: "+targetPosition+"\tCurrent"+RobotMap.intakePot.getValue());
 
   }
 
   public double getPosition(){
-    return(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+    return(RobotMap.intakePot.getValue());
   }
 
   public double getTargetPosition(){

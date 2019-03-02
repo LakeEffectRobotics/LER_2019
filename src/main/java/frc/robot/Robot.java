@@ -7,13 +7,9 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ControlType;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Climber;
@@ -54,6 +50,7 @@ public class Robot extends TimedRobot {
 		gyro.calibrate();
 		lights.setBoth(Lights.Colour.PURPLE);
 		//Setup dashboard
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	@Override
@@ -92,7 +89,9 @@ public class Robot extends TimedRobot {
 		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(), ControlType.kPosition);
 		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
 
-		Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
+		intakeArm.init();
+		outtake.setSide(Outtake.LEFT, Outtake.L_IN);
+		outtake.setSide(Outtake.RIGHT, Outtake.R_IN);
 
 		enabledInit();
 	}
@@ -105,20 +104,18 @@ public class Robot extends TimedRobot {
 	}
 
 	//3653,3967
-	Servo s = new Servo(0);
-	double d = 0;
-
+	double d = 0.5;
 	// AnalogInput a = new AnalogInput(0);
 
 	public void testInit() {
 	}
-
+//0.5465,0.4078,
 	@Override
 	public void testPeriodic() {
-		d += Robot.oi.xbox.getJoyLeftY()/200;
+		if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > 0.1)
+			d += Robot.oi.xbox.getJoyLeftY()/200;
 		System.out.println(d);
-		s.set(d);
-		// System.out.println(a.getValue());
+		RobotMap.rightServo.set(d);
+		// System.out.println(RobotMap.intakePot.getValue());
 	}
 }
-

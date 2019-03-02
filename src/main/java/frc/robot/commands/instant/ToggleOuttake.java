@@ -25,12 +25,14 @@ public class ToggleOuttake extends InstantCommand {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.outtake);
+    side = s;
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
     Robot.outtake.toggleSide(side);
+    System.out.println("OUTTAKE "+side);
   }
 
 }
