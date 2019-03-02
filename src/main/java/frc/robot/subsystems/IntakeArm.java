@@ -27,7 +27,8 @@ public class IntakeArm extends Subsystem {
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
   public double targetPosition;
-  public static final double ACCEL = 1;
+  //**The minimum acceleration, used when at close range */
+  public static final double MIN_ACCEL = 0.1;
   
 
   @Override
@@ -53,7 +54,11 @@ public class IntakeArm extends Subsystem {
   }
 
   public void drive(){
-    double speed = Math.max(Math.min((targetPosition - getPosition())/1000, 1), -1)/2;
+    double speed = Math.pow((targetPosition - getPosition())/1000, 3);
+    //Add the minimum acceleration
+    speed += speed>0?MIN_ACCEL:-MIN_ACCEL;
+
+    speed = Math.max(Math.min(speed, 1), -1)/2;
     if(targetPosition==POSITION_DOWN && getPosition()<POSITION_UP)
       speed /= 5;
     RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, -speed);
