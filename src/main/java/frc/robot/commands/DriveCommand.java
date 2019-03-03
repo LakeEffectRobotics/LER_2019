@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class DriveCommand extends Command {
 
-  final double DEADZONE = 0.1;
+  final double DEADZONE = 0.025;
 
   public DriveCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -36,10 +36,13 @@ public class DriveCommand extends Command {
     if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
     if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
     if(Robot.oi.l_joy.getRawButton(2)){
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/10, Math.pow(rSpeed, 3)/10);
+      Robot.drivetrain.drive(-Math.pow(lSpeed, 3)/4, -Math.pow(rSpeed, 3)/4);
+    }
+    else if (Robot.oi.l_joy.getRawButton(1)){
+      Robot.drivetrain.drive(Math.pow(lSpeed, 3)*0.75, Math.pow(rSpeed, 3)*0.75);
     }
     else{
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/2, Math.pow(rSpeed, 3)/2);
+      Robot.drivetrain.drive(-Math.pow(lSpeed, 3)*0.75, -Math.pow(rSpeed, 3)*0.75);
     }
   }
 

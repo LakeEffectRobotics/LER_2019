@@ -21,14 +21,12 @@ public class IntakeArm extends Subsystem {
   // here. Call these from Commands.
 
   //TODO: Set positions
-  public static final double POSITION_MAX = 3507;
-  public static final double POSITION_UP = 3072;
-  public static final double POSITION_DOWN = 2021;
+  public static final double POSITION_MAX = -487;
+  public static final double POSITION_UP = -371;
+  public static final double POSITION_DOWN = -114;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
-  public double targetPosition;
-  //**The minimum acceleration, used when at close range */
-  public static final double MIN_ACCEL = 0.1;
+  public double targetPosition=POSITION_UP;
   
 
   @Override
@@ -39,7 +37,7 @@ public class IntakeArm extends Subsystem {
   }
 
   public void init(){
-    if(getPosition() < POSITION_MID){
+    if(getPosition() > POSITION_MID){
       setTargetPosition(getPosition());
     }
     else{
@@ -48,26 +46,25 @@ public class IntakeArm extends Subsystem {
   }
 
   public void setTargetPosition(double position){
-    if(position > POSITION_MAX) position=POSITION_MAX;
-    if(position < POSITION_DOWN) position=POSITION_DOWN;
+    if(position < POSITION_MAX) {  // sensor values are negative 
+      position=POSITION_MAX;
+    }
+    if(position > POSITION_DOWN) {  // sensor values are negative
+      position=POSITION_DOWN;
+    }
+    if (position!=POSITION_DOWN) {
+      RobotMap.intakeArmTalon.config_kP(0, 3.0, 0);
+      RobotMap.intakeArmTalon.config_kD(0, 0.2, 0);
+      RobotMap.intakeArmTalon.config_kI(0, 0.000, 0);
+    } else {
+      RobotMap.intakeArmTalon.config_kP(0, 0.5, 0);
+    }
     targetPosition = position; 
-  }
-
-  public void drive(){
-    double speed = Math.pow((targetPosition - getPosition())/1000, 3);
-    //Add the minimum acceleration
-    speed += speed>0?MIN_ACCEL:-MIN_ACCEL;
-
-    speed = Math.max(Math.min(speed, 1), -1)/2;
-    if(targetPosition==POSITION_DOWN && getPosition()<POSITION_UP)
-      speed /= 5;
-    RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, -speed);
-    // System.out.println("Speed: "+speed+"\tTarget: "+targetPosition+"\tCurrent"+RobotMap.intakePot.getValue());
-
+    RobotMap.intakeArmTalon.set(ControlMode.Position, position);
   }
 
   public double getPosition(){
-    return(RobotMap.intakePot.getValue());
+    return(RobotMap.intakeArmTalon.getSelectedSensorPosition());
   }
 
   public double getTargetPosition(){

@@ -10,8 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.GripOuttake;
 import frc.robot.commands.HoldOuttake;
 import frc.robot.commands.LockDriveCommand;
+import frc.robot.commands.StraightGyroDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
 // import frc.robot.commands.instant.IntakeOpenCommand;
@@ -36,6 +38,8 @@ public class OI {
 	final int TOGGLE_SHAWN_DRIVE = 1;
 	final int HOLD_SHAWN_DRIVE = 2;
 	final int LOCK_DRIVE = 3;
+	final int HOLD_GYRO = 1;
+
 	// -- final int BUTTON_NAME = number;
 
 	// left joystick buttons
@@ -50,6 +54,8 @@ public class OI {
 	
 	// can be changed to driver's preferences
 	public Button toggleShawnDriveButton = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
+	public Button gyroDriveHold = new JoystickButton(r_joy, HOLD_GYRO);
+
 	//Lift controls
 	public Button rStickLift = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_Y);
 	
@@ -96,19 +102,23 @@ public class OI {
 		//Initialize event handling
 
 		//Joystick Buttons
-		toggleShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.TOGGLE));
+		// toggleShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.TOGGLE));
 		holdShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.ON));
 		holdShawnDriveButton.whenReleased(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.OFF));
 		lockDriveButton.whileHeld(new LockDriveCommand());
+		gyroDriveHold.whileHeld(new StraightGyroDriveCommand());
 
 		//XBox Buttons
+		//stepUpButton.whenPressed(new GripOuttake());
 		stepUpButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.UP));
 		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
 		intakeHeightButton.whenPressed(new ElevatorToIntakeHeight());
 		toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
-		leftOuttake.whileHeld(new HoldOuttake(Outtake.LEFT));
-		rightOuttake.whileHeld(new HoldOuttake(Outtake.RIGHT));
+		leftOuttake.whenPressed(new HoldOuttake(Outtake.LEFT,Outtake.L_OUT));
+		leftOuttake.whenReleased(new HoldOuttake(Outtake.LEFT,Outtake.L_IN));
+		rightOuttake.whenPressed(new HoldOuttake (Outtake.RIGHT,Outtake.R_OUT));
+		rightOuttake.whenReleased(new HoldOuttake (Outtake.RIGHT,Outtake.R_IN));
 		
 		// -- buttonName.whenHeld(new Command())
 	}

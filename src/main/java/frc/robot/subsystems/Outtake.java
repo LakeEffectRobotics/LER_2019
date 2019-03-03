@@ -17,12 +17,12 @@ public class Outtake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public static double L_GRIP = 0.52756;
-  public static double L_IN = 0.59337;
-  public static double L_OUT = 1;
-  public static double R_GRIP = 0.5700;
-  public static double R_IN = 0.5465;
-  public static double R_OUT = 0;
+  public static double L_GRIP = 0;
+  public static double L_IN = 0;
+  public static double L_OUT = 0.58;
+  public static double R_GRIP = 1;
+  public static double R_IN = 1;
+  public static double R_OUT = 0.4;
 
   public static int RIGHT = 0;
   public static int LEFT = 1;
@@ -37,14 +37,14 @@ public class Outtake extends Subsystem {
   }
 
   public void toggleSide(int side){
-    System.out.println("TOGGLE");
+    // System.out.println("TOGGLE");
     if(side == LEFT){
       if(targetL == L_IN)
         targetL = L_OUT;
       else
         targetL = L_IN;
       RobotMap.leftServo.set(targetL);
-      System.out.println("LEFT "+targetL);
+      // System.out.println("LEFT "+targetL);
     }
 
     if(side == RIGHT){
@@ -53,7 +53,7 @@ public class Outtake extends Subsystem {
       else
         targetR = R_IN;
       RobotMap.rightServo.set(targetR);
-      System.out.println("RIGHT "+targetR);
+      // System.out.println("RIGHT "+targetR);
     }
   }
 
@@ -63,11 +63,13 @@ public class Outtake extends Subsystem {
     if(side == LEFT){
       targetL = target;
       RobotMap.leftServo.set(targetL);
+      // System.out.println("LEFT"+targetL);
     }
     
-    if(side == LEFT){
+    if(side == RIGHT){
       targetR = target;
       RobotMap.rightServo.set(targetR);
+      // System.out.println("RIGHT"+targetR);
     }
   }
 

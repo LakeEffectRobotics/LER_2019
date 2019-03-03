@@ -7,11 +7,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.revrobotics.ControlType;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -36,6 +38,10 @@ public class Robot extends TimedRobot {
 	
 	public void robotPeriodic() {
 		//Called periodically, use to interface with dashboard
+		SmartDashboard.putBoolean("Left Line Detector", RobotMap.leftTapeSensor1.isOnTape());
+		// SmartDashboard.putBoolean("Right Line Detector", RobotMap.rightTapeSensor1.isOnTape());
+
+		System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 	}
 
 	public void enabledInit() {
@@ -49,8 +55,9 @@ public class Robot extends TimedRobot {
 		RobotMap.init();
 		gyro.calibrate();
 		lights.setBoth(Lights.Colour.PURPLE);
+		intakeArm.init();
 		//Setup dashboard
-		CameraServer.getInstance().startAutomaticCapture();
+		// CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	@Override
@@ -62,7 +69,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
@@ -100,6 +107,14 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
+
+		// if(RobotMap.leftTapeSensor1.get()){
+		// 	Robot.oi.xbox.setRumble(RumbleType.kLeftRumble, 1);
+		// }
+		// if(RobotMap.rightTapeSensor1.get()){
+		// 	Robot.oi.xbox.setRumble(RumbleType.kRightRumble, 1);
+		// }
+		
 		// System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
@@ -112,10 +127,11 @@ public class Robot extends TimedRobot {
 //0.5465,0.4078,
 	@Override
 	public void testPeriodic() {
-		if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > 0.1)
-			d += Robot.oi.xbox.getJoyLeftY()/200;
-		System.out.println(d);
-		RobotMap.rightServo.set(d);
-		// System.out.println(RobotMap.intakePot.getValue());
+		// if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > 0.1)
+		// 	d += Robot.oi.xbox.getJoyLeftY()/200;
+		// System.out.println(d);
+		// RobotMap.rightServo.set(d);
+		RobotMap.intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
 	}
 }

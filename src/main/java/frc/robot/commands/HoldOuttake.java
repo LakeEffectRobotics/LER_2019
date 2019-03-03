@@ -15,23 +15,25 @@ import frc.robot.Robot;
 public class HoldOuttake extends Command {
 
   int side;
+  double position;
 
   /**
    * Add your docs here.
    */
-  public HoldOuttake(int s) {
+  public HoldOuttake(int s, double pos) {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.outtake);
     side = s;
+    position=pos;
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    Robot.outtake.toggleSide(side);
-    System.out.println("OUTTAKE "+side);
+    Robot.outtake.setSide(side,position);
+    // System.out.println("OUTTAKE "+side);
   }
 
   @Override
@@ -41,7 +43,7 @@ public class HoldOuttake extends Command {
 
   @Override
   protected void end(){
-    Robot.outtake.toggleSide(side);
+    //Robot.outtake.toggleSide(side);
   }
 
 }

@@ -37,9 +37,9 @@ public class LockDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.print(RobotMap.leftDriveSpark1.getEncoder().getPosition());
-    System.out.print("\t");
-    System.out.println(RobotMap.rightDriveSpark1.getEncoder().getPosition());
+    // System.out.print(RobotMap.leftDriveSpark1.getEncoder().getPosition());
+    // System.out.print("\t");
+    // System.out.println(RobotMap.rightDriveSpark1.getEncoder().getPosition());
 
     //TODO: Allow the driver to move the bot
 

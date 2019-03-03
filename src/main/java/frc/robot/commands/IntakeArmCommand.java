@@ -21,6 +21,7 @@ public class IntakeArmCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    //Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -33,7 +34,6 @@ public class IntakeArmCommand extends Command {
     if(Robot.oi.xbox.getDpadUp()){
       Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_MAX);
     }
-    Robot.intakeArm.drive();
   }
 
   // Make this return true when this Command no longer needs to run execute()

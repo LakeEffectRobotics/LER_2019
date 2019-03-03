@@ -27,19 +27,20 @@ public class Elevator extends Subsystem {
   }
 
   //TODO: Set heights
-  public static final double GROUND_HEIGHT = 0.5;
-  public static final double MAX_HEIGHT = 45;
+  public static final double GROUND_HEIGHT = 0;
+  public static final double MAX_HEIGHT = 51;
   
-  public static final double LOW_HEIGHT = 15;
-  public static final double MID_HEIGHT = 25;
-  public static final double HIGH_HEIGHT = 35;
+  public static final double LOW_HEIGHT = 8.857;
+  public static final double CS_HEIGHT = 19;
+  public static final double MID_HEIGHT = 30.5;
+  public static final double HIGH_HEIGHT = 49.5;
 
-  public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
+  public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CS_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
   public static final double HATCH_OFFSET = -5;
   public static final double HATCH_RELEASE_OFFSET = -5;
 
-  public static final double acceleration = 0.75;
+  public static final double acceleration = 0.375;
 
   double targetHeight = GROUND_HEIGHT;
   public Mode currentMode = Mode.CARGO;
@@ -75,6 +76,7 @@ public class Elevator extends Subsystem {
       if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
     }
 
+    // System.out.println(target + "\t" + src);
     RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
   }
 

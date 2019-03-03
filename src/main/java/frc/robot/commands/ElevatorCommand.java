@@ -29,11 +29,12 @@ public class ElevatorCommand extends Command {
   }
 
   // Called repeatedly when this Command is scheduled to run
+  
   @Override
   protected void execute() {
     //Manual control using left stick
     if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > DEADZONE){
-      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()+Robot.oi.xbox.getJoyLeftY()/2, 0, "Joy");
+      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()-Robot.oi.xbox.getJoyLeftY()*0.8, 0, "Joy");
     }
 
     
