@@ -10,6 +10,9 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.revrobotics.ControlType;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,12 +39,19 @@ public class Robot extends TimedRobot {
 	public static final Elevator elevator = new Elevator();
 	public static final Outtake outtake = new Outtake();
 	
+	public static UsbCamera jevois;
+
 	public void robotPeriodic() {
 		//Called periodically, use to interface with dashboard
 		SmartDashboard.putBoolean("Left Line Detector", RobotMap.leftTapeSensor1.isOnTape());
-		// SmartDashboard.putBoolean("Right Line Detector", RobotMap.rightTapeSensor1.isOnTape());
-
-		System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
+		SmartDashboard.putBoolean("Right Line Detector", RobotMap.rightTapeSensor1.isOnTape());
+		SmartDashboard.putNumber("Left Encoder", RobotMap.leftDriveSpark1.getEncoder().getPosition());
+		SmartDashboard.putNumber("Right Encoder", RobotMap.rightDriveSpark1.getEncoder().getPosition());
+		SmartDashboard.putNumber("Elevator Encoder", RobotMap.elevatorSpark1.getEncoder().getPosition());
+		SmartDashboard.putNumber("Intake Angle", RobotMap.intakePot.getVoltage());
+		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
+		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
+		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 	}
 
 	public void enabledInit() {
@@ -57,7 +67,12 @@ public class Robot extends TimedRobot {
 		lights.setBoth(Lights.Colour.PURPLE);
 		intakeArm.init();
 		//Setup dashboard
-		// CameraServer.getInstance().startAutomaticCapture();
+
+		//Setup jevois feed
+		jevois = CameraServer.getInstance().startAutomaticCapture(0);
+		jevois.setPixelFormat(PixelFormat.kRGB565);
+		jevois.setResolution(320, 240);
+		jevois.setFPS(30);
 	}
 
 	@Override
@@ -119,8 +134,8 @@ public class Robot extends TimedRobot {
 	}
 
 	//3653,3967
-	double d = 0.5;
-	// AnalogInput a = new AnalogInput(0);
+	double l = 0.5;
+	double r = 0.5;
 
 	public void testInit() {
 	}
@@ -128,9 +143,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		// if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > 0.1)
-		// 	d += Robot.oi.xbox.getJoyLeftY()/200;
-		// System.out.println(d);
-		// RobotMap.rightServo.set(d);
+		// 	l += Robot.oi.xbox.getJoyLeftY()/200;
+		// RobotMap.leftServo.set(l);
+		// if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.1)
+		// 	r += Robot.oi.xbox.getJoyRightY()/200;
+		// RobotMap.rightServo.set(r);
+		
+		// System.out.println(l+"\t"+r);
 		RobotMap.intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
 	}

@@ -20,7 +20,9 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
 import frc.robot.subsystems.Climber;
@@ -119,7 +121,9 @@ public class RobotMap {
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	// public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
 	public static final AnalogInput intakePot = new AnalogInput(INTAKE_POT);
+	public static final SerialPort jevoisSerial = new SerialPort(15200, Port.kUSB);
 
+	
 	//LED lights
 	public static Relay leftRed = new Relay(LEFT_RED_RELAY, Relay.Direction.kForward);
 	public static Relay leftBlue = new Relay(LEFT_BLUE_RELAY, Relay.Direction.kForward);
@@ -149,7 +153,7 @@ public class RobotMap {
 		leftDriveSpark3.follow(leftDriveSpark1);
 
 		leftDriveSpark1.setOpenLoopRampRate(0.5);
-		rightDriveSpark1.setOpenLoopRampRate(0.5);
+		rightDriveSpark1.setOpenLoopRampRate(0.5);  
 
 		intakeArmTalon.configOpenloopRamp(0.1);
 		RobotMap.intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
