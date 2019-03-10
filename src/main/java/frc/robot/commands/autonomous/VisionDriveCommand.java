@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class VisionDrive extends Command {
+public class VisionDriveCommand extends Command {
 
   double lSpeed, rSpeed;
   int offset = 0;
@@ -25,7 +25,7 @@ public class VisionDrive extends Command {
   final double MAX_DIFF = 20.0;
   final double MULTIPLIER = 0.25;
 
-  public VisionDrive() {
+  public VisionDriveCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);

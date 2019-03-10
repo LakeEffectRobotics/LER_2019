@@ -14,6 +14,7 @@ import frc.robot.commands.GripOuttake;
 import frc.robot.commands.HoldOuttake;
 import frc.robot.commands.LockDriveCommand;
 import frc.robot.commands.StraightGyroDriveCommand;
+import frc.robot.commands.autonomous.VisionDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
 // import frc.robot.commands.instant.IntakeOpenCommand;
@@ -43,6 +44,7 @@ public class OI {
 	// -- final int BUTTON_NAME = number;
 
 	// left joystick buttons
+	final int VISION_DRIVE = 3;
 
 
 	// controller initialization
@@ -73,6 +75,7 @@ public class OI {
 	public Button holdShawnDriveButton = new JoystickButton(r_joy, HOLD_SHAWN_DRIVE);
 
 	public Button lockDriveButton = new JoystickButton(r_joy, LOCK_DRIVE);
+	public Button visionDriveButton = new JoystickButton(l_joy, VISION_DRIVE);
 	//XBox Button initialization
 
 	//Start and Back
@@ -107,6 +110,7 @@ public class OI {
 		holdShawnDriveButton.whenReleased(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.OFF));
 		lockDriveButton.whileHeld(new LockDriveCommand());
 		gyroDriveHold.whileHeld(new StraightGyroDriveCommand());
+		visionDriveButton.whileHeld(new VisionDriveCommand());
 
 		//XBox Buttons
 		//stepUpButton.whenPressed(new GripOuttake());
