@@ -13,7 +13,9 @@ import com.revrobotics.ControlType;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard
@@ -25,6 +27,7 @@ import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeRoller;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Outtake;
+import frc.robot.subsystems.Lights.Colour;
 
 public class Robot extends TimedRobot {
 
@@ -48,7 +51,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder", RobotMap.leftDriveSpark1.getEncoder().getPosition());
 		SmartDashboard.putNumber("Right Encoder", RobotMap.rightDriveSpark1.getEncoder().getPosition());
 		SmartDashboard.putNumber("Elevator Encoder", RobotMap.elevatorSpark1.getEncoder().getPosition());
-		SmartDashboard.putNumber("Intake Angle", RobotMap.intakePot.getVoltage());
+		SmartDashboard.putNumber("Intake Angle", RobotMap.intakeArmTalon.getSelectedSensorPosition());
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
 		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
@@ -69,10 +72,10 @@ public class Robot extends TimedRobot {
 		//Setup dashboard
 
 		//Setup jevois feed
-		jevois = CameraServer.getInstance().startAutomaticCapture(0);
-		jevois.setPixelFormat(PixelFormat.kRGB565);
-		jevois.setResolution(320, 240);
-		jevois.setFPS(30);
+		// jevois = CameraServer.getInstance().startAutomaticCapture(0);
+		// jevois.setPixelFormat(PixelFormat.kRGB565);
+		// jevois.setResolution(320, 240);
+		// jevois.setFPS(30);
 	}
 
 	@Override
@@ -150,7 +153,19 @@ public class Robot extends TimedRobot {
 		// RobotMap.rightServo.set(r);
 		
 		// System.out.println(l+"\t"+r);
-		RobotMap.intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-		System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+		// RobotMap.intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		// System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+
+		// Robot.lights.setColour(Lights.LEFT, Lights.Colour.RED);
+		// Robot.lights.setColour(Lights.RIGHT, Lights.Colour.GREEN);
+
+		// RobotMap.leftLED_PB.set(Value.kOn);
+		// RobotMap.leftLED_GB.set(Value.kForward);
+
+		// RobotMap.rightLED_PB.set(Value.kForward);
+		// RobotMap.rightLED_GR.set(Value.kOn);
+
+		Robot.lights.setColour(Lights.LEFT, Colour.PURPLE);
+		Robot.lights.setColour(Lights.RIGHT, Colour.PURPLE);
 	}
 }

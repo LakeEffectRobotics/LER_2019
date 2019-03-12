@@ -38,7 +38,7 @@ public class Elevator extends Subsystem {
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CS_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
   public static final double HATCH_OFFSET = -5;
-  public static final double HATCH_RELEASE_OFFSET = -5;
+  public static final double HATCH_RELEASE_OFFSET = -3;
 
   public static final double acceleration = 0.375;
 

@@ -21,9 +21,16 @@ public class IntakeArm extends Subsystem {
   // here. Call these from Commands.
 
   //TODO: Set positions
-  public static final double POSITION_MAX = -487;
-  public static final double POSITION_UP = -371;
-  public static final double POSITION_DOWN = -114;
+  // Competition bot:
+  /*public static final double POSITION_MAX = -220;
+  public static final double POSITION_UP = -120;
+  public static final double POSITION_DOWN = -5;
+  public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;*/
+
+  // Twin Bot:
+  public static final double POSITION_MAX = -205;
+  public static final double POSITION_UP = -138;
+  public static final double POSITION_DOWN = -4;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
   public double targetPosition=POSITION_UP;

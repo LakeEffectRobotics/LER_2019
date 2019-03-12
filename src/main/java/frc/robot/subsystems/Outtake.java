@@ -17,12 +17,12 @@ public class Outtake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public static double L_GRIP = 0;
-  public static double L_IN = 0;
-  public static double L_OUT = 0.58;
-  public static double R_GRIP = 1;
-  public static double R_IN = 1;
-  public static double R_OUT = 0.4;
+  public static double L_GRIP = 0.6;
+  public static double L_IN = 0.51;
+  public static double L_OUT = 0;
+  public static double R_GRIP = 0.5;
+  public static double R_IN = 0.41;
+  public static double R_OUT = 1;
 
   public static int RIGHT = 0;
   public static int LEFT = 1;

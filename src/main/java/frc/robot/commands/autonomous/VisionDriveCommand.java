@@ -39,7 +39,7 @@ public class VisionDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    int available = RobotMap.jevoisSerial.getBytesReceived();
+    int available =0;// RobotMap.jevoisSerial.getBytesReceived();
     // Update collector
     int sum = available;
     for (int i = 0; i < collector.length - 1; i++) {
@@ -55,7 +55,7 @@ public class VisionDriveCommand extends Command {
 
     // Parse new offset
     if (available > 0) {
-      String[] in = RobotMap.jevoisSerial.readString().split("\n");
+      String[] in = {""};//RobotMap.jevoisSerial.readString().split("\n");
       System.out.println(in[0]);
       String t = in[in.length - 1];
       if (t.length() > 1) {

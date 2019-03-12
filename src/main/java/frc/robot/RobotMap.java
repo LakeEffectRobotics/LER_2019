@@ -9,6 +9,8 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -77,7 +79,7 @@ public class RobotMap {
 	final static int INTAKE_ARM_VICTOR = 20;
 	final static int INTAKE_ROLLER_TALON = 12;
 	// final static int INTAKE_LIMIT_SWITCH = 4;
-	final static int INTAKE_POT = 2;
+	//final static int INTAKE_POT = 2;
 
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
@@ -87,10 +89,10 @@ public class RobotMap {
 
 	//LED pins
 	//TODO set proper pins
-	private static final int LEFT_RED_RELAY = 0;
-	private static final int LEFT_BLUE_RELAY = 1;
-	private static final int RIGHT_RED_RELAY = 2;
-	private static final int RIGHT_BLUE_RELAY = 3;
+	private static final int LEFT_PB_RELAY = 0;
+	private static final int LEFT_GR_RELAY = 1;
+	private static final int RIGHT_PB_RELAY = 2;
+	private static final int RIGHT_GR_RELAY = 3;
 
 	/**
 	 * Creating motor controller objects
@@ -120,15 +122,15 @@ public class RobotMap {
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	// public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
-	public static final AnalogInput intakePot = new AnalogInput(INTAKE_POT);
-	public static final SerialPort jevoisSerial = new SerialPort(15200, Port.kUSB);
+	//public static final AnalogInput intakePot = new AnalogInput(INTAKE_POT);
+	// public static final SerialPort jevoisSerial = new SerialPort(15200, Port.kUSB);
 
 	
 	//LED lights
-	public static Relay leftRed = new Relay(LEFT_RED_RELAY, Relay.Direction.kForward);
-	public static Relay leftBlue = new Relay(LEFT_BLUE_RELAY, Relay.Direction.kForward);
-	public static Relay rightRed = new Relay(RIGHT_RED_RELAY, Relay.Direction.kForward);
-	public static Relay rightBlue = new Relay(RIGHT_BLUE_RELAY, Relay.Direction.kForward);
+	public static Relay leftLED_PB = new Relay(LEFT_PB_RELAY, Relay.Direction.kBoth);
+	public static Relay leftLED_GB = new Relay(LEFT_GR_RELAY, Relay.Direction.kBoth);
+	public static Relay rightLED_PB = new Relay(RIGHT_PB_RELAY, Relay.Direction.kBoth);
+	public static Relay rightLED_GR = new Relay(RIGHT_GR_RELAY, Relay.Direction.kBoth);
 
 	/**
 	 * Creating sensor objects
@@ -156,11 +158,12 @@ public class RobotMap {
 		rightDriveSpark1.setOpenLoopRampRate(0.5);  
 
 		intakeArmTalon.configOpenloopRamp(0.1);
-		RobotMap.intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-		RobotMap.intakeArmTalon.setSensorPhase(true);
-		RobotMap.intakeArmTalon.config_kP(0, 1.0, 0);
-		RobotMap.intakeArmTalon.config_kI(0, 0.0, 0);
-		RobotMap.intakeArmTalon.config_kD(0, 0.001, 0);
+		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		intakeArmTalon.setSensorPhase(true);
+		intakeArmTalon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector,LimitSwitchNormal.NormallyOpen);
+		intakeArmTalon.config_kP(0, 1.0, 0);
+		intakeArmTalon.config_kI(0, 0.0, 0);
+		intakeArmTalon.config_kD(0, 0.001, 0);
 		intakeArmVictor.follow(intakeArmTalon);
 
 		elevatorSpark2.follow(elevatorSpark1, true);
@@ -174,5 +177,10 @@ public class RobotMap {
 
 		// climberTalon2.follow(climberTalon1);
 
+		//LEDs off by default:
+		leftLED_PB.set(Relay.Value.kOff);
+		leftLED_GB.set(Relay.Value.kOff);
+		rightLED_PB.set(Relay.Value.kOff);
+		rightLED_GR.set(Relay.Value.kOff);
 	}
 }

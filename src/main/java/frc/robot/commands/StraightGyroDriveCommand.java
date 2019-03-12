@@ -22,8 +22,8 @@ public class StraightGyroDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double l = -Robot.oi.l_joy.getY();
-    	double r = -Robot.oi.r_joy.getY();
+    	double l = Robot.oi.l_joy.getY();
+    	double r = Robot.oi.r_joy.getY();
     	
     	l = Math.abs(l) > Math.abs(r) ? l : r;
     	r = l;

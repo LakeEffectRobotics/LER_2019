@@ -94,8 +94,8 @@ public class OI {
 	public Button intakeButton = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
 
 	//D-pad
-	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
-	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
+	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
+	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
 	
 
 
