@@ -21,13 +21,19 @@ public class IntakeArm extends Subsystem {
   // here. Call these from Commands.
 
   //TODO: Set positions
-  public static final double POSITION_MAX = 3967;
-  public static final double POSITION_UP = 3620;
-  public static final double POSITION_DOWN = 2577;
+  // Competition bot:
+  /*public static final double POSITION_MAX = -220;
+  public static final double POSITION_UP = -120;
+  public static final double POSITION_DOWN = -5;
+  public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;*/
+
+  // Twin Bot:
+  public static final double POSITION_MAX = -205;
+  public static final double POSITION_UP = -138;
+  public static final double POSITION_DOWN = -4;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
-  public double targetPosition;
-  public static final double ACCEL = 1;
+  public double targetPosition=POSITION_UP;
   
 
   @Override
@@ -37,19 +43,31 @@ public class IntakeArm extends Subsystem {
     setDefaultCommand(new IntakeArmCommand());
   }
 
-  public void setTargetPosition(double position){
-    if(position > POSITION_MAX) position=POSITION_MAX;
-    if(position < POSITION_DOWN) position=POSITION_DOWN;
-    targetPosition = position; 
+  public void init(){
+    if(getPosition() > POSITION_MID){
+      setTargetPosition(getPosition());
+    }
+    else{
+      setTargetPosition(POSITION_UP);
+    }
   }
 
-  public void drive(){
-    double speed = Math.max(Math.min((targetPosition - getPosition())/1000, 1), -1)/2;
-    if(targetPosition==POSITION_DOWN && getPosition()<POSITION_MID)
-      speed /= 10;
-    RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, speed);
-    // System.out.println("Speed: "+(targetPosition - RobotMap.intakePot.getValue())/1000+"\tTarget: "+targetPosition+"\tCurrent"+RobotMap.intakePot.getValue());
-
+  public void setTargetPosition(double position){
+    if(position < POSITION_MAX) {  // sensor values are negative 
+      position=POSITION_MAX;
+    }
+    if(position > POSITION_DOWN) {  // sensor values are negative
+      position=POSITION_DOWN;
+    }
+    if (position!=POSITION_DOWN) {
+      RobotMap.intakeArmTalon.config_kP(0, 3.0, 0);
+      RobotMap.intakeArmTalon.config_kD(0, 0.2, 0);
+      RobotMap.intakeArmTalon.config_kI(0, 0.000, 0);
+    } else {
+      RobotMap.intakeArmTalon.config_kP(0, 0.5, 0);
+    }
+    targetPosition = position; 
+    RobotMap.intakeArmTalon.set(ControlMode.Position, position);
   }
 
   public double getPosition(){

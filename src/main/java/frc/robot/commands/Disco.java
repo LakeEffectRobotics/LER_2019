@@ -7,43 +7,47 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.ControlType;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.subsystems.Lights;
 
-public class LockDriveCommand extends Command {
-  public LockDriveCommand() {
+public class Disco extends Command {
+  public Disco() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.drivetrain);
+    requires(Robot.lights);
   }
+
+  byte leftColour = 0b001;
+  byte rightColour = 0b001;
+  final byte RED = 0b100;
+  final byte BLUE = 0b010;
+  final byte GREEN = 0b001;
+  int delay = 1;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.leftDriveSpark1.getPIDController().setP(1);
-    RobotMap.leftDriveSpark1.getPIDController().setOutputRange(-1, 1);
-    RobotMap.leftDriveSpark1.getPIDController().setReference(RobotMap.leftDriveSpark1.getEncoder().getPosition(), ControlType.kPosition);
-    
-    
-    RobotMap.rightDriveSpark1.getPIDController().setP(1);
-    RobotMap.rightDriveSpark1.getPIDController().setOutputRange(-1, 1);
-    RobotMap.rightDriveSpark1.getPIDController().setReference(RobotMap.rightDriveSpark1.getEncoder().getPosition(), ControlType.kPosition);
-   
+    Robot.lights.setColour(Lights.LEFT, (leftColour&RED)==RED, (leftColour&GREEN)==GREEN, (leftColour&BLUE)==BLUE);
+    Robot.lights.setColour(Lights.RIGHT, (rightColour&RED)==RED, (rightColour&GREEN)==GREEN, (rightColour&BLUE)==BLUE);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // System.out.print(RobotMap.leftDriveSpark1.getEncoder().getPosition());
-    // System.out.print("\t");
-    // System.out.println(RobotMap.rightDriveSpark1.getEncoder().getPosition());
+    if(delay < 7){
+      delay++;
+      return;
+    } 
+    delay = 0;
+    leftColour += 0b001;
+    if(leftColour > 0b111) leftColour = 0b001;
+    rightColour -= 0b001;
+    if(rightColour == 0b000) rightColour = 0b111;
+    
 
-    //TODO: Allow the driver to move the bot
-
-
+    Robot.lights.setColour(Lights.LEFT, (leftColour&RED)==RED, (leftColour&GREEN)==GREEN, (leftColour&BLUE)==BLUE);
+    Robot.lights.setColour(Lights.RIGHT, (rightColour&RED)==RED, (rightColour&GREEN)==GREEN, (rightColour&BLUE)==BLUE);
   }
 
   // Make this return true when this Command no longer needs to run execute()

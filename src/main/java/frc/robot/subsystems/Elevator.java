@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ElevatorCommand;
 
@@ -26,17 +27,18 @@ public class Elevator extends Subsystem {
   }
 
   //TODO: Set heights
-  public static final double GROUND_HEIGHT = 0.5;
-  public static final double MAX_HEIGHT = 45;
+  public static final double GROUND_HEIGHT = 0;
+  public static final double MAX_HEIGHT = 51;
   
-  public static final double LOW_HEIGHT = 15;
-  public static final double MID_HEIGHT = 25;
-  public static final double HIGH_HEIGHT = 35;
+  public static final double LOW_HEIGHT = 8.857;
+  public static final double CS_HEIGHT = 22;
+  public static final double MID_HEIGHT = 30.5;
+  public static final double HIGH_HEIGHT = 49.5;
 
-  public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
+  public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CS_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
   public static final double HATCH_OFFSET = -5;
-  public static final double HATCH_RELEASE_OFFSET = -5;
+  public static final double HATCH_RELEASE_OFFSET = -3;
 
   public static final double acceleration = 0.75;
 
@@ -59,21 +61,22 @@ public class Elevator extends Subsystem {
   }
 
   public void setTargetHeight(double target, double offset, String src){
-    if(target > MAX_HEIGHT){
-      target=MAX_HEIGHT;
-    }
-    if(target < GROUND_HEIGHT){
-      System.out.println(target+"is less than"+GROUND_HEIGHT);
-      target = GROUND_HEIGHT;
+    if(!Robot.oi.xbox.getButtonBack()){ // Override limits
+      if(target > MAX_HEIGHT) target=MAX_HEIGHT;
+      if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
     }
     targetHeight = target;  
 
     //Add offset here so it doesn't affect the saved target
     target += offset;
     if(currentMode == Mode.HATCH) target += HATCH_OFFSET;
-    if(target > MAX_HEIGHT) target=MAX_HEIGHT;
-    if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
+    
+    if(!Robot.oi.xbox.getButtonBack()){ // Override limits
+      if(target > MAX_HEIGHT) target=MAX_HEIGHT;
+      if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
+    }
 
+    // System.out.println(target + "\t" + src);
     RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
   }
 

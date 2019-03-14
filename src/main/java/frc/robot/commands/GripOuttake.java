@@ -4,38 +4,44 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+package frc.robot.commands;
 
-package frc.robot.commands.instant;
-
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.IntakeArm;
+import frc.robot.subsystems.Outtake;
 
 /**
  * Add your docs here.
  */
-public class ToggleIntakeArm extends InstantCommand {
+public class GripOuttake extends Command {
+
+  int side;
+
   /**
    * Add your docs here.
    */
-  public ToggleIntakeArm() {
+  public GripOuttake() {
     super();
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.intakeArm);
+    // eg. requires(chassis);
+    requires(Robot.outtake);
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    double currentPos = Robot.intakeArm.getTargetPosition();
-    
-    if(currentPos < IntakeArm.POSITION_UP) // If it's past up
-      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
-    else if(currentPos < IntakeArm.POSITION_MID) // If it's between half and up
-      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
-    else if(currentPos > IntakeArm.POSITION_MID) // If it's between half and down
-      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
-    
+    Robot.outtake.setSide(Outtake.LEFT,Outtake.L_GRIP);
+    Robot.outtake.setSide(Outtake.RIGHT,Outtake.R_GRIP);
+    // System.out.println("OUTTAKE "+side);
+  }
+
+  @Override
+  protected boolean isFinished(){
+    return false;
+  }
+
+  @Override
+  protected void end(){
   }
 
 }

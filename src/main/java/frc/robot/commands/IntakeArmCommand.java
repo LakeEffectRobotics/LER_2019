@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.IntakeArm;
 
 public class IntakeArmCommand extends Command {
@@ -21,6 +22,7 @@ public class IntakeArmCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    //Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -33,7 +35,9 @@ public class IntakeArmCommand extends Command {
     if(Robot.oi.xbox.getDpadUp()){
       Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_MAX);
     }
-    Robot.intakeArm.drive();
+
+    if(RobotMap.intakeLimitSwitch.get() && Robot.oi.xbox.getTriggerLeft() > 0.1)
+      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
   }
 
   // Make this return true when this Command no longer needs to run execute()

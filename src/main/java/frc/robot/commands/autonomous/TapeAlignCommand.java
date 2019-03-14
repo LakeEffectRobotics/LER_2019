@@ -66,9 +66,9 @@ public class TapeAlignCommand extends Command {
       speed *= (distanceLeft / SENSOR_SPACING);
       speed = Tools.forceMaximum(speed, MIN_SPEED);
       Robot.drivetrain.drive(speed, speed);
-      if (centeredOnTape() || -distanceLeft >= FINISHED_TOLERANCE) {
-        finished = true;
-      }
+      // if (centeredOnTape() || -distanceLeft >= FINISHED_TOLERANCE) {
+      //   finished = true;
+      // }
     }
   }
 
@@ -89,7 +89,7 @@ public class TapeAlignCommand extends Command {
   protected void interrupted() {
   }
 
-  protected boolean centeredOnTape() {
-    return (isLeftSide && RobotMap.leftTapeSensor2.isOnTape()) || (!isLeftSide && RobotMap.rightTapeSensor2.isOnTape());
-  }
+  // protected boolean centeredOnTape() {
+  //   // return (isLeftSide && RobotMap.leftTapeSensor2.isOnTape()) || (!isLeftSide && RobotMap.rightTapeSensor2.isOnTape());
+  // }
 }

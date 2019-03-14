@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class DriveCommand extends Command {
 
-  final double DEADZONE = 0.1;
+  final double DEADZONE = 0.025;
 
   public DriveCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -32,14 +32,25 @@ public class DriveCommand extends Command {
     //  Pushing the joysticks forward gives a negative Y value, whereas pushing them backward gives a positive Y value
     double lSpeed = -Robot.oi.l_joy.getY();
     double rSpeed = -Robot.oi.r_joy.getY();
+    double average = (lSpeed+rSpeed)/2;
 
     if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
     if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
+
+
+    // if sticks are close and speed reasonable, go straight
+    if(Math.abs(lSpeed-rSpeed)<0.1 && Math.abs(average)>0.25){
+      lSpeed = average;
+      rSpeed = average;
+    }
     if(Robot.oi.l_joy.getRawButton(2)){
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/10, Math.pow(rSpeed, 3)/10);
+      Robot.drivetrain.drive(-Math.pow(lSpeed, 3)/4, -Math.pow(rSpeed, 3)/4);
+    }
+    else if (Robot.oi.l_joy.getRawButton(1)){
+      Robot.drivetrain.drive(Math.pow(lSpeed, 3)*0.75, Math.pow(rSpeed, 3)*0.75);
     }
     else{
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/2, Math.pow(rSpeed, 3)/2);
+      Robot.drivetrain.drive(-Math.pow(lSpeed, 3)*0.75, -Math.pow(rSpeed, 3)*0.75);
     }
   }
 

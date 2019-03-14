@@ -76,9 +76,9 @@ public class Drivetrain extends Subsystem {
     		l = -MIN_SPEED;
 		}
 		
-    	if (Math.abs(distanceLeft) < FINISHED_TOLERANCE || ((RobotMap.leftTapeSensor2.get() || RobotMap.rightTapeSensor2.get()) && line_stop)) {
-			finished = true;
-    	}
+    	// if (Math.abs(distanceLeft) < FINISHED_TOLERANCE || ((RobotMap.leftTapeSensor2.get() || RobotMap.rightTapeSensor2.get()) && line_stop)) {
+		// 	finished = true;
+    	// }
     	
     	r = l;
     	
