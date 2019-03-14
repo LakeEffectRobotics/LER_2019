@@ -55,6 +55,13 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
+
+
+		System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
+		//If there are more than 10 bytes in the buffer, clear it
+		// if(RobotMap.jevoisSerial.getBytesReceived() > 10){
+		// 	RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
+		// }
 		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 	}
 
@@ -75,7 +82,7 @@ public class Robot extends TimedRobot {
 		//Setup dashboard
 
 		//Setup jevois feed
-		jevois = CameraServer.getInstance().startAutomaticCapture(1);
+		jevois = CameraServer.getInstance().startAutomaticCapture(0);
 		jevois.setPixelFormat(PixelFormat.kRGB565);
 		jevois.setResolution(320, 240);
 		jevois.setFPS(30);
@@ -168,9 +175,11 @@ public class Robot extends TimedRobot {
 		// RobotMap.rightLED_PB.set(Value.kForward);
 		// RobotMap.rightLED_GR.set(Value.kOn);
 
-		Robot.lights.setColour(Lights.LEFT, Colour.PURPLE);
-		Robot.lights.setColour(Lights.RIGHT, Colour.PURPLE);
+		// Robot.lights.setColour(Lights.LEFT, Colour.PURPLE);
+		// Robot.lights.setColour(Lights.RIGHT, Colour.PURPLE);
 
-		System.out.println(RobotMap.intakeLimitSwitch.get());
+		// System.out.println(RobotMap.intakeLimitSwitch.get());
+
+		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 	}
 }
