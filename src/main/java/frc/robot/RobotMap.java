@@ -17,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANPIDController.AccelStrategy;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -122,7 +123,7 @@ public class RobotMap {
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
-	public static final SerialPort jevoisSerial = new SerialPort(115200, Port.kUSB1);
+	public static SerialPort jevoisSerial;
 
 	
 	//LED lights
@@ -166,12 +167,15 @@ public class RobotMap {
 		intakeArmVictor.follow(intakeArmTalon);
 
 		elevatorSpark2.follow(elevatorSpark1, true);
-		
+
 		elevatorSpark1.getPIDController().setP(1);
 		//Down is halved to prevent damage (somewhat)
 		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration/2, Elevator.acceleration);
 		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
-		elevatorSpark1.setOpenLoopRampRate(0.5);
+		elevatorSpark1.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
+		elevatorSpark1.getPIDController().setSmartMotionMaxVelocity(2000, 0);
+		elevatorSpark1.getPIDController().setSmartMotionMaxAccel(1000, 0);
+
 		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
 		// climberTalon2.follow(climberTalon1);
@@ -181,5 +185,7 @@ public class RobotMap {
 		leftLED_GB.set(Relay.Value.kOff);
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
+
+		jevoisSerial = new SerialPort(115200, Port.kUSB);
 	}
 }

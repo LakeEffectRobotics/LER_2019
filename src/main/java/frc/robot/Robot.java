@@ -23,8 +23,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gyro;
-import frc.robot.subsystems.IntakeArm;
-import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Outtake;
 import frc.robot.subsystems.Lights.Colour;
@@ -37,8 +36,7 @@ public class Robot extends TimedRobot {
 	public static final Lights lights = new Lights();
 	public static OI oi;
 
-	public static final IntakeArm intakeArm = new IntakeArm();
-	public static final IntakeRoller intakeRoller = new IntakeRoller();
+	public static final Intake intake = new Intake();
 	public static final Elevator elevator = new Elevator();
 	public static final Outtake outtake = new Outtake();
 	
@@ -55,6 +53,15 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
+
+
+		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
+		//If there are more than 10 bytes in the buffer, clear it
+		if(RobotMap.jevoisSerial!=null){
+			if(RobotMap.jevoisSerial.getBytesReceived() > 10){
+				RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
+			}
+		}
 		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 	}
 
@@ -71,11 +78,11 @@ public class Robot extends TimedRobot {
 		RobotMap.init();
 		gyro.calibrate();
 		lights.setBoth(Lights.Colour.PURPLE);
-		intakeArm.init();
+		intake.init();
 		//Setup dashboard
 
 		//Setup jevois feed
-		jevois = CameraServer.getInstance().startAutomaticCapture(1);
+		jevois = CameraServer.getInstance().startAutomaticCapture(0);
 		jevois.setPixelFormat(PixelFormat.kRGB565);
 		jevois.setResolution(320, 240);
 		jevois.setFPS(30);
@@ -90,7 +97,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
@@ -117,7 +124,7 @@ public class Robot extends TimedRobot {
 		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(), ControlType.kPosition);
 		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
 
-		intakeArm.init();
+		intake.init();
 		outtake.setSide(Outtake.LEFT, Outtake.L_IN);
 		outtake.setSide(Outtake.RIGHT, Outtake.R_IN);
 
@@ -168,9 +175,11 @@ public class Robot extends TimedRobot {
 		// RobotMap.rightLED_PB.set(Value.kForward);
 		// RobotMap.rightLED_GR.set(Value.kOn);
 
-		Robot.lights.setColour(Lights.LEFT, Colour.PURPLE);
-		Robot.lights.setColour(Lights.RIGHT, Colour.PURPLE);
+		// Robot.lights.setColour(Lights.LEFT, Colour.PURPLE);
+		// Robot.lights.setColour(Lights.RIGHT, Colour.PURPLE);
 
-		System.out.println(RobotMap.intakeLimitSwitch.get());
+		// System.out.println(RobotMap.intakeLimitSwitch.get());
+
+		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 	}
 }

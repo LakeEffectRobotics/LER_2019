@@ -9,33 +9,27 @@ package frc.robot.commands.instant;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.IntakeArm;
+import frc.robot.subsystems.Intake;
 
 /**
  * Add your docs here.
  */
-public class ToggleIntakeArm extends InstantCommand {
+public class SetIntakeArm extends InstantCommand {
   /**
    * Add your docs here.
    */
-  public ToggleIntakeArm() {
+  double pos;
+
+  public SetIntakeArm(double pos) {
     super();
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.intakeArm);
+    requires(Robot.intake);
+    this.pos = pos;
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    double currentPos = Robot.intakeArm.getTargetPosition();
-    
-    if(currentPos < IntakeArm.POSITION_UP) // If it's past up
-      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
-    else if(currentPos < IntakeArm.POSITION_MID) // If it's between half and up
-      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
-    else if(currentPos > IntakeArm.POSITION_MID) // If it's between half and down
-      Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
-    
+    Robot.intake.setTargetPosition(pos);
   }
-
 }
