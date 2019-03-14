@@ -37,8 +37,9 @@ public class DriveCommand extends Command {
     if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
     if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
 
+
     // if sticks are close and speed reasonable, go straight
-    if(Math.abs(lSpeed-rSpeed)<0.1 && average>0.25){
+    if(Math.abs(lSpeed-rSpeed)<0.1 && Math.abs(average)>0.25){
       lSpeed = average;
       rSpeed = average;
     }

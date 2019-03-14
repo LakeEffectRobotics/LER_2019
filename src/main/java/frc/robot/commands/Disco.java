@@ -7,28 +7,47 @@
 
 package frc.robot.commands;
 
-import frc.robot.Robot;
-import frc.robot.RobotMap;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.Lights;
 
-public class IntakeRollerCommand extends Command {
-  public IntakeRollerCommand() {
+public class Disco extends Command {
+  public Disco() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.intakeRoller);
+    // eg. requires(chassis);
+    requires(Robot.lights);
   }
+
+  byte leftColour = 0b001;
+  byte rightColour = 0b001;
+  final byte RED = 0b100;
+  final byte BLUE = 0b010;
+  final byte GREEN = 0b001;
+  int delay = 1;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.lights.setColour(Lights.LEFT, (leftColour&RED)==RED, (leftColour&GREEN)==GREEN, (leftColour&BLUE)==BLUE);
+    Robot.lights.setColour(Lights.RIGHT, (rightColour&RED)==RED, (rightColour&GREEN)==GREEN, (rightColour&BLUE)==BLUE);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeRoller.spin(Robot.oi.xbox.getTriggerLeft());
+    if(delay < 7){
+      delay++;
+      return;
+    } 
+    delay = 0;
+    leftColour += 0b001;
+    if(leftColour > 0b111) leftColour = 0b001;
+    rightColour -= 0b001;
+    if(rightColour == 0b000) rightColour = 0b111;
+    
+
+    Robot.lights.setColour(Lights.LEFT, (leftColour&RED)==RED, (leftColour&GREEN)==GREEN, (leftColour&BLUE)==BLUE);
+    Robot.lights.setColour(Lights.RIGHT, (rightColour&RED)==RED, (rightColour&GREEN)==GREEN, (rightColour&BLUE)==BLUE);
   }
 
   // Make this return true when this Command no longer needs to run execute()

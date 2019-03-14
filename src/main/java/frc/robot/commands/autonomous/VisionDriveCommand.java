@@ -23,7 +23,7 @@ public class VisionDriveCommand extends Command {
 
   /** The offset where speed=1, inversely proportinal to power */
   final double MAX_DIFF = 20.0;
-  final double MULTIPLIER = 0.25;
+  final double MULTIPLIER = 0.2;
 
   public VisionDriveCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -39,7 +39,7 @@ public class VisionDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    int available =0;// RobotMap.jevoisSerial.getBytesReceived();
+    int available = RobotMap.jevoisSerial.getBytesReceived();
     // Update collector
     int sum = available;
     for (int i = 0; i < collector.length - 1; i++) {
@@ -55,7 +55,7 @@ public class VisionDriveCommand extends Command {
 
     // Parse new offset
     if (available > 0) {
-      String[] in = {""};//RobotMap.jevoisSerial.readString().split("\n");
+      String[] in = RobotMap.jevoisSerial.readString().split("\n");
       System.out.println(in[0]);
       String t = in[in.length - 1];
       if (t.length() > 1) {
@@ -68,12 +68,12 @@ public class VisionDriveCommand extends Command {
     offset = (int) fitToRange(offset, -MAX_DIFF, MAX_DIFF);
 
     lSpeed = Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
-    lSpeed += 0.5 * Robot.oi.l_joy.getY();
+    lSpeed += 0.5 * Math.pow(Robot.oi.l_joy.getY(), 3);
 
     rSpeed = -Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
-    rSpeed += 0.5 * Robot.oi.l_joy.getY();
+    rSpeed += 0.5 * Math.pow(Robot.oi.l_joy.getY(), 3);
 
-    // System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);
+    System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);
 
     Robot.drivetrain.drive(fitToRange(-lSpeed, -1.0, 1.0), fitToRange(rSpeed, -1.0, 1.0));
   }

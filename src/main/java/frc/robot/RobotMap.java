@@ -63,7 +63,7 @@ public class RobotMap {
 	// final static int CLIMBER_TALON_2 = 2708;
 
 	//	Sensor 1 is in the front, Sensor 2 is in the center, Sensor 3 is in the back
-	final static int LEFT_TAPE_SENSOR_1 = 0;
+	final static int LEFT_TAPE_SENSOR_1 = 2;
 	// final static int LEFT_TAPE_SENSOR_2 = 0;
 	//	final static int LEFT_TAPE_SENSOR_3 = 2708;
 
@@ -78,7 +78,7 @@ public class RobotMap {
 	final static int INTAKE_ARM_TALON = 10;
 	final static int INTAKE_ARM_VICTOR = 20;
 	final static int INTAKE_ROLLER_TALON = 12;
-	// final static int INTAKE_LIMIT_SWITCH = 4;
+	final static int INTAKE_LIMIT_SWITCH = 3;
 	//final static int INTAKE_POT = 2;
 
 	final static int ELEVATOR_SPARK_1 = 7;
@@ -121,9 +121,8 @@ public class RobotMap {
 	 * Creating Gyro object
 	 */	
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-	// public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
-	//public static final AnalogInput intakePot = new AnalogInput(INTAKE_POT);
-	// public static final SerialPort jevoisSerial = new SerialPort(15200, Port.kUSB);
+	public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
+	public static final SerialPort jevoisSerial = new SerialPort(115200, Port.kUSB1);
 
 	
 	//LED lights

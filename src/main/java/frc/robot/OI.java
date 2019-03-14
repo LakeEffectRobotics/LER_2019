@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.Disco;
 import frc.robot.commands.GripOuttake;
 import frc.robot.commands.HoldOuttake;
 import frc.robot.commands.LockDriveCommand;
@@ -79,7 +80,7 @@ public class OI {
 	//XBox Button initialization
 
 	//Start and Back
-	public Button climberButton = new XBoxButton(xbox, XBoxController.XBOX_BACK);
+	// public Button climberButton = new XBoxButton(xbox, XBoxController.XBOX_BACK);
 
 	//Lettered Buttons
 	public Button stepUpButton = new XBoxButton(xbox, XBoxController.XBOX_Y);
@@ -96,6 +97,8 @@ public class OI {
 	//D-pad
 	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
 	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
+
+	public Button DISCO = new XBoxButton(xbox, XBoxController.XBOX_BACK);
 	
 
 
@@ -124,6 +127,8 @@ public class OI {
 		rightOuttake.whenPressed(new HoldOuttake (Outtake.RIGHT,Outtake.R_OUT));
 		rightOuttake.whenReleased(new HoldOuttake (Outtake.RIGHT,Outtake.R_IN));
 		
+
+		DISCO.whileHeld(new Disco());
 		// -- buttonName.whenHeld(new Command())
 	}
 }

@@ -40,9 +40,9 @@ public class BumpElevatorHeight extends InstantCommand {
     double height = Robot.elevator.getTargetHeight();
     System.out.println(height);
 
-    if(Robot.intakeArm.getTargetPosition()!=IntakeArm.POSITION_DOWN){
+    /*if(Robot.intakeArm.getTargetPosition()!=IntakeArm.POSITION_DOWN){
       Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
-    }
+    }*/
 
 
     if (height > Elevator.MAX_HEIGHT && direction == UP) {
