@@ -15,6 +15,7 @@ import frc.robot.commands.GripOuttake;
 import frc.robot.commands.HoldOuttake;
 import frc.robot.commands.LockDriveCommand;
 import frc.robot.commands.StraightGyroDriveCommand;
+import frc.robot.commands.autonomous.AutoIntakeCommand;
 import frc.robot.commands.autonomous.VisionDriveCommand;
 // import frc.robot.commands.instant.ResetLiftPositionCommand;
 // import frc.robot.commands.instant.ToggleClawPositionCommand;
@@ -120,7 +121,8 @@ public class OI {
 		stepUpButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.UP));
 		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
 		intakeHeightButton.whenPressed(new ElevatorToIntakeHeight());
-		toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
+		// toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
+		intakeButton.whileHeld(new AutoIntakeCommand());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
 		leftOuttake.whenPressed(new HoldOuttake(Outtake.LEFT,Outtake.L_OUT));
 		leftOuttake.whenReleased(new HoldOuttake(Outtake.LEFT,Outtake.L_IN));

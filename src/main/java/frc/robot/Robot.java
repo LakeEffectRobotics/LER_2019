@@ -23,8 +23,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gyro;
-import frc.robot.subsystems.IntakeArm;
-import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Outtake;
 import frc.robot.subsystems.Lights.Colour;
@@ -37,8 +36,7 @@ public class Robot extends TimedRobot {
 	public static final Lights lights = new Lights();
 	public static OI oi;
 
-	public static final IntakeArm intakeArm = new IntakeArm();
-	public static final IntakeRoller intakeRoller = new IntakeRoller();
+	public static final Intake intake = new Intake();
 	public static final Elevator elevator = new Elevator();
 	public static final Outtake outtake = new Outtake();
 	
@@ -78,7 +76,7 @@ public class Robot extends TimedRobot {
 		RobotMap.init();
 		gyro.calibrate();
 		lights.setBoth(Lights.Colour.PURPLE);
-		intakeArm.init();
+		intake.init();
 		//Setup dashboard
 
 		//Setup jevois feed
@@ -124,7 +122,7 @@ public class Robot extends TimedRobot {
 		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(), ControlType.kPosition);
 		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
 
-		intakeArm.init();
+		intake.init();
 		outtake.setSide(Outtake.LEFT, Outtake.L_IN);
 		outtake.setSide(Outtake.RIGHT, Outtake.R_IN);
 

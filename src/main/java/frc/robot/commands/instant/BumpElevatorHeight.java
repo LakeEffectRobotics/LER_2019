@@ -12,7 +12,7 @@ import java.time.format.SignStyle;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.IntakeArm;
+import frc.robot.subsystems.Intake;
 
 /**
  * Add your docs here.

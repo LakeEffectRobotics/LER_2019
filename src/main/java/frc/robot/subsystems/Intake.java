@@ -11,12 +11,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.IntakeArmCommand;
+import frc.robot.commands.IntakeCommand;
 
 /**
  * Add your docs here.
  */
-public class IntakeArm extends Subsystem {
+public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -35,12 +35,15 @@ public class IntakeArm extends Subsystem {
   
   public double targetPosition=POSITION_UP;
   
+  
+  final double SPEED_PRACTICE = 0.7;
+  final double SPEED = 1;
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new IntakeArmCommand());
+    // setDefaultCommand(new IntakeCommand());
   }
 
   public void init(){
@@ -76,6 +79,11 @@ public class IntakeArm extends Subsystem {
 
   public double getTargetPosition(){
     return(targetPosition);
+  }
+
+  public void spin(double speed){
+    //TODO change for comp bot
+    RobotMap.intakeRollerTalon.set(ControlMode.PercentOutput, -speed*SPEED_PRACTICE);
   }
 
   
