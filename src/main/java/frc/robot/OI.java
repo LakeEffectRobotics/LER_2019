@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Disco;
@@ -24,7 +25,8 @@ import frc.robot.commands.instant.BumpElevatorHeight;
 import frc.robot.commands.instant.ElevatorToIntakeHeight;
 import frc.robot.commands.instant.SetShawnDriveCommand;
 import frc.robot.commands.instant.ToggleHatchMode;
-import frc.robot.commands.instant.ToggleIntakeArm;
+import frc.robot.commands.instant.SetIntakeArm;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Outtake;
 
 public class OI {
@@ -93,7 +95,8 @@ public class OI {
 	public Button toggleHatchModeButton = new XBoxButton(xbox, XBoxController.XBOX_L3);
 	// public Button autoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
 	public Button hatchOffsetButton = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
-	public Button intakeButton = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
+	public Button intakeButton = new XBoxButton(xbox, XBoxController.XBOX_B);
+	public Button retractIntakeButton = new XBoxButton(xbox, XBoxController.XBOX_START);
 
 	//D-pad
 	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
@@ -122,12 +125,14 @@ public class OI {
 		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
 		intakeHeightButton.whenPressed(new ElevatorToIntakeHeight());
 		// toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
-		intakeButton.whileHeld(new AutoIntakeCommand());
+		intakeButton.whenPressed(new AutoIntakeCommand());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
 		leftOuttake.whenPressed(new HoldOuttake(Outtake.LEFT,Outtake.L_OUT));
 		leftOuttake.whenReleased(new HoldOuttake(Outtake.LEFT,Outtake.L_IN));
 		rightOuttake.whenPressed(new HoldOuttake (Outtake.RIGHT,Outtake.R_OUT));
 		rightOuttake.whenReleased(new HoldOuttake (Outtake.RIGHT,Outtake.R_IN));
+
+		retractIntakeButton.whenPressed(new SetIntakeArm(Intake.POSITION_UP));
 		
 
 		DISCO.whileHeld(new Disco());

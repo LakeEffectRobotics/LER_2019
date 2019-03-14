@@ -28,18 +28,18 @@ public class IntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.2){
-      Robot.intake.setTargetPosition(Robot.intake.getTargetPosition()+Robot.oi.xbox.getJoyRightY());
-    }
-    //Retract the arm for defence
-    if(Robot.oi.xbox.getDpadUp()){
-      Robot.intake.setTargetPosition(Intake.POSITION_MAX);
-    }
+    // if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.2){
+    //   Robot.intake.setTargetPosition(Robot.intake.getTargetPosition()+Robot.oi.xbox.getJoyRightY());
+    // }
+    // //Retract the arm for defence
+    // if(Robot.oi.xbox.getDpadUp()){
+    //   Robot.intake.setTargetPosition(Intake.POSITION_MAX);
+    // }
 
-    if(RobotMap.intakeLimitSwitch.get() && Robot.oi.xbox.getTriggerLeft() > 0.1)
-      Robot.intake.setTargetPosition(Intake.POSITION_UP);
+    // if(RobotMap.intakeLimitSwitch.get() && Robot.oi.xbox.getTriggerLeft() > 0.1)
+    //   Robot.intake.setTargetPosition(Intake.POSITION_UP);
 
-    Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
+    // Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
   }
 
   // Make this return true when this Command no longer needs to run execute()

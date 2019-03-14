@@ -7,12 +7,15 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.XBoxController;
 import frc.robot.subsystems.Intake;
 
 public class AutoIntakeCommand extends Command {
+
   public AutoIntakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -28,7 +31,7 @@ public class AutoIntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.spin(0.5);
+    Robot.intake.spin(0.9);
     if(RobotMap.intakeLimitSwitch.get()){
       Robot.intake.setTargetPosition(Intake.POSITION_UP);
     }
@@ -37,7 +40,7 @@ public class AutoIntakeCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.intake.getTargetPosition()==Intake.POSITION_UP && !RobotMap.intakeLimitSwitch.get();
+    return (Robot.intake.getTargetPosition()==Intake.POSITION_UP && !RobotMap.intakeLimitSwitch.get());
   }
 
   // Called once after isFinished returns true
@@ -51,5 +54,6 @@ public class AutoIntakeCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

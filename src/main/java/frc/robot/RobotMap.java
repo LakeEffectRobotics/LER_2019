@@ -186,6 +186,6 @@ public class RobotMap {
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
 
-		// jevoisSerial = new SerialPort(115200, Port.kUSB);
+		jevoisSerial = new SerialPort(115200, Port.kUSB);
 	}
 }

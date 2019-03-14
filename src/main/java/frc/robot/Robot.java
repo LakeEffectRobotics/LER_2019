@@ -55,11 +55,13 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
 
 
-		System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
+		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
 		//If there are more than 10 bytes in the buffer, clear it
-		// if(RobotMap.jevoisSerial.getBytesReceived() > 10){
-		// 	RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
-		// }
+		if(RobotMap.jevoisSerial!=null){
+			if(RobotMap.jevoisSerial.getBytesReceived() > 10){
+				RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
+			}
+		}
 		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 	}
 
@@ -95,7 +97,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
