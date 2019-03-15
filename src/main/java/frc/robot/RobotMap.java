@@ -63,18 +63,17 @@ public class RobotMap {
 	// final static int CLIMBER_TALON_1 = 2708;
 	// final static int CLIMBER_TALON_2 = 2708;
 
-	//	Sensor 1 is in the front, Sensor 2 is in the center, Sensor 3 is in the back
-	final static int LEFT_TAPE_SENSOR_1 = 2;
-	// final static int LEFT_TAPE_SENSOR_2 = 0;
-	//	final static int LEFT_TAPE_SENSOR_3 = 2708;
+	//	Sensor numbers go up from the left side of the robot to the right side (e.g. Sensor A1 is on the far left, Sensor A4 is on the far right).
+	//	"A" sensors lie in the same plane as the cargo outtake. They are responsible for ensuring that the robot is properly aligned and close enough to the port, when scoring cargo. 
+	//	"B" sensors lie on the hatch panel side of the robot. They are responsible for detecting white tape in advance so the robot can slow down for the "A" sensors to detect. 
 
-	//	final static int CENTER_TAPE_SENSOR_1 = 2708;
-	//	final static int CENTER_TAPE_SENSOR_2 = 2708;
-	//	final static int CENTER_TAPE_SENSOR_3 = 2708;
+	final static int TAPE_SENSOR_A1 = 2708;
+	final static int TAPE_SENSOR_A2 = 2708;
+	final static int TAPE_SENSOR_A3 = 2708;
+	final static int TAPE_SENSOR_A4 = 2708;
 
-	final static int RIGHT_TAPE_SENSOR_1 = 1;
-	// final static int RIGHT_TAPE_SENSOR_2 = 1;
-	//	final static int RIGHT_TAPE_SENSOR_3 = 2708;
+	final static int TAPE_SENSOR_B1 = 2708;
+	final static int TAPE_SENSOR_B2 = 2708;
 
 	final static int INTAKE_ARM_TALON = 10;
 	final static int INTAKE_ARM_VICTOR = 20;
@@ -135,17 +134,13 @@ public class RobotMap {
 	/**
 	 * Creating sensor objects
 	 */
-	public static TapeSensor leftTapeSensor1 = new TapeSensor(LEFT_TAPE_SENSOR_1);
-	// public static TapeSensor leftTapeSensor2 = new TapeSensor(LEFT_TAPE_SENSOR_2);
-	//	public static TapeSensor leftTapeSensor3 = new TapeSensor(LEFT_TAPE_SENSOR_3);
-
-	//	public static TapeSensor centerTapeSensor1 = new TapeSensor(CENTER_TAPE_SENSOR_1);
-	//	public static TapeSensor centerTapeSensor2 = new TapeSensor(CENTER_TAPE_SENSOR_2);
-	//	public static TapeSensor centerTapeSensor3 = new TapeSensor(CENTER_TAPE_SENSOR_3);
-
-	public static TapeSensor rightTapeSensor1 = new TapeSensor(RIGHT_TAPE_SENSOR_1);
-	// public static TapeSensor rightTapeSensor2 = new TapeSensor(RIGHT_TAPE_SENSOR_2);
-	//	public static TapeSensor rightTapeSensor3 = new TapeSensor(RIGHT_TAPE_SENSOR_3);
+	public static TapeSensor tapeSensorA1 = new TapeSensor(TAPE_SENSOR_A1);
+	public static TapeSensor tapeSensorA2 = new TapeSensor(TAPE_SENSOR_A2);
+	public static TapeSensor tapeSensorA3 = new TapeSensor(TAPE_SENSOR_A3);
+	public static TapeSensor tapeSensorA4 = new TapeSensor(TAPE_SENSOR_A4);
+	
+	public static TapeSensor tapeSensorB1 = new TapeSensor(TAPE_SENSOR_B1);
+	public static TapeSensor tapeSensorB2 = new TapeSensor(TAPE_SENSOR_B2);
 	
 	public static void init() { //r/outoftheloop
 		//Set followers
@@ -156,6 +151,24 @@ public class RobotMap {
 
 		leftDriveSpark1.setOpenLoopRampRate(0.5);
 		rightDriveSpark1.setOpenLoopRampRate(0.5);  
+
+		//	Ratio of wheel rotations to encoder rotations
+		//	Also equal to the ratio of teeth on the motor gears to teeth on the wheel gears
+		double gearRatio = 14 / 50;
+		//	1 rotation has 2π radians
+		double rotationsToRadians = 2 * Math.PI;
+		//	The wheels have radius 3"
+		double wheelRadius = 3;
+		//	Conversion of encoder rotations to linear distance travelled by the robot (in inches)
+		//		Multiplying by gear ratio gives the number of wheel rotations
+		//		Multiplying by 2π gives the number of radians rotated by the wheels
+		//		Multiplying by wheel radius gives the distance travelled by the robot (in inches)
+		double rotationsToInches = gearRatio * rotationsToRadians * wheelRadius;
+
+		leftDriveSpark1.getEncoder().setPositionConversionFactor​(rotationsToInches);
+		leftDriveSpark1.getEncoder().setVelocityConversionFactor​(rotationsToInches);
+		rightDriveSpark1.getEncoder().setPositionConversionFactor​(rotationsToInches);
+		rightDriveSpark1.getEncoder().setVelocityConversionFactor​(rotationsToInches);
 
 		intakeArmTalon.configOpenloopRamp(0.1);
 		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
