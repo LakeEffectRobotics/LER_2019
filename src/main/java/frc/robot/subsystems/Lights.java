@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.LightCommand;
 
 /**
  * First relay has power and the red line; second relay has green and blue
@@ -60,6 +61,7 @@ public class Lights extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new LightCommand());
   }
 
   public void setColour(int side, Colour c){
@@ -74,22 +76,6 @@ public class Lights extends Subsystem {
   public void setColour(int side, boolean r, boolean g, boolean b){
     Relay pb;
     Relay gr;
-
-    // //Red:
-    // RobotMap.leftLED_PR.set(Relay.Value.kForward);  //12 0
-    // RobotMap.leftLED_GB.set(Relay.Value.kOn);       //12 12
-    // //Green:
-    // RobotMap.leftLED_PR.set(Relay.Value.kOn);       //12 12
-    // RobotMap.leftLED_GB.set(Relay.Value.kReverse);  //0  12
-    // //Blue:
-    // RobotMap.leftLED_PR.set(Relay.Value.kOn);       //12 12
-    // RobotMap.leftLED_GB.set(Relay.Value.kForward);  //12 0
-    // //Purple:
-    // RobotMap.leftLED_PR.set(Relay.Value.kForward);  //12 0
-    // RobotMap.leftLED_GB.set(Relay.Value.kForward);  //12 0
-    // //White:
-    // RobotMap.leftLED_PR.set(Relay.Value.kForward);  //12 0
-    // RobotMap.leftLED_GB.set(Relay.Value.kOff);      //0  0
 
     if(side==LEFT){
       pb=RobotMap.leftLED_PB;

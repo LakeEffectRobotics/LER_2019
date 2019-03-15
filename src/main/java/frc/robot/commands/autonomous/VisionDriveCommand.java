@@ -76,7 +76,7 @@ public class VisionDriveCommand extends Command {
 
     System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);
 
-    Robot.drivetrain.drive(fitToRange(-lSpeed, -1.0, 1.0), fitToRange(rSpeed, -1.0, 1.0));
+    Robot.drivetrain.drive(fitToRange(-lSpeed, -1.0, 1.0), fitToRange(-rSpeed, -1.0, 1.0));
   }
 
   public double fitToRange(double value, double min, double max) {

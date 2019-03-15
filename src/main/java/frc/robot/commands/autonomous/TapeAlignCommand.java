@@ -50,11 +50,11 @@ public class TapeAlignCommand extends Command {
       if (averageEncoderPosition < MAX_DRIVE_DISTANCE) {
         Robot.drivetrain.drive(speed, speed);
       }
-      if (RobotMap.leftTapeSensor1.isOnTape()) {
+      if (RobotMap.outerLeftSensor.isOnTape()) {
         isLeftSide = true;
         tapeDetected = true;
         initialEncoderPositions = Robot.drivetrain.getInitialEncoderPositions();
-      } else if (RobotMap.rightTapeSensor1.isOnTape()) {
+      } else if (RobotMap.outerRightSensor.isOnTape()) {
         isLeftSide = false;
         tapeDetected = true;
         initialEncoderPositions = Robot.drivetrain.getInitialEncoderPositions();

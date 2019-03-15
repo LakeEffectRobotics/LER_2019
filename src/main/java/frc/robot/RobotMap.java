@@ -63,18 +63,13 @@ public class RobotMap {
 	// final static int CLIMBER_TALON_1 = 2708;
 	// final static int CLIMBER_TALON_2 = 2708;
 
-	//	Sensor 1 is in the front, Sensor 2 is in the center, Sensor 3 is in the back
-	final static int LEFT_TAPE_SENSOR_1 = 2;
-	// final static int LEFT_TAPE_SENSOR_2 = 0;
-	//	final static int LEFT_TAPE_SENSOR_3 = 2708;
-
-	//	final static int CENTER_TAPE_SENSOR_1 = 2708;
-	//	final static int CENTER_TAPE_SENSOR_2 = 2708;
-	//	final static int CENTER_TAPE_SENSOR_3 = 2708;
-
-	final static int RIGHT_TAPE_SENSOR_1 = 1;
-	// final static int RIGHT_TAPE_SENSOR_2 = 1;
-	//	final static int RIGHT_TAPE_SENSOR_3 = 2708;
+	final static int BACK_LEFT_SENSOR = 0;
+	final static int OUTER_LEFT_SENSOR = 1;
+	final static int INNER_LEFT_SENSOR = 2;
+	
+	final static int BACK_RIGHT_SENSOR = 3;
+	final static int OUTER_RIGHT_SENSOR = 4;
+	final static int INNER_RIGHT_SENSOR = 5;
 
 	final static int INTAKE_ARM_TALON = 10;
 	final static int INTAKE_ARM_VICTOR = 20;
@@ -132,20 +127,14 @@ public class RobotMap {
 	public static Relay rightLED_PB = new Relay(RIGHT_PB_RELAY, Relay.Direction.kBoth);
 	public static Relay rightLED_GR = new Relay(RIGHT_GR_RELAY, Relay.Direction.kBoth);
 
-	/**
-	 * Creating sensor objects
-	 */
-	public static TapeSensor leftTapeSensor1 = new TapeSensor(LEFT_TAPE_SENSOR_1);
-	// public static TapeSensor leftTapeSensor2 = new TapeSensor(LEFT_TAPE_SENSOR_2);
-	//	public static TapeSensor leftTapeSensor3 = new TapeSensor(LEFT_TAPE_SENSOR_3);
-
-	//	public static TapeSensor centerTapeSensor1 = new TapeSensor(CENTER_TAPE_SENSOR_1);
-	//	public static TapeSensor centerTapeSensor2 = new TapeSensor(CENTER_TAPE_SENSOR_2);
-	//	public static TapeSensor centerTapeSensor3 = new TapeSensor(CENTER_TAPE_SENSOR_3);
-
-	public static TapeSensor rightTapeSensor1 = new TapeSensor(RIGHT_TAPE_SENSOR_1);
-	// public static TapeSensor rightTapeSensor2 = new TapeSensor(RIGHT_TAPE_SENSOR_2);
-	//	public static TapeSensor rightTapeSensor3 = new TapeSensor(RIGHT_TAPE_SENSOR_3);
+	//Creating sensor objects
+	public static TapeSensor backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
+	public static TapeSensor outerLeftSensor = new TapeSensor(OUTER_LEFT_SENSOR);
+	public static TapeSensor innerLeftSensor = new TapeSensor(INNER_LEFT_SENSOR);
+	
+	public static TapeSensor backRightSensor = new TapeSensor(BACK_RIGHT_SENSOR);
+	public static TapeSensor outerRightSensor = new TapeSensor(OUTER_RIGHT_SENSOR);
+	public static TapeSensor innerRightSensor = new TapeSensor(INNER_RIGHT_SENSOR);
 	
 	public static void init() { //r/outoftheloop
 		//Set followers

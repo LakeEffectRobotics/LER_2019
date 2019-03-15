@@ -43,7 +43,7 @@ public class Intake extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    // setDefaultCommand(new IntakeCommand());
+    setDefaultCommand(new IntakeCommand());
   }
 
   public void init(){
@@ -67,7 +67,7 @@ public class Intake extends Subsystem {
       RobotMap.intakeArmTalon.config_kD(0, 0.2, 0);
       RobotMap.intakeArmTalon.config_kI(0, 0.000, 0);
     } else {
-      RobotMap.intakeArmTalon.config_kP(0, 0.5, 0);
+      RobotMap.intakeArmTalon.config_kP(0, 1, 0);
     }
     targetPosition = position; 
     RobotMap.intakeArmTalon.set(ControlMode.Position, position);

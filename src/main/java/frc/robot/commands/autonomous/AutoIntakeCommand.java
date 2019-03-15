@@ -16,6 +16,8 @@ import frc.robot.subsystems.Intake;
 
 public class AutoIntakeCommand extends Command {
 
+  final double SPEED = 0.95;
+  final double DEADZONE = 0.2;
   public AutoIntakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -31,7 +33,11 @@ public class AutoIntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.spin(0.9);
+    if(Robot.oi.xbox.getTriggerLeft() > DEADZONE){
+      Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
+    } else {
+      Robot.intake.spin(SPEED);
+    }
     if(RobotMap.intakeLimitSwitch.get()){
       Robot.intake.setTargetPosition(Intake.POSITION_UP);
     }

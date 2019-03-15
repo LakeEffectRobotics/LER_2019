@@ -10,36 +10,34 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.Lights.Colour;
 
-public class IntakeCommand extends Command {
-  public IntakeCommand() {
+public class LightCommand extends Command {
+  public LightCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.intake);
+    requires(Robot.lights);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.2){
-    //   Robot.intake.setTargetPosition(Robot.intake.getTargetPosition()+Robot.oi.xbox.getJoyRightY());
-    // }
-    // //Retract the arm for defence
-    // if(Robot.oi.xbox.getDpadUp()){
-    //   Robot.intake.setTargetPosition(Intake.POSITION_MAX);
-    // }
-
-    // if(RobotMap.intakeLimitSwitch.get() && Robot.oi.xbox.getTriggerLeft() > 0.1)
-    //   Robot.intake.setTargetPosition(Intake.POSITION_UP);
-
-    Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
+    if(RobotMap.outerLeftSensor.get()){
+      Robot.lights.setColour(Lights.LEFT, Colour.BLUE);
+      if(RobotMap.innerLeftSensor.get()) 
+        Robot.lights.setColour(Lights.LEFT, Colour.GREEN);
+    }   
+    if(RobotMap.outerRightSensor.get()){
+      Robot.lights.setColour(Lights.RIGHT, Colour.BLUE);
+      if(RobotMap.innerRightSensor.get()) 
+        Robot.lights.setColour(Lights.RIGHT, Colour.GREEN);
+    }    
   }
 
   // Make this return true when this Command no longer needs to run execute()
