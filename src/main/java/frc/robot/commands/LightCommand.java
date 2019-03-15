@@ -28,14 +28,15 @@ public class LightCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(RobotMap.outerLeftSensor.get()){
+    Robot.lights.setBoth(Colour.PURPLE);
+    if(RobotMap.outerLeftSensor.isOnTape()){
       Robot.lights.setColour(Lights.LEFT, Colour.BLUE);
-      if(RobotMap.innerLeftSensor.get()) 
+      if(RobotMap.innerLeftSensor.isOnTape()) 
         Robot.lights.setColour(Lights.LEFT, Colour.GREEN);
     }   
-    if(RobotMap.outerRightSensor.get()){
+    if(RobotMap.outerRightSensor.isOnTape()){
       Robot.lights.setColour(Lights.RIGHT, Colour.BLUE);
-      if(RobotMap.innerRightSensor.get()) 
+      if(RobotMap.innerRightSensor.isOnTape()) 
         Robot.lights.setColour(Lights.RIGHT, Colour.GREEN);
     }    
   }

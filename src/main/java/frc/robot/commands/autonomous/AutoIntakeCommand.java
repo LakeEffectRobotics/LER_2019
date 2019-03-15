@@ -18,6 +18,9 @@ public class AutoIntakeCommand extends Command {
 
   final double SPEED = 0.95;
   final double DEADZONE = 0.2;
+  boolean pressed = false;
+  long time = 0;
+
   public AutoIntakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -28,6 +31,7 @@ public class AutoIntakeCommand extends Command {
   @Override
   protected void initialize() {
     Robot.intake.setTargetPosition(Intake.POSITION_DOWN);
+    pressed = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,7 +42,11 @@ public class AutoIntakeCommand extends Command {
     } else {
       Robot.intake.spin(SPEED);
     }
-    if(RobotMap.intakeLimitSwitch.get()){
+    if(RobotMap.intakeLimitSwitch.get() && !pressed){
+      pressed = true;
+      time = System.currentTimeMillis();
+    }
+    if(pressed && System.currentTimeMillis()-time > 250){
       Robot.intake.setTargetPosition(Intake.POSITION_UP);
     }
   }

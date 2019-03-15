@@ -99,8 +99,8 @@ public class OI {
 	public Button retractIntakeButton = new XBoxButton(xbox, XBoxController.XBOX_START);
 
 	//D-pad
-	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
-	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
+	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
+	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
 
 	public Button DISCO = new XBoxButton(xbox, XBoxController.XBOX_BACK);
 	
@@ -127,10 +127,14 @@ public class OI {
 		// toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
 		intakeButton.whenPressed(new AutoIntakeCommand());
 		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
-		leftOuttake.whenPressed(new HoldOuttake(Outtake.LEFT,Outtake.L_OUT));
-		leftOuttake.whenReleased(new HoldOuttake(Outtake.LEFT,Outtake.L_IN));
-		rightOuttake.whenPressed(new HoldOuttake (Outtake.RIGHT,Outtake.R_OUT));
-		rightOuttake.whenReleased(new HoldOuttake (Outtake.RIGHT,Outtake.R_IN));
+		
+		// leftOuttake.whenPressed(new HoldOuttake(Outtake.SIDE_LEFT,Outtake.L_OUT));
+		// leftOuttake.whenReleased(new HoldOuttake(Outtake.SIDE_LEFT,Outtake.L_IN));
+		// rightOuttake.whenPressed(new HoldOuttake (Outtake.SIDE_RIGHT,Outtake.R_OUT));
+		// rightOuttake.whenReleased(new HoldOuttake (Outtake.SIDE_RIGHT,Outtake.R_IN));
+
+		leftOuttake.whenPressed(new HoldOuttake(5/*HoldOuttake.SIDE_AUTO*/, HoldOuttake.AUTO_OUT, "AUTO"));
+		leftOuttake.whenReleased(new HoldOuttake(6/*HoldOuttake.SIDE_BOTH*/, HoldOuttake.AUTO_IN, "RETRACT"));
 
 		retractIntakeButton.whenPressed(new SetIntakeArm(Intake.POSITION_UP));
 		

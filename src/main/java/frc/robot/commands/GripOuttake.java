@@ -30,8 +30,8 @@ public class GripOuttake extends Command {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    Robot.outtake.setSide(Outtake.LEFT,Outtake.L_GRIP);
-    Robot.outtake.setSide(Outtake.RIGHT,Outtake.R_GRIP);
+    Robot.outtake.setSide(Outtake.SIDE_LEFT,Outtake.L_GRIP);
+    Robot.outtake.setSide(Outtake.SIDE_RIGHT,Outtake.R_GRIP);
     // System.out.println("OUTTAKE "+side);
   }
 

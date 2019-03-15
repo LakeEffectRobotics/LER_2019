@@ -24,8 +24,8 @@ public class Outtake extends Subsystem {
   public static double R_IN = 0.41;
   public static double R_OUT = 1;
 
-  public static int RIGHT = 0;
-  public static int LEFT = 1;
+  public static int SIDE_RIGHT = 1;
+  public static int SIDE_LEFT = 0;
 
   double targetL = 0;
   double targetR = 0;
@@ -38,7 +38,7 @@ public class Outtake extends Subsystem {
 
   public void toggleSide(int side){
     // System.out.println("TOGGLE");
-    if(side == LEFT){
+    if(side == SIDE_LEFT){
       if(targetL == L_IN)
         targetL = L_OUT;
       else
@@ -47,7 +47,7 @@ public class Outtake extends Subsystem {
       // System.out.println("LEFT "+targetL);
     }
 
-    if(side == RIGHT){
+    if(side == SIDE_RIGHT){
       if(targetR == R_IN)
         targetR = R_OUT;
       else
@@ -60,13 +60,13 @@ public class Outtake extends Subsystem {
   public void setSide(int side, double target){
     //TODO: Add safeguard
     
-    if(side == LEFT){
+    if(side == SIDE_LEFT){
       targetL = target;
       RobotMap.leftServo.set(targetL);
       // System.out.println("LEFT"+targetL);
     }
     
-    if(side == RIGHT){
+    if(side == SIDE_RIGHT){
       targetR = target;
       RobotMap.rightServo.set(targetR);
       // System.out.println("RIGHT"+targetR);

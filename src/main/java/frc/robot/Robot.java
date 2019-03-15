@@ -125,8 +125,8 @@ public class Robot extends TimedRobot {
 		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
 
 		intake.init();
-		outtake.setSide(Outtake.LEFT, Outtake.L_IN);
-		outtake.setSide(Outtake.RIGHT, Outtake.R_IN);
+		outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
+		outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
 
 		enabledInit();
 	}

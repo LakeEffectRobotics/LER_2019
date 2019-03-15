@@ -63,18 +63,18 @@ public class RobotMap {
 	// final static int CLIMBER_TALON_1 = 2708;
 	// final static int CLIMBER_TALON_2 = 2708;
 
-	final static int BACK_LEFT_SENSOR = 0;
-	final static int OUTER_LEFT_SENSOR = 1;
-	final static int INNER_LEFT_SENSOR = 2;
+	final static int BACK_LEFT_SENSOR = 4;
+	final static int OUTER_LEFT_SENSOR = 5;
+	final static int INNER_LEFT_SENSOR = 6;
 	
-	final static int BACK_RIGHT_SENSOR = 3;
-	final static int OUTER_RIGHT_SENSOR = 4;
-	final static int INNER_RIGHT_SENSOR = 5;
+	final static int BACK_RIGHT_SENSOR = 9;
+	final static int OUTER_RIGHT_SENSOR = 8;
+	final static int INNER_RIGHT_SENSOR = 7;
 
 	final static int INTAKE_ARM_TALON = 10;
 	final static int INTAKE_ARM_VICTOR = 20;
 	final static int INTAKE_ROLLER_TALON = 12;
-	final static int INTAKE_LIMIT_SWITCH = 3;
+	final static int INTAKE_LIMIT_SWITCH = 0;
 	//final static int INTAKE_POT = 2;
 
 	final static int ELEVATOR_SPARK_1 = 7;
@@ -128,15 +128,28 @@ public class RobotMap {
 	public static Relay rightLED_GR = new Relay(RIGHT_GR_RELAY, Relay.Direction.kBoth);
 
 	//Creating sensor objects
-	public static TapeSensor backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
-	public static TapeSensor outerLeftSensor = new TapeSensor(OUTER_LEFT_SENSOR);
-	public static TapeSensor innerLeftSensor = new TapeSensor(INNER_LEFT_SENSOR);
+	public static TapeSensor backLeftSensor;
+	public static TapeSensor outerLeftSensor;
+	public static TapeSensor innerLeftSensor;
 	
-	public static TapeSensor backRightSensor = new TapeSensor(BACK_RIGHT_SENSOR);
-	public static TapeSensor outerRightSensor = new TapeSensor(OUTER_RIGHT_SENSOR);
-	public static TapeSensor innerRightSensor = new TapeSensor(INNER_RIGHT_SENSOR);
+	public static TapeSensor backRightSensor;
+	public static TapeSensor outerRightSensor;
+	public static TapeSensor innerRightSensor;
 	
 	public static void init() { //r/outoftheloop
+		System.out.println("BL:"+BACK_LEFT_SENSOR);
+		backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
+		System.out.println("OL:"+OUTER_LEFT_SENSOR);
+		outerLeftSensor = new TapeSensor(OUTER_LEFT_SENSOR);
+		System.out.println("IL:"+INNER_LEFT_SENSOR);
+		innerLeftSensor = new TapeSensor(INNER_LEFT_SENSOR);
+		System.out.println("BR:"+BACK_RIGHT_SENSOR);
+		backRightSensor = new TapeSensor(BACK_RIGHT_SENSOR);
+		System.out.println("OR:"+OUTER_RIGHT_SENSOR);
+		outerRightSensor = new TapeSensor(OUTER_RIGHT_SENSOR);
+		System.out.println("IR:"+INNER_RIGHT_SENSOR);
+		innerRightSensor = new TapeSensor(INNER_RIGHT_SENSOR);
+
 		//Set followers
 		rightDriveSpark2.follow(rightDriveSpark1);
 		rightDriveSpark3.follow(rightDriveSpark1);
@@ -175,6 +188,6 @@ public class RobotMap {
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
 
-		jevoisSerial = new SerialPort(115200, Port.kUSB);
+		// jevoisSerial = new SerialPort(115200, Port.kUSB);
 	}
 }
