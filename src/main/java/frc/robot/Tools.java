@@ -1,6 +1,16 @@
 package frc.robot;
 
 public class Tools {
+	public static double getAdaptedSpeed(double speed){
+		if (Robot.oi.shawnDrive.get()){
+			speed = -speed;
+		}
+		double out = 0.25*Math.sin((6*Math.PI/5)*speed -3*Math.PI/5)+0.5*speed+0.25;
+		if(out < 0.02) out = 0;
+		return out*(speed>0?1:-1);
+		//OLD: (0.5*(Math.sin(Math.PI*speed-Math.PI/2))+0.5)
+	}
+
 	public static double fitToRange(double value, double min, double max) {
 		value = value < min ? min : value;
 		value = value > max ? max : value;

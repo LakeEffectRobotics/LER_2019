@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
+import frc.robot.Tools;
 
 public class DriveCommand extends Command {
 
@@ -37,20 +37,19 @@ public class DriveCommand extends Command {
     if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
     if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
 
+    lSpeed = Tools.getAdaptedSpeed(lSpeed);
+    rSpeed = Tools.getAdaptedSpeed(rSpeed);;
 
     // if sticks are close and speed reasonable, go straight
-    if(Math.abs(lSpeed-rSpeed)<0.1 && Math.abs(average)>0.25){
+    if(Math.abs(lSpeed-rSpeed)<0.05 && Math.abs(average)>0.25){
       lSpeed = average;
       rSpeed = average;
     }
     if(Robot.oi.slowDrive.get()){
-      Robot.drivetrain.drive(-Math.pow(lSpeed, 3)/4, -Math.pow(rSpeed, 3)/4);
-    }
-    else if (Robot.oi.shawnDrive.get()){
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)*0.75, Math.pow(rSpeed, 3)*0.75);
+      Robot.drivetrain.drive(lSpeed*0.25, rSpeed*0.25);
     }
     else{
-      Robot.drivetrain.drive(-Math.pow(lSpeed, 3)*0.75, -Math.pow(rSpeed, 3)*0.75);
+      Robot.drivetrain.drive(lSpeed*0.7, rSpeed*0.7);
     }
   }
 

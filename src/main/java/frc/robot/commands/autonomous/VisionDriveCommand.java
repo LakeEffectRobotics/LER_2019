@@ -10,6 +10,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.Tools;
 
 public class VisionDriveCommand extends Command {
 
@@ -19,11 +20,11 @@ public class VisionDriveCommand extends Command {
    * Amount of bits in each of the last 5 messages, used to check for data
    * validity
    */
-  int[] collector = { 0, 0, 2, 0, 0 };
+  int[] collector = new int[25];
 
   /** The offset where speed=1, inversely proportinal to power */
   final double MAX_DIFF = 20.0;
-  final double MULTIPLIER = 0.2;
+  final double MULTIPLIER = 0.15;
 
   public VisionDriveCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -69,10 +70,10 @@ public class VisionDriveCommand extends Command {
     offset = (int) fitToRange(offset, -MAX_DIFF, MAX_DIFF);
 
     lSpeed = Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
-    lSpeed += 0.5 * Math.pow(Robot.oi.lJoy.getY(), 3);
+    lSpeed += 0.5 * Tools.getAdaptedSpeed(Robot.oi.lJoy.getY());
 
     rSpeed = -Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
-    rSpeed += 0.5 * Math.pow(Robot.oi.lJoy.getY(), 3);
+    rSpeed += 0.5 * Tools.getAdaptedSpeed(Robot.oi.lJoy.getY());
 
     System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);
 

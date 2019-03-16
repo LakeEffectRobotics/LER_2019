@@ -3,6 +3,7 @@ package frc.robot.commands;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Tools;
 
 /**
  *
@@ -22,15 +23,15 @@ public class StraightGyroDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double l = Math.pow(Robot.oi.lJoy.getY(), 3)*0.75;
-    	double r = Math.pow(Robot.oi.rJoy.getY(), 3)*0.75;
+    	double l = Tools.getAdaptedSpeed(Robot.oi.lJoy.getY())*0.7;
+    	double r = Tools.getAdaptedSpeed(Robot.oi.rJoy.getY())*0.7;
     	
     	l = Math.abs(l) > Math.abs(r) ? l : r;
     	r = l;
     	
     	double[] straight_gyro_output = Robot.gyro.getStraightOutput(l, r);
     	
-    	Robot.drivetrain.drive(straight_gyro_output[0], straight_gyro_output[1]);
+    	Robot.drivetrain.drive(-straight_gyro_output[1], -straight_gyro_output[0]);
     }
 
     protected boolean isFinished() {

@@ -39,7 +39,7 @@ public class IntakeCommand extends Command {
     // if(RobotMap.intakeLimitSwitch.get() && Robot.oi.xbox.getTriggerLeft() > 0.1)
     //   Robot.intake.setTargetPosition(Intake.POSITION_UP);
 
-    Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
+    // Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
   }
 
   // Make this return true when this Command no longer needs to run execute()

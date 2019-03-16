@@ -53,12 +53,12 @@ public class RobotMap {
 	/**
 	 * Declaring CANIDs
 	 */
-	final static int RIGHT_DRIVE_SPARK_1 = 1;
-	final static int RIGHT_DRIVE_SPARK_2 = 2;
-	final static int RIGHT_DRIVE_SPARK_3 = 3;
-	final static int LEFT_DRIVE_SPARK_1 = 4;
-	final static int LEFT_DRIVE_SPARK_2 = 5;
-	final static int LEFT_DRIVE_SPARK_3 = 6;
+	final static int RIGHT_DRIVE_SPARK_1 = 4;
+	final static int RIGHT_DRIVE_SPARK_2 = 5;
+	final static int RIGHT_DRIVE_SPARK_3 = 6;
+	final static int LEFT_DRIVE_SPARK_1 = 1;
+	final static int LEFT_DRIVE_SPARK_2 = 2;
+	final static int LEFT_DRIVE_SPARK_3 = 3;
 
 	// final static int CLIMBER_TALON_1 = 2708;
 	// final static int CLIMBER_TALON_2 = 2708;
@@ -150,18 +150,20 @@ public class RobotMap {
 		System.out.println("IR:"+INNER_RIGHT_SENSOR);
 		innerRightSensor = new TapeSensor(INNER_RIGHT_SENSOR);
 
+		// leftDriveSpark1.setInverted(true);
+		// rightDriveSpark1.setInverted(true);
 		//Set followers
 		rightDriveSpark2.follow(rightDriveSpark1);
 		rightDriveSpark3.follow(rightDriveSpark1);
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
 
-		leftDriveSpark1.setOpenLoopRampRate(0.5);
-		rightDriveSpark1.setOpenLoopRampRate(0.5);  
+		leftDriveSpark1.setOpenLoopRampRate(0.25);
+		rightDriveSpark1.setOpenLoopRampRate(0.25);  
 
 		//	Ratio of wheel rotations to encoder rotations
 		//	Also equal to the ratio of teeth on the motor gears to teeth on the wheel gears
-		double gearRatio = 14 / 50;
+		double gearRatio = 14.0 / 50.0;
 		//	1 rotation has 2π radians
 		double rotationsToRadians = 2 * Math.PI;
 		//	The wheels have radius 3"
@@ -207,6 +209,6 @@ public class RobotMap {
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
 
-		// jevoisSerial = new SerialPort(115200, Port.kUSB);
+		jevoisSerial = new SerialPort(115200, Port.kUSB1);
 	}
 }
