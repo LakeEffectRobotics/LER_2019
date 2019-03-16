@@ -30,8 +30,8 @@ public class DriveCommand extends Command {
   @Override
   protected void execute() {
     //  Pushing the joysticks forward gives a negative Y value, whereas pushing them backward gives a positive Y value
-    double lSpeed = -Robot.oi.l_joy.getY();
-    double rSpeed = -Robot.oi.r_joy.getY();
+    double lSpeed = -Robot.oi.lJoy.getY();
+    double rSpeed = -Robot.oi.rJoy.getY();
     double average = (lSpeed+rSpeed)/2;
 
     if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
@@ -43,10 +43,10 @@ public class DriveCommand extends Command {
       lSpeed = average;
       rSpeed = average;
     }
-    if(Robot.oi.l_joy.getRawButton(2)){
+    if(Robot.oi.slowDrive.get()){
       Robot.drivetrain.drive(-Math.pow(lSpeed, 3)/4, -Math.pow(rSpeed, 3)/4);
     }
-    else if (Robot.oi.l_joy.getRawButton(1)){
+    else if (Robot.oi.shawnDrive.get()){
       Robot.drivetrain.drive(Math.pow(lSpeed, 3)*0.75, Math.pow(rSpeed, 3)*0.75);
     }
     else{

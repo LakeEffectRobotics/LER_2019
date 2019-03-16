@@ -19,7 +19,6 @@ public class HoldOuttake extends InstantCommand {
 
   int side = 5;
   double position;
-  String src;
   public static final int SIDE_AUTO = 5;
   public static final int SIDE_BOTH = 6;
 
@@ -28,20 +27,19 @@ public class HoldOuttake extends InstantCommand {
   /**
    * Add your docs here.
    */
-  public HoldOuttake(int s, double pos, String src) {
+  public HoldOuttake(int s, double pos) {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.outtake);
     side = s;
     position=pos;
-    this.src = src;
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    System.out.println("Outtake: "+src+","+side);
+    System.out.println("Outtake: "+side);
     if(side == SIDE_BOTH){
       if(position == AUTO_IN){
         Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);

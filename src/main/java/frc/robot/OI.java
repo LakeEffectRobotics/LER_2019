@@ -8,23 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Disco;
-import frc.robot.commands.GripOuttake;
 import frc.robot.commands.HoldOuttake;
-import frc.robot.commands.LockDriveCommand;
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.autonomous.AutoIntakeCommand;
 import frc.robot.commands.autonomous.VisionDriveCommand;
-// import frc.robot.commands.instant.ResetLiftPositionCommand;
-// import frc.robot.commands.instant.ToggleClawPositionCommand;
-// import frc.robot.commands.instant.IntakeOpenCommand;
-import frc.robot.commands.instant.BumpElevatorHeight;
-import frc.robot.commands.instant.ElevatorToIntakeHeight;
-import frc.robot.commands.instant.SetShawnDriveCommand;
-import frc.robot.commands.instant.ToggleHatchMode;
 import frc.robot.commands.instant.SetIntakeArm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Outtake;
@@ -37,109 +26,75 @@ public class OI {
 	
 	final int XBOX = 2;
 
-	// button number definitions
-	
-	// right joystick buttons	//  TODO: Update all controls
-	final int TOGGLE_SHAWN_DRIVE = 1;
-	final int HOLD_SHAWN_DRIVE = 2;
-	final int LOCK_DRIVE = 3;
-	final int HOLD_GYRO = 1;
+	//Left Joystick buttons
+	final int TAPE_DRIVE_BUTTON = 3;
+	final int GYRO_DRIVE_BUTTON = 1;
 
-	// -- final int BUTTON_NAME = number;
+	//Right Joystick buttons
+	final int VISION_DRIVE_BUTTON = 3;
+	final int SLOW_DRIVE_BUTTON = 2;
+	final int SHAWN_DRIVE_BUTTON = 1;
 
-	// left joystick buttons
-	final int VISION_DRIVE = 3;
+	//Xbox buttons:
+	final int GROUND_HEIGHT_BUTTON = XBoxController.XBOX_A;
+	final int LOW_ROCKET_BUTTON = XBoxController.XBOX_X;
+	final int MID_ROCKET_BUTTON = XBoxController.XBOX_Y;
+	final int HIGH_ROCKET_BUTTON = XBoxController.XBOX_B;
+	final int CARGO_HEIGHT_BUTTON = XBoxController.XBOX_RB;
 
+	final int ELEVATOR_SHIFT_UP = XBoxController.XBOX_LEFT_TRIGGER;
+	final int ELEVATOR_SHIFT_DOWN = XBoxController.XBOX_RIGHT_TRIGGER;
 
-	// controller initialization
-	public Joystick l_joy = new Joystick(L_JOY);
-	public Joystick r_joy = new Joystick(R_JOY);
+	final int INTAKE_BUTTON = XBoxController.XBOX_START;
+	final int INTAKE_CANCEL_BUTTON = XBoxController.XBOX_BACK;
+
+	final int OUTTAKE_LEFT_BUTTON = XBoxController.XBOX_DPAD_LEFT_ANGLE;
+	final int OUTTAKE_RIGHT_BUTTON = XBoxController.XBOX_DPAD_RIGHT_ANGLE;
+
+	final int DISCO_BUTTON = XBoxController.XBOX_R3;
+
+	//Initialisation
+	public Joystick lJoy = new Joystick(L_JOY);
+	public Joystick rJoy = new Joystick(R_JOY);
 	public XBoxController xbox = new XBoxController(XBOX);
 
-	// button initialization 
+	JoystickButton tapeDrive = new JoystickButton(lJoy, TAPE_DRIVE_BUTTON);
+	JoystickButton gyroDrive = new JoystickButton(lJoy, GYRO_DRIVE_BUTTON);
+
+	JoystickButton visionDrive = new JoystickButton(rJoy, VISION_DRIVE_BUTTON);
+	public JoystickButton slowDrive = new JoystickButton(rJoy, SLOW_DRIVE_BUTTON);
+	public JoystickButton shawnDrive = new JoystickButton(rJoy, SHAWN_DRIVE_BUTTON);
+
+	XBoxButton groundHeight = new XBoxButton(xbox, GROUND_HEIGHT_BUTTON);
+	XBoxButton lowHeight = new XBoxButton(xbox, LOW_ROCKET_BUTTON);
+	XBoxButton midHeight = new XBoxButton(xbox, MID_ROCKET_BUTTON);
+	XBoxButton highHeight = new XBoxButton(xbox, HIGH_ROCKET_BUTTON);
 	
-	// can be changed to driver's preferences
-	public Button toggleShawnDriveButton = new JoystickButton(l_joy, TOGGLE_SHAWN_DRIVE);
-	public Button gyroDriveHold = new JoystickButton(r_joy, HOLD_GYRO);
-
-	//Lift controls
-	public Button rStickLift = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_Y);
+	XBoxButton intake = new XBoxButton(xbox, INTAKE_BUTTON);
+	XBoxButton cancelIntake = new XBoxButton(xbox, INTAKE_CANCEL_BUTTON);
 	
-	public Button highLiftButton = new XBoxButton(xbox, XBoxController.XBOX_Y);
-	public Button mediumLiftButton = new XBoxButton(xbox, XBoxController.XBOX_X);
-	public Button lowLiftButton = new XBoxButton(xbox, XBoxController.XBOX_A);
-	public Button cargoIntakeButton = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
-	public Button cargoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LEFT_TRIGGER);
-	public Button rightFlipperButton = new XBoxButton(xbox, XBoxController.XBOX_RB);
-	public Button leftFlipperButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
-	
+	XBoxButton outtakeLeft = new XBoxButton(xbox, OUTTAKE_LEFT_BUTTON);
+	XBoxButton outtakeRight = new XBoxButton(xbox, OUTTAKE_RIGHT_BUTTON);
 
+	public XBoxTrigger shiftUp = new XBoxTrigger(xbox, true);
+	public XBoxTrigger shiftDown = new XBoxTrigger(xbox, false);
 
-
-	public Button holdShawnDriveButton = new JoystickButton(r_joy, HOLD_SHAWN_DRIVE);
-
-	public Button lockDriveButton = new JoystickButton(r_joy, LOCK_DRIVE);
-	public Button visionDriveButton = new JoystickButton(l_joy, VISION_DRIVE);
-	//XBox Button initialization
-
-	//Start and Back
-	// public Button climberButton = new XBoxButton(xbox, XBoxController.XBOX_BACK);
-
-	//Lettered Buttons
-	public Button stepUpButton = new XBoxButton(xbox, XBoxController.XBOX_Y);
-	public Button stepDownButton = new XBoxButton(xbox, XBoxController.XBOX_X);
-	public Button intakeHeightButton = new XBoxButton(xbox, XBoxController.XBOX_A);
-	public Button toggleIntakeArmButton = new XBoxButton(xbox, XBoxController.XBOX_B);
-
-	//Bumpers and Triggers
-	public Button toggleHatchModeButton = new XBoxButton(xbox, XBoxController.XBOX_L3);
-	// public Button autoOuttakeButton = new XBoxButton(xbox, XBoxController.XBOX_LB);
-	public Button hatchOffsetButton = new XBoxButton(xbox, XBoxController.XBOX_RIGHT_TRIGGER);
-	public Button intakeButton = new XBoxButton(xbox, XBoxController.XBOX_B);
-	public Button retractIntakeButton = new XBoxButton(xbox, XBoxController.XBOX_START);
-
-	//D-pad
-	public Button leftOuttake = new XBoxButton(xbox, XBoxController.XBOX_LB);
-	public Button rightOuttake = new XBoxButton(xbox, XBoxController.XBOX_RB);
-
-	public Button DISCO = new XBoxButton(xbox, XBoxController.XBOX_BACK);
-	
-
-
-	// -- public Button buttonName = new JoystickButton(controller, BUTTON_NAME);
+	XBoxButton disco = new XBoxButton(xbox, DISCO_BUTTON);
 
 	public void init() {
-		//Initialize event handling
-
 		//Joystick Buttons
-		// toggleShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.TOGGLE));
-		holdShawnDriveButton.whenPressed(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.ON));
-		holdShawnDriveButton.whenReleased(new SetShawnDriveCommand(SetShawnDriveCommand.Mode.OFF));
-		lockDriveButton.whileHeld(new LockDriveCommand());
-		gyroDriveHold.whileHeld(new StraightGyroDriveCommand());
-		visionDriveButton.whileHeld(new VisionDriveCommand());
+		gyroDrive.whileHeld(new StraightGyroDriveCommand());
+		visionDrive.whileHeld(new VisionDriveCommand());
 
 		//XBox Buttons
-		//stepUpButton.whenPressed(new GripOuttake());
-		stepUpButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.UP));
-		stepDownButton.whenPressed(new BumpElevatorHeight(BumpElevatorHeight.DOWN));
-		intakeHeightButton.whenPressed(new ElevatorToIntakeHeight());
-		// toggleIntakeArmButton.whenPressed(new ToggleIntakeArm());
-		intakeButton.whenPressed(new AutoIntakeCommand());
-		toggleHatchModeButton.whenPressed(new ToggleHatchMode());
-		
-		// leftOuttake.whenPressed(new HoldOuttake(Outtake.SIDE_LEFT,Outtake.L_OUT));
-		// leftOuttake.whenReleased(new HoldOuttake(Outtake.SIDE_LEFT,Outtake.L_IN));
-		// rightOuttake.whenPressed(new HoldOuttake (Outtake.SIDE_RIGHT,Outtake.R_OUT));
-		// rightOuttake.whenReleased(new HoldOuttake (Outtake.SIDE_RIGHT,Outtake.R_IN));
+		intake.whenPressed(new AutoIntakeCommand());
+		cancelIntake.whenPressed(new SetIntakeArm(Intake.POSITION_UP));
 
-		leftOuttake.whenPressed(new HoldOuttake(5/*HoldOuttake.SIDE_AUTO*/, HoldOuttake.AUTO_OUT, "AUTO"));
-		leftOuttake.whenReleased(new HoldOuttake(6/*HoldOuttake.SIDE_BOTH*/, HoldOuttake.AUTO_IN, "RETRACT"));
+		outtakeLeft.whenPressed(new HoldOuttake(Outtake.SIDE_LEFT, Outtake.L_OUT));
+		outtakeLeft.whenReleased(new HoldOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));
+		outtakeRight.whenPressed(new HoldOuttake(Outtake.SIDE_RIGHT, Outtake.R_OUT));
+		outtakeRight.whenReleased(new HoldOuttake(Outtake.SIDE_RIGHT, Outtake.R_IN));
 
-		retractIntakeButton.whenPressed(new SetIntakeArm(Intake.POSITION_UP));
-		
-
-		DISCO.whileHeld(new Disco());
-		// -- buttonName.whenHeld(new Command())
+		disco.whileHeld(new Disco());
 	}
 }

@@ -69,10 +69,10 @@ public class VisionDriveCommand extends Command {
     offset = (int) fitToRange(offset, -MAX_DIFF, MAX_DIFF);
 
     lSpeed = Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
-    lSpeed += 0.5 * Math.pow(Robot.oi.l_joy.getY(), 3);
+    lSpeed += 0.5 * Math.pow(Robot.oi.lJoy.getY(), 3);
 
     rSpeed = -Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
-    rSpeed += 0.5 * Math.pow(Robot.oi.l_joy.getY(), 3);
+    rSpeed += 0.5 * Math.pow(Robot.oi.lJoy.getY(), 3);
 
     System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);
 
