@@ -16,30 +16,26 @@ public class AutoGyroDriveCommand extends Command {
     private double speed;
     private double distance;
     private boolean finished = false;
-    private boolean line_stop;
 
-    private double[] initial_encoder_positions;
-
-    public AutoGyroDriveCommand(double speed, double distance, boolean line_stop) {
+    public AutoGyroDriveCommand(double speed, double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.drivetrain);
         this.speed = speed;
-        this.distance = Tools.inchesToRotations(distance);
-        this.line_stop = line_stop;
+        this.distance = distance;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        initial_encoder_positions = Robot.drivetrain.getInitialEncoderPositions();
+        Robot.drivetrain.resetEncoderPositions();
         Robot.gyro.resetAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Object[] auto_drive_output = Robot.drivetrain.getAutoDriveOutput(speed, distance, initial_encoder_positions, timeSinceInitialized(), line_stop);
+        Object[] auto_drive_output = Robot.drivetrain.getAutoDriveOutput(speed, distance, timeSinceInitialized());
         double[] straight_gyro_output = Robot.gyro.getStraightOutput((double) auto_drive_output[0], (double) auto_drive_output[1]);
         Robot.drivetrain.drive(straight_gyro_output[0], straight_gyro_output[1]);
         finished = (boolean) auto_drive_output[2];
@@ -48,7 +44,7 @@ public class AutoGyroDriveCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-      return false;
+      return finished;
     }
 
     // Called once after isFinished returns true

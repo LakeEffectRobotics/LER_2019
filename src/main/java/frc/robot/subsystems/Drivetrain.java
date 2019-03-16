@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 import frc.robot.RobotMap;
+import frc.robot.Tools;
 import frc.robot.commands.DriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -34,19 +35,24 @@ public class Drivetrain extends Subsystem {
 		}
 	}
 
-	public double[] getInitialEncoderPositions() {
-		double l = RobotMap.leftDriveSpark1.getEncoder().getPosition();
-		double r = -RobotMap.rightDriveSpark1.getEncoder().getPosition();
-		return new double[] {l, r};
+	public double getLeftEncoderPosition() {
+		return RobotMap.leftDriveSpark1.getEncoder().getPosition();
 	}
 
-	public double getAverageEncoderPosition(double[] initialEncoderPositions) {
-		double l = RobotMap.leftDriveSpark1.getEncoder().getPosition() - initialEncoderPositions[0];
-		double r = -RobotMap.rightDriveSpark1.getEncoder().getPosition() - initialEncoderPositions[1];
-		return (l + r) / 2;
+	public double getRightEncoderPosition() {
+		return RobotMap.rightDriveSpark1.getEncoder().getPosition();
 	}
 
-	public Object[] getAutoDriveOutput(double speed, double distance, double[] initialEncoderPositions, double time, boolean line_stop) {
+	public double getAverageEncoderPosition() {
+		return (getLeftEncoderPosition() + getRightEncoderPosition()) / 2.0;
+	}
+
+	public void resetEncoderPositions() {
+		RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
+		RobotMap.rightDriveSpark1.getEncoder().setPosition(0);
+	}
+
+	public Object[] getAutoDriveOutput(double speed, double distance, double time) {
 		//	TODO: Update these values
 		final double SLOW_DOWN_THRESHOLD = 15.75;	//	Originally 0.4 m or 40 cm, now 15.75"
     	final double MIN_SPEED = 0.2;
@@ -58,27 +64,25 @@ public class Drivetrain extends Subsystem {
 		/*
 		double averageEncoderPosition = time;	//	Unsure as to why time is being used in place of the encoders; perhaps because it's a good approximation? Or were the encoders having issues?
 		*/
-		double averageEncoderPosition = getAverageEncoderPosition(initialEncoderPositions);
+		double averageEncoderPosition = getAverageEncoderPosition();
 		double distanceLeft = distance - averageEncoderPosition;
     	if (distanceLeft > SLOW_DOWN_THRESHOLD) {
     		l = speed;
     	} else if (distanceLeft < -SLOW_DOWN_THRESHOLD) {
     		l = -speed;
-		} else if (distanceLeft > 0) {
-    		l = speed * (distanceLeft / SLOW_DOWN_THRESHOLD);
-    	} else {
-			l = -speed * (distanceLeft / SLOW_DOWN_THRESHOLD);
+		} else {
+			l = speed * (distanceLeft / SLOW_DOWN_THRESHOLD);
+			l = Tools.setAbsoluteMinimum(l, MIN_SPEED);
 		}
-		
-    	if (l < MIN_SPEED && l > 0) {
-    		l = MIN_SPEED;
-    	} else if (l < -MIN_SPEED && l < 0) {
-    		l = -MIN_SPEED;
-		}
-		
+		   	
+
     	// if (Math.abs(distanceLeft) < FINISHED_TOLERANCE || ((RobotMap.leftTapeSensor2.get() || RobotMap.rightTapeSensor2.get()) && line_stop)) {
 		// 	finished = true;
-    	// }
+		// }
+				
+		if (Math.abs(distanceLeft) < FINISHED_TOLERANCE) {
+			finished = true;
+		}
     	
     	r = l;
     	

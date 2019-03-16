@@ -159,6 +159,25 @@ public class RobotMap {
 		leftDriveSpark1.setOpenLoopRampRate(0.5);
 		rightDriveSpark1.setOpenLoopRampRate(0.5);  
 
+		//	Ratio of wheel rotations to encoder rotations
+		//	Also equal to the ratio of teeth on the motor gears to teeth on the wheel gears
+		double gearRatio = 14 / 50;
+		//	1 rotation has 2π radians
+		double rotationsToRadians = 2 * Math.PI;
+		//	The wheels have radius 3"
+		double wheelRadius = 3;
+		//	Conversion of encoder rotations to linear distance travelled by the robot (in inches)
+		//		Multiplying by gear ratio gives the number of wheel rotations
+		//		Multiplying by 2π gives the number of radians rotated by the wheels
+		//		Multiplying by wheel radius gives the distance travelled by the robot (in inches)
+		double rotationsToInches = gearRatio * rotationsToRadians * wheelRadius;
+
+
+		leftDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
+		leftDriveSpark1.getEncoder().setVelocityConversionFactor(rotationsToInches);
+		rightDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
+		rightDriveSpark1.getEncoder().setVelocityConversionFactor(rotationsToInches);
+
 		intakeArmTalon.configOpenloopRamp(0.1);
 		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		intakeArmTalon.setSensorPhase(true);

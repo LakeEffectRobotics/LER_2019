@@ -15,17 +15,14 @@ import frc.robot.Tools;
 
 public class TapeAlignCommand extends Command {
   //  TODO: Update these values
-  final static double MAX_DRIVE_DISTANCE = 15;
-  final static double SENSOR_SPACING = 12;
+  final static double MAX_DRIVE_DISTANCE = 18;    //  If the "B" sensors fail to detect tape after initially driving this distance, the command will simply finish.
+  final static double SENSOR_SPACING = 12;        //  The distance between the "A" and "B" sensors (and the distance that must be driven once the "B" sensors detect the tape). 
   final static double MIN_SPEED = 0.2;
-  final static double FINISHED_TOLERANCE = 0.5;
+  final static double FINISHED_THRESHOLD = 4;     //  If the "A" sensors fail to detect tape after driving this distance past SENSOR_SPACING, the command will simply finish.
 
   double speed;
-  double[] initialEncoderPositions;
-  double averageEncoderPosition;
-  double distanceLeft;
   boolean isLeftSide;
-  boolean tapeDetected = false;
+  boolean[] tapeDetected = new boolean[3];        //  tapeDetected[0] states if a "B" sensor has detected the tape. tapeDetected[1] states if the first corresponding "A" sensor has detected the tape. tapeDetected[2] states if the second corresponding "A" sensor has detected the tape. 
   boolean finished = false;
 
   public TapeAlignCommand(double speed) {
@@ -38,39 +35,48 @@ public class TapeAlignCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    initialEncoderPositions = Robot.drivetrain.getInitialEncoderPositions();
+    Robot.drivetrain.resetEncoderPositions();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SmartDashboard.putBoolean("Detected Tape", tapeDetected);
-    averageEncoderPosition = Tools.rotationsToInches(Robot.drivetrain.getAverageEncoderPosition(initialEncoderPositions));
-    if (!tapeDetected) {
+    double averageEncoderPosition = -Robot.drivetrain.getAverageEncoderPosition();  //  Positions and velocities are inverted here because the robot is to be driven in reverse (in the direction of the hatch panel mechanism). 
+    if (!tapeDetected[0]) {
       if (averageEncoderPosition < MAX_DRIVE_DISTANCE) {
-        Robot.drivetrain.drive(speed, speed);
-      }
-      if (RobotMap.outerLeftSensor.isOnTape()) {
-        isLeftSide = true;
-        tapeDetected = true;
-        initialEncoderPositions = Robot.drivetrain.getInitialEncoderPositions();
-      } else if (RobotMap.outerRightSensor.isOnTape()) {
-        isLeftSide = false;
-        tapeDetected = true;
-        initialEncoderPositions = Robot.drivetrain.getInitialEncoderPositions();
-      } else if (averageEncoderPosition >= MAX_DRIVE_DISTANCE) {
+        Robot.drivetrain.drive(-speed, -speed);
+        if (RobotMap.backLeftSensor.isOnTape()) {
+          isLeftSide = true;
+          tapeDetected[0] = true;
+          Robot.drivetrain.resetEncoderPositions();
+        } else if (RobotMap.backLeftSensor.isOnTape()) {
+          isLeftSide = false;
+          tapeDetected[0] = true;
+          Robot.drivetrain.resetEncoderPositions();
+        }
+      } else {
         finished = true;
       }
     } else {
-      distanceLeft = SENSOR_SPACING - averageEncoderPosition;
-      speed *= (distanceLeft / SENSOR_SPACING);
-      speed = Tools.forceMaximum(speed, MIN_SPEED);
-      Robot.drivetrain.drive(speed, speed);
-      // if (centeredOnTape() || -distanceLeft >= FINISHED_TOLERANCE) {
-      //   finished = true;
-      // }
+      double distanceLeft = SENSOR_SPACING - averageEncoderPosition;
+      double output = 0;
+      
+      if (distanceLeft > SENSOR_SPACING) {
+    		output = speed;
+    	} else if (distanceLeft < -SENSOR_SPACING) {
+    		output = -speed;
+      } else {
+        output = speed * (distanceLeft / SENSOR_SPACING);
+        output = Tools.setAbsoluteMinimum(output, MIN_SPEED);
+      }
+      Robot.drivetrain.drive(-speed, -speed);
+
+      if (robotOnTape() || distanceLeft < -FINISHED_THRESHOLD) {
+        finished = true;
+      }
     }
   }
+  //  TODO: Add some LED code in here to let drive team know if the line-up has succeeded/failed
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -89,7 +95,22 @@ public class TapeAlignCommand extends Command {
   protected void interrupted() {
   }
 
-  // protected boolean centeredOnTape() {
-  //   // return (isLeftSide && RobotMap.leftTapeSensor2.isOnTape()) || (!isLeftSide && RobotMap.rightTapeSensor2.isOnTape());
-  // }
+  protected boolean robotOnTape() {
+    if (isLeftSide) {
+      if (RobotMap.outerLeftSensor.isOnTape()) {
+        tapeDetected[1] = true;
+      }
+      if (RobotMap.innerLeftSensor.isOnTape()) {
+        tapeDetected[2] = true;
+      }
+    } else {
+      if (RobotMap.innerRightSensor.isOnTape()) {
+        tapeDetected[1] = true;
+      }
+      if (RobotMap.outerRightSensor.isOnTape()) {
+        tapeDetected[2] = true;
+      }
+    }
+    return (tapeDetected[1] && tapeDetected[2]);
+  }
 }

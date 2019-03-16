@@ -44,8 +44,6 @@ public class Robot extends TimedRobot {
 
 	public void robotPeriodic() {
 		//Called periodically, use to interface with dashboard
-		SmartDashboard.putBoolean("Left Line Detector", RobotMap.outerLeftSensor.isOnTape());
-		SmartDashboard.putBoolean("Right Line Detector", RobotMap.outerRightSensor.isOnTape());
 		SmartDashboard.putNumber("Left Encoder", RobotMap.leftDriveSpark1.getEncoder().getPosition());
 		SmartDashboard.putNumber("Right Encoder", RobotMap.rightDriveSpark1.getEncoder().getPosition());
 		SmartDashboard.putNumber("Elevator Encoder", RobotMap.elevatorSpark1.getEncoder().getPosition());
