@@ -31,11 +31,11 @@ public class Elevator extends Subsystem {
   public static final double MAX_HEIGHT = 49;
   
   public static final double LOW_HEIGHT = 8.857;
-  public static final double CS_HEIGHT = 22;
+  public static final double CARGO_SHIP_HEIGHT = 22;
   public static final double MID_HEIGHT = 30.5;
   public static final double HIGH_HEIGHT = 49.5;
 
-  public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CS_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
+  public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CARGO_SHIP_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
   public static final double HATCH_OFFSET = -5;
   public static final double HATCH_RELEASE_OFFSET = -3;

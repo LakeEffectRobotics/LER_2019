@@ -14,20 +14,21 @@ import frc.robot.subsystems.Elevator;
 /**
  * Add your docs here.
  */
-public class ElevatorToIntakeHeight extends InstantCommand {
-  /**
-   * Add your docs here.
-   */
-  public ElevatorToIntakeHeight() {
+public class SetElevatorHeightCommand extends InstantCommand {
+
+  double height;
+
+  public SetElevatorHeightCommand(double targetHeight) {
     super();
     // Use requires() here to declare subsystem dependencies
     requires(Robot.elevator);
+    height = targetHeight;
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-      Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT,0, "Ground");
+      Robot.elevator.setTargetHeight(height, 0, "Set");
   }
 
 }

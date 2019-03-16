@@ -14,7 +14,9 @@ import frc.robot.commands.HoldOuttake;
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.autonomous.AutoIntakeCommand;
 import frc.robot.commands.autonomous.VisionDriveCommand;
+import frc.robot.commands.instant.SetElevatorHeightCommand;
 import frc.robot.commands.instant.SetIntakeArm;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Outtake;
 
@@ -40,7 +42,7 @@ public class OI {
 	final int LOW_ROCKET_BUTTON = XBoxController.XBOX_X;
 	final int MID_ROCKET_BUTTON = XBoxController.XBOX_Y;
 	final int HIGH_ROCKET_BUTTON = XBoxController.XBOX_B;
-	final int CARGO_HEIGHT_BUTTON = XBoxController.XBOX_RB;
+	final int CARGO_SHIP_HEIGHT_BUTTON = XBoxController.XBOX_RB;
 
 	final int ELEVATOR_SHIFT_UP = XBoxController.XBOX_LEFT_TRIGGER;
 	final int ELEVATOR_SHIFT_DOWN = XBoxController.XBOX_RIGHT_TRIGGER;
@@ -69,6 +71,7 @@ public class OI {
 	XBoxButton lowHeight = new XBoxButton(xbox, LOW_ROCKET_BUTTON);
 	XBoxButton midHeight = new XBoxButton(xbox, MID_ROCKET_BUTTON);
 	XBoxButton highHeight = new XBoxButton(xbox, HIGH_ROCKET_BUTTON);
+	XBoxButton cargoShipHeight = new XBoxButton(xbox, CARGO_SHIP_HEIGHT_BUTTON);
 	
 	XBoxButton intake = new XBoxButton(xbox, INTAKE_BUTTON);
 	XBoxButton cancelIntake = new XBoxButton(xbox, INTAKE_CANCEL_BUTTON);
@@ -87,6 +90,12 @@ public class OI {
 		visionDrive.whileHeld(new VisionDriveCommand());
 
 		//XBox Buttons
+		groundHeight.whenPressed(new SetElevatorHeightCommand(Elevator.GROUND_HEIGHT));
+		lowHeight.whenPressed(new SetElevatorHeightCommand(Elevator.LOW_HEIGHT));
+		midHeight.whenPressed(new SetElevatorHeightCommand(Elevator.MID_HEIGHT));
+		highHeight.whenPressed(new SetElevatorHeightCommand(Elevator.HIGH_HEIGHT));
+		cargoShipHeight.whenPressed(new SetElevatorHeightCommand(Elevator.CARGO_SHIP_HEIGHT));
+
 		intake.whenPressed(new AutoIntakeCommand());
 		cancelIntake.whenPressed(new SetIntakeArm(Intake.POSITION_UP));
 
