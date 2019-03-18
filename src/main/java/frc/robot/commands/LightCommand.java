@@ -12,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Lights.Colour;
+import frc.robot.subsystems.Outtake;
 
 public class LightCommand extends Command {
   public LightCommand() {
@@ -29,16 +30,21 @@ public class LightCommand extends Command {
   @Override
   protected void execute() {
     Robot.lights.setBoth(Colour.PURPLE);
-    if(RobotMap.outerLeftSensor.isOnTape()){
-      Robot.lights.setColour(Lights.LEFT, Colour.BLUE);
+
+    double distance = (RobotMap.leftDriveSpark2.getEncoder().getPosition()+RobotMap.rightDriveSpark2.getEncoder().getPosition())/2.0;
+
+    if(Robot.outtake.lastSide == Outtake.SIDE_LEFT && distance < Outtake.MAX_DIST){
+      Robot.lights.setColour(Lights.LEFT, Colour.YELLOW);
       if(RobotMap.innerLeftSensor.isOnTape()) 
         Robot.lights.setColour(Lights.LEFT, Colour.GREEN);
     }   
-    if(RobotMap.outerRightSensor.isOnTape()){
-      Robot.lights.setColour(Lights.RIGHT, Colour.BLUE);
+    if(Robot.outtake.lastSide == Outtake.SIDE_RIGHT && distance < Outtake.MAX_DIST){
+      Robot.lights.setColour(Lights.RIGHT, Colour.YELLOW);
       if(RobotMap.innerRightSensor.isOnTape()) 
         Robot.lights.setColour(Lights.RIGHT, Colour.GREEN);
     }    
+    
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

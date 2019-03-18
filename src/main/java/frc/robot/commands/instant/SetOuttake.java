@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-package frc.robot.commands;
+package frc.robot.commands.instant;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
@@ -15,7 +15,7 @@ import frc.robot.subsystems.Outtake;
 /**
  * Add your docs here.
  */
-public class HoldOuttake extends InstantCommand {
+public class SetOuttake extends InstantCommand {
 
   int side = 5;
   double position;
@@ -27,7 +27,7 @@ public class HoldOuttake extends InstantCommand {
   /**
    * Add your docs here.
    */
-  public HoldOuttake(int s, double pos) {
+  public SetOuttake(int s, double pos) {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -47,16 +47,16 @@ public class HoldOuttake extends InstantCommand {
       }
       return;
     }
-    System.out.println("Still going");
     if(side == SIDE_AUTO){
       System.out.println("AUTO");
-      if(RobotMap.outerRightSensor.isOnTape()){
+      double distance = (RobotMap.leftDriveSpark2.getEncoder().getPosition()+RobotMap.rightDriveSpark2.getEncoder().getPosition())/2.0;
+      if(Robot.outtake.lastSide == Outtake.SIDE_LEFT && distance < Outtake.MAX_DIST){
         side = Outtake.SIDE_LEFT;
         System.out.println("LEFT");
         if(position == AUTO_OUT) position = Outtake.L_OUT;
         if(position == AUTO_IN) position = Outtake.L_IN;
       }
-      else if(RobotMap.outerLeftSensor.isOnTape()){
+      else if(Robot.outtake.lastSide == Outtake.SIDE_RIGHT && distance < Outtake.MAX_DIST){
         side=Outtake.SIDE_RIGHT;
         System.out.println("RIGHT");
         if(position == AUTO_OUT) position = Outtake.R_OUT;

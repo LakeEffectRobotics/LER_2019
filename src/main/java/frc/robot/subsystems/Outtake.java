@@ -17,18 +17,30 @@ public class Outtake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public static double L_GRIP = 0.6;
+  /*public static double L_GRIP = 0.6;  Original outtake
   public static double L_IN = 0.51;
   public static double L_OUT = 0;
   public static double R_GRIP = 0.5;
   public static double R_IN = 0.41;
-  public static double R_OUT = 1;
+  public static double R_OUT = 1;*/
 
-  public static int SIDE_RIGHT = 1;
-  public static int SIDE_LEFT = 0;
+  public static final double L_GRIP = 0.6;
+  public static final double L_IN = 0.51;
+  public static final double L_OUT = 0;
+  public static final double R_GRIP = 0.4;
+  public static final double R_IN = 0.3;
+  public static final double R_OUT = .8;
+
+  public static final int SIDE_RIGHT = 1;
+  public static final int SIDE_LEFT = 0;
+  public static final int SIDE_NONE = -1;
+
+  public static final double MAX_DIST = 2;
 
   double targetL = 0;
   double targetR = 0;
+
+  public int lastSide = SIDE_NONE;
 
   @Override
   public void initDefaultCommand() {

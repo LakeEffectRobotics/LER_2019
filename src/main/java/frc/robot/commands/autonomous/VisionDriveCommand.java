@@ -20,11 +20,11 @@ public class VisionDriveCommand extends Command {
    * Amount of bits in each of the last 5 messages, used to check for data
    * validity
    */
-  int[] collector = new int[25];
+  int[] collector = {0,0,2,0,0};
 
   /** The offset where speed=1, inversely proportinal to power */
   final double MAX_DIFF = 20.0;
-  final double MULTIPLIER = 0.15;
+  final double MULTIPLIER = 0.075;
 
   public VisionDriveCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -40,7 +40,7 @@ public class VisionDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("VisionDrive");
+    System.out.println("VisionDrive: "+RobotMap.jevoisSerial.getBytesReceived());
     int available = RobotMap.jevoisSerial.getBytesReceived();
     // Update collector
     int sum = available;
@@ -66,6 +66,7 @@ public class VisionDriveCommand extends Command {
         offset = Integer.parseInt(t);
       }
     }
+    if(offset > MAX_DIFF) offset = 0;
 
     offset = (int) fitToRange(offset, -MAX_DIFF, MAX_DIFF);
 

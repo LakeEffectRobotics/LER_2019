@@ -51,12 +51,13 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
+		System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 
 
 		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
 		//If there are more than 10 bytes in the buffer, clear it
 		if(RobotMap.jevoisSerial!=null){
-			if(RobotMap.jevoisSerial.getBytesReceived() > 10){
+			if(RobotMap.jevoisSerial.getBytesReceived() > 100){
 				RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
 			}
 		}

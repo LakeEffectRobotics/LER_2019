@@ -25,7 +25,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.SerialPort.Parity;
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.SerialPort.StopBits;
 import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
 import frc.robot.subsystems.Climber;
@@ -179,6 +181,11 @@ public class RobotMap {
 		leftDriveSpark1.getEncoder().setVelocityConversionFactor(rotationsToInches);
 		rightDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
 		rightDriveSpark1.getEncoder().setVelocityConversionFactor(rotationsToInches);
+		
+		leftDriveSpark2.getEncoder().setPositionConversionFactor(rotationsToInches);
+		leftDriveSpark2.getEncoder().setVelocityConversionFactor(rotationsToInches);
+		rightDriveSpark2.getEncoder().setPositionConversionFactor(rotationsToInches);
+		rightDriveSpark2.getEncoder().setVelocityConversionFactor(rotationsToInches);
 
 		intakeArmTalon.configOpenloopRamp(0.1);
 		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
@@ -209,6 +216,6 @@ public class RobotMap {
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
 
-		jevoisSerial = new SerialPort(115200, Port.kUSB1);
+		jevoisSerial = new SerialPort(115200, Port.kUSB);
 	}
 }

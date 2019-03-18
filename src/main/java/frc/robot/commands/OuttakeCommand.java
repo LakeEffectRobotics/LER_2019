@@ -5,71 +5,54 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autonomous;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Outtake;
 import frc.robot.RobotMap;
-import frc.robot.XBoxController;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 
-public class AutoIntakeCommand extends Command {
-
-  final double SPEED = 0.95;
-  final double DEADZONE = 0.2;
-  boolean pressed = false;
-  long time = 0;
-
-  public AutoIntakeCommand() {
+public class OuttakeCommand extends Command {
+  public OuttakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.intake);
+    requires(Robot.outtake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intake.setTargetPosition(Intake.POSITION_DOWN);
-    pressed = false;
-    Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "INTAKE");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.oi.xbox.getTriggerLeft() > DEADZONE){
-      Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
-    } else {
-      Robot.intake.spin(SPEED);
-    }
-    if(RobotMap.intakeLimitSwitch.get() && !pressed){
-      pressed = true;
-      time = System.currentTimeMillis();
-    }
-    if(pressed && System.currentTimeMillis()-time > 250){
-      Robot.intake.setTargetPosition(Intake.POSITION_UP);
-    }
+    if(RobotMap.outerLeftSensor.isOnTape()){
+      RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
+      RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
+      Robot.outtake.lastSide = Outtake.SIDE_LEFT;
+    }   
+    if(RobotMap.outerRightSensor.isOnTape()){
+      RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
+      RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
+      Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
+    }    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.intake.getTargetPosition()==Intake.POSITION_UP && !RobotMap.intakeLimitSwitch.get());
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.spin(0);
-    Robot.intake.setTargetPosition(Intake.POSITION_UP);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

@@ -45,6 +45,7 @@ public class Lights extends Subsystem {
     BLUE (new boolean[] {false, false, true}),
     PURPLE (new boolean[] {true, false, true}),
     WHITE (new boolean[] {true, true, true}),
+    YELLOW (new boolean[] {true, true, false}),
     OFF (new boolean[] {false, false, false});
 
     private boolean[] value;
