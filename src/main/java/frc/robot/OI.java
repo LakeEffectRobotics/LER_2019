@@ -51,11 +51,9 @@ public class OI {
 	final int INTAKE_BUTTON = XBoxController.XBOX_START;
 	final int INTAKE_CANCEL_BUTTON = XBoxController.XBOX_BACK;
 
-	final int OUTTAKE_LEFT_BUTTON = XBoxController.XBOX_DPAD_LEFT_ANGLE;
-	final int OUTTAKE_RIGHT_BUTTON = XBoxController.XBOX_DPAD_RIGHT_ANGLE;
+	final int OUTTAKE_LEFT_BUTTON = XBoxController.XBOX_L3;
+	final int OUTTAKE_RIGHT_BUTTON = XBoxController.XBOX_R3;
 	final int AUTO_OUTTAKE_BUTTON = XBoxController.XBOX_LB;
-
-	final int DISCO_BUTTON = XBoxController.XBOX_R3;
 
 	//Initialisation
 	public Joystick lJoy = new Joystick(L_JOY);
@@ -86,7 +84,7 @@ public class OI {
 	public XBoxTrigger shiftUp = new XBoxTrigger(xbox, true);
 	public XBoxTrigger shiftDown = new XBoxTrigger(xbox, false);
 
-	XBoxButton disco = new XBoxButton(xbox, DISCO_BUTTON);
+	// XBoxButton disco = new XBoxButton(xbox, DISCO_BUTTON);
 
 	public void init() {
 		//Joystick Buttons
@@ -112,6 +110,6 @@ public class OI {
 		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));
 		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_IN));
 
-		disco.whileHeld(new Disco());
+		// disco.whileHeld(new Disco());
 	}
 }

@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.revrobotics.ControlType;
 
@@ -180,5 +181,12 @@ public class Robot extends TimedRobot {
 		// System.out.println(RobotMap.intakeLimitSwitch.get());
 
 		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
+
+		RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
+		System.out.println(RobotMap.leftDriveSpark1.getEncoder().getPosition()+"\t"+RobotMap.leftDriveSpark2.getEncoder().getPosition());
+
+		RobotMap.climberVictor.follow(RobotMap.climberTalon);
+
+		RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
 	}
 }

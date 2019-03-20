@@ -62,8 +62,8 @@ public class RobotMap {
 	final static int LEFT_DRIVE_SPARK_2 = 2;
 	final static int LEFT_DRIVE_SPARK_3 = 3;
 
-	// final static int CLIMBER_TALON_1 = 2708;
-	// final static int CLIMBER_TALON_2 = 2708;
+	final static int CLIMBER_TALON = 11;
+	final static int CLIMBER_VICTOR = 21;
 
 	final static int BACK_LEFT_SENSOR = 4;
 	final static int OUTER_LEFT_SENSOR = 5;
@@ -109,9 +109,8 @@ public class RobotMap {
 	public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
 	public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
 
-	// public static TalonSRX_2 climberTalon1 = new TalonSRX_2(CLIMBER_TALON_1, Climber.DEPLOYED_POSITION,
-	// 		Climber.DEFAULT_POSITION);
-	// public static TalonSRX_2 climberTalon2 = new TalonSRX_2(CLIMBER_TALON_2, Climber.DEPLOYED_POSITION, Climber.DEFAULT_POSITION);
+	public static TalonSRX climberTalon = new TalonSRX(CLIMBER_TALON);
+	public static VictorSPX climberVictor = new VictorSPX(CLIMBER_VICTOR);
 
 	public static Servo leftServo = new Servo(LEFT_SERVO);
 	public static Servo rightServo = new Servo(RIGHT_SERVO);
