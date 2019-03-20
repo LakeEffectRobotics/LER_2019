@@ -48,27 +48,6 @@ public class Outtake extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void toggleSide(int side){
-    // System.out.println("TOGGLE");
-    if(side == SIDE_LEFT){
-      if(targetL == L_IN)
-        targetL = L_OUT;
-      else
-        targetL = L_IN;
-      RobotMap.leftServo.set(targetL);
-      // System.out.println("LEFT "+targetL);
-    }
-
-    if(side == SIDE_RIGHT){
-      if(targetR == R_IN)
-        targetR = R_OUT;
-      else
-        targetR = R_IN;
-      RobotMap.rightServo.set(targetR);
-      // System.out.println("RIGHT "+targetR);
-    }
-  }
-
   public void setSide(int side, double target){
     //TODO: Add safeguard
     

@@ -21,10 +21,12 @@ import com.revrobotics.CANPIDController.AccelStrategy;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.SerialPort.Parity;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.SerialPort.StopBits;
@@ -85,6 +87,9 @@ public class RobotMap {
 	final static int LEFT_SERVO = 1;
 	final static int RIGHT_SERVO = 2;
 
+	final static int LEFT_OUTTAKE_COUNTER = 1;
+	final static int RIGHT_OUTTAKE_COUNTER = 2;
+
 	//LED pins
 	//TODO set proper pins
 	private static final int LEFT_PB_RELAY = 0;
@@ -120,6 +125,10 @@ public class RobotMap {
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
 	public static SerialPort jevoisSerial;
+
+	public static final Counter leftOuttakeCounter = new Counter(new DigitalInput(LEFT_OUTTAKE_COUNTER));
+	public static final Counter rightOuttakeCounter = new Counter(new DigitalInput(RIGHT_OUTTAKE_COUNTER));
+
 
 	
 	//LED lights
@@ -216,5 +225,6 @@ public class RobotMap {
 		rightLED_GR.set(Relay.Value.kOff);
 
 		jevoisSerial = new SerialPort(115200, Port.kUSB);
+
 	}
 }
