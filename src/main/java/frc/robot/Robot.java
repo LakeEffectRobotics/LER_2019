@@ -185,8 +185,13 @@ public class Robot extends TimedRobot {
 		RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
 		System.out.println(RobotMap.leftDriveSpark1.getEncoder().getPosition()+"\t"+RobotMap.leftDriveSpark2.getEncoder().getPosition());
 
-		RobotMap.climberVictor.follow(RobotMap.climberTalon);
+		// RobotMap.climberVictor.follow(RobotMap.climberTalon);
 
 		RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
+
+		System.out.println(RobotMap.leftOuttakeCounter.get());
+		if(Robot.oi.xbox.getBumperL()){
+			RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
+		}
 	}
 }

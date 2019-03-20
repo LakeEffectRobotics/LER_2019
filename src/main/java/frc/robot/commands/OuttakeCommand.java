@@ -38,8 +38,8 @@ public class OuttakeCommand extends Command {
       Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
     }    
   
-
     
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
