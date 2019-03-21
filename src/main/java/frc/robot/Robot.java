@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
-		System.out.println(RobotMap.jevoisSerial.getBytesReceived());
+		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 
 
 		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
@@ -152,6 +152,8 @@ public class Robot extends TimedRobot {
 
 	public void testInit() {
 	}
+
+	int count = 0;
 //0.5465,0.4078,
 	@Override
 	public void testPeriodic() {
@@ -182,16 +184,28 @@ public class Robot extends TimedRobot {
 
 		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 
-		RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
-		System.out.println(RobotMap.leftDriveSpark1.getEncoder().getPosition()+"\t"+RobotMap.leftDriveSpark2.getEncoder().getPosition());
+		// RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
+		// System.out.println(RobotMap.leftDriveSpark1.getEncoder().getPosition()+"\t"+RobotMap.leftDriveSpark2.getEncoder().getPosition());
 
-		// RobotMap.climberVictor.follow(RobotMap.climberTalon);
+		// // RobotMap.climberVictor.follow(RobotMap.climberTalon);
 
-		RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
+		// RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
 
-		System.out.println(RobotMap.leftOuttakeCounter.get());
-		if(Robot.oi.xbox.getBumperL()){
-			RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
+		System.out.println(count);
+		double speed = Robot.oi.xbox.getJoyLeftY()/2;
+
+		if(speed > 0){
+			count += RobotMap.rightOuttakeCounter.get();
 		}
+		if(speed < 0){
+			count -= RobotMap.rightOuttakeCounter.get();
+		}
+		RobotMap.rightOuttakeCounter.reset();
+
+
+		RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, speed);
+		// if(Robot.oi.xbox.getBumperL()){
+		// 	RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
+		// }
 	}
 }

@@ -84,11 +84,11 @@ public class RobotMap {
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
 
-	final static int LEFT_OUTTAKE_TALON = 13;
-	final static int RIGHT_OUTTAKE_TALON = 14;
+	final static int LEFT_OUTTAKE_TALON = 11;
+	final static int RIGHT_OUTTAKE_TALON = 12;
 
-	final static int LEFT_OUTTAKE_COUNTER = 1;
-	final static int RIGHT_OUTTAKE_COUNTER = 2;
+	final static int LEFT_OUTTAKE_COUNTER = 2;
+	final static int RIGHT_OUTTAKE_COUNTER = 1;
 
 	//LED pins
 	//TODO set proper pins
@@ -224,7 +224,7 @@ public class RobotMap {
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
 
-		jevoisSerial = new SerialPort(115200, Port.kUSB);
+		// jevoisSerial = new SerialPort(115200, Port.kUSB);
 
 	}
 }

@@ -11,6 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.Tools;
+import frc.robot.commands.OuttakeCommand;
 
 /**
  * Add your docs here.
@@ -27,10 +29,10 @@ public class Outtake extends Subsystem {
 
   public static final int L_GRIP = 0;
   public static final int L_IN = 0;
-  public static final int L_OUT = 0;
+  public static final int L_OUT = 20;
   public static final int R_GRIP = 0;
   public static final int R_IN = 0;
-  public static final int R_OUT = 0;
+  public static final int R_OUT = 20;
 
   public static final int SIDE_RIGHT = 1;
   public static final int SIDE_LEFT = 0;
@@ -38,8 +40,13 @@ public class Outtake extends Subsystem {
 
   final static double P = 0.1;
 
+  public static final int MAX_DIST =2;
+
   int targetL = 0;
+  int lPos = 0;
+
   int targetR = 0;
+  int rPos = 0;
 
   public int lastSide = SIDE_NONE;
 
@@ -47,9 +54,11 @@ public class Outtake extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new OuttakeCommand());
   }
 
-  public void setSide(int side, int target) {
+  public void setSide(int side, double t) {
+    int target = (int) t;
     if (side == SIDE_LEFT) {
       targetL = target;
     }
@@ -57,19 +66,40 @@ public class Outtake extends Subsystem {
     if (side == SIDE_RIGHT) {
       targetR = target;
     }
+
+    System.out.println(side);
   }
 
   public void drive() {
-    int lDelta = RobotMap.leftOuttakeCounter.get() - targetL;
-    double lSpeed = lDelta * P;
-    RobotMap.leftOuttakeCounter.setReverseDirection(lDelta<0);
-    
-    int rDelta = RobotMap.rightOuttakeCounter.get() - targetR;
-    double rSpeed = lDelta * P;
-    RobotMap.rightOuttakeCounter.setReverseDirection(rDelta<0);
 
-    RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lSpeed);
-    RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rSpeed);
+
+    int lDelta = lPos - targetL;
+    double lSpeed = lDelta * -P;
+    
+    int rDelta = rPos - targetR;
+    double rSpeed = rDelta * -P;
+
+    RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -1, 1));
+    RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, Tools.fitToRange(rSpeed, -1, 1));
+
+    if(lSpeed > 0){
+			lPos += RobotMap.leftOuttakeCounter.get();
+		}
+		if(lSpeed < 0){
+			lPos -= RobotMap.leftOuttakeCounter.get();
+		}
+    System.out.println("L: "+lDelta+"\t"+lPos+"\t"+RobotMap.leftOuttakeCounter.get());
+    RobotMap.leftOuttakeCounter.reset();
+    
+    if(rSpeed > 0){
+      rPos += RobotMap.rightOuttakeCounter.get();
+		}
+		if(rSpeed < 0){
+			rPos -= RobotMap.rightOuttakeCounter.get();
+    }
+    System.out.println("R: "+rDelta+"\t"+rPos+"\t"+RobotMap.rightOuttakeCounter.get());    
+    RobotMap.rightOuttakeCounter.reset();
+    
   }
 
 }

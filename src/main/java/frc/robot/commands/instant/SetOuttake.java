@@ -31,7 +31,7 @@ public class SetOuttake extends InstantCommand {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.outtake);
+    // requires(Robot.outtake);
     side = s;
     position=pos;
   }
