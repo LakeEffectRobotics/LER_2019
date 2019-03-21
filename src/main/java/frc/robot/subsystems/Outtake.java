@@ -40,7 +40,8 @@ public class Outtake extends Subsystem {
 
   final static double P = 0.1;
 
-  public static final int MAX_DIST =2;
+  /***The maxium distance from the line, in inches */
+  public static final int MAX_DIST = 4;
 
   int targetL = 0;
   int lPos = 0;
@@ -88,7 +89,7 @@ public class Outtake extends Subsystem {
 		if(lSpeed < 0){
 			lPos -= RobotMap.leftOuttakeCounter.get();
 		}
-    System.out.println("L: "+lDelta+"\t"+lPos+"\t"+RobotMap.leftOuttakeCounter.get());
+    // System.out.println("L: "+lDelta+"\t"+lPos+"\t"+RobotMap.leftOuttakeCounter.get());
     RobotMap.leftOuttakeCounter.reset();
     
     if(rSpeed > 0){
@@ -97,7 +98,7 @@ public class Outtake extends Subsystem {
 		if(rSpeed < 0){
 			rPos -= RobotMap.rightOuttakeCounter.get();
     }
-    System.out.println("R: "+rDelta+"\t"+rPos+"\t"+RobotMap.rightOuttakeCounter.get());    
+    // System.out.println("R: "+rDelta+"\t"+rPos+"\t"+RobotMap.rightOuttakeCounter.get());    
     RobotMap.rightOuttakeCounter.reset();
     
   }

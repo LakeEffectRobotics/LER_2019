@@ -31,15 +31,17 @@ public class OuttakeCommand extends Command {
       RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
       RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
       Robot.outtake.lastSide = Outtake.SIDE_LEFT;
+      System.out.println("RESET LEDT");
     }   
     if(RobotMap.outerRightSensor.isOnTape()){
-      RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
-      RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
-      Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
+      // RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
+      // RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
+      // Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
     }    
   
     Robot.outtake.drive();
 
+    // System.out.println(RobotMap.leftDriveSpark2.getEncoder().getPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()

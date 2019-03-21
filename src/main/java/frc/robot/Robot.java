@@ -195,12 +195,12 @@ public class Robot extends TimedRobot {
 		double speed = Robot.oi.xbox.getJoyLeftY()/2;
 
 		if(speed > 0){
-			count += RobotMap.rightOuttakeCounter.get();
+			count += RobotMap.leftOuttakeCounter.get();
 		}
 		if(speed < 0){
-			count -= RobotMap.rightOuttakeCounter.get();
+			count -= RobotMap.leftOuttakeCounter.get();
 		}
-		RobotMap.rightOuttakeCounter.reset();
+		RobotMap.leftOuttakeCounter.reset();
 
 
 		RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, speed);

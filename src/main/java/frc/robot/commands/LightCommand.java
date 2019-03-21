@@ -31,8 +31,10 @@ public class LightCommand extends Command {
   protected void execute() {
     Robot.lights.setBoth(Colour.PURPLE);
 
-    double distance = (RobotMap.leftDriveSpark2.getEncoder().getPosition()+RobotMap.rightDriveSpark2.getEncoder().getPosition())/2.0;
+    // double distance = (RobotMap.leftDriveSpark2.getEncoder().getPosition()+RobotMap.rightDriveSpark2.getEncoder().getPosition())/2.0;
+    double distance = Math.abs(RobotMap.leftDriveSpark2.getEncoder().getPosition());
 
+    System.out.println(distance);
     if(Robot.outtake.lastSide == Outtake.SIDE_LEFT && distance < Outtake.MAX_DIST){
       Robot.lights.setColour(Lights.LEFT, Colour.YELLOW);
       if(RobotMap.innerLeftSensor.isOnTape()) 

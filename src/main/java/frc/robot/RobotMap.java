@@ -177,12 +177,12 @@ public class RobotMap {
 		//	1 rotation has 2π radians
 		double rotationsToRadians = 2 * Math.PI;
 		//	The wheels have radius 3"
-		double wheelRadius = 3;
+		double wheelRadius = 6;
 		//	Conversion of encoder rotations to linear distance travelled by the robot (in inches)
 		//		Multiplying by gear ratio gives the number of wheel rotations
 		//		Multiplying by 2π gives the number of radians rotated by the wheels
 		//		Multiplying by wheel radius gives the distance travelled by the robot (in inches)
-		double rotationsToInches = gearRatio * rotationsToRadians * wheelRadius;
+		double rotationsToInches = gearRatio * wheelRadius;
 
 
 		leftDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
