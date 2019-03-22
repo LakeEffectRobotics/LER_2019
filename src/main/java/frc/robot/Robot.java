@@ -191,19 +191,21 @@ public class Robot extends TimedRobot {
 
 		// RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
 
-		System.out.println(count);
-		double speed = Robot.oi.xbox.getJoyLeftY()/2;
+		// System.out.println(count);
+		double lSpeed = Robot.oi.xbox.getJoyLeftY()/2;
+		double rSpeed = Robot.oi.xbox.getJoyRightY()/2;
 
-		if(speed > 0){
-			count += RobotMap.leftOuttakeCounter.get();
-		}
-		if(speed < 0){
-			count -= RobotMap.leftOuttakeCounter.get();
-		}
-		RobotMap.leftOuttakeCounter.reset();
+		// if(speed > 0){
+		// 	count += RobotMap.leftOuttakeCounter.get();
+		// }
+		// if(speed < 0){
+		// 	count -= RobotMap.leftOuttakeCounter.get();
+		// }
+		// RobotMap.leftOuttakeCounter.reset();
 
 
-		RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, speed);
+		RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rSpeed);
+		RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lSpeed);
 		// if(Robot.oi.xbox.getBumperL()){
 		// 	RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
 		// }

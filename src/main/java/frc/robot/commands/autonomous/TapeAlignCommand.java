@@ -38,6 +38,7 @@ public class TapeAlignCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
     System.out.println("Aligning: "+engageLock);
 
     if((RobotMap.outerLeftSensor.isOnTape() || RobotMap.innerLeftSensor.isOnTape()) || 

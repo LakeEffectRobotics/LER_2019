@@ -43,10 +43,10 @@ public class Outtake extends Subsystem {
   /***The maxium distance from the line, in inches */
   public static final int MAX_DIST = 4;
 
-  int targetL = 0;
+  int lTarget = 0;
   int lPos = 0;
 
-  int targetR = 0;
+  int rTarget = 0;
   int rPos = 0;
 
   public int lastSide = SIDE_NONE;
@@ -60,12 +60,17 @@ public class Outtake extends Subsystem {
 
   public void setSide(int side, double t) {
     int target = (int) t;
+
+    if(target == 0){
+      target = -1;
+    }
+
     if (side == SIDE_LEFT) {
-      targetL = target;
+      lTarget = target;
     }
 
     if (side == SIDE_RIGHT) {
-      targetR = target;
+      rTarget = target;
     }
 
     System.out.println(side);
@@ -73,12 +78,20 @@ public class Outtake extends Subsystem {
 
   public void drive() {
 
-
-    int lDelta = lPos - targetL;
+    int lDelta = lPos - lTarget;
     double lSpeed = lDelta * -P;
+
+    if(lTarget < 0 && lDelta < 2){
+      lTarget --;
+    }
     
-    int rDelta = rPos - targetR;
+    int rDelta = rPos - rTarget;
     double rSpeed = rDelta * -P;
+
+    
+    if(rTarget < 0 && rDelta < 2){
+      rTarget --;
+    }
 
     RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -1, 1));
     RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, Tools.fitToRange(rSpeed, -1, 1));
@@ -100,7 +113,16 @@ public class Outtake extends Subsystem {
     }
     // System.out.println("R: "+rDelta+"\t"+rPos+"\t"+RobotMap.rightOuttakeCounter.get());    
     RobotMap.rightOuttakeCounter.reset();
-    
+
+    if(RobotMap.leftOuttakeLimit.get()){
+      lPos = 0;
+      lTarget = 0;
+    }
+    if(RobotMap.rightOuttakeLimit.get()){
+      rPos = 0;
+      rTarget = 0;
+    }
+
   }
 
 }

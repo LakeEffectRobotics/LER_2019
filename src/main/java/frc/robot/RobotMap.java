@@ -88,7 +88,9 @@ public class RobotMap {
 	final static int RIGHT_OUTTAKE_TALON = 12;
 
 	final static int LEFT_OUTTAKE_COUNTER = 2;
+	final static int LEFT_OUTTAKE_LIMIT = 4;
 	final static int RIGHT_OUTTAKE_COUNTER = 1;
+	final static int RIGHT_OUTTAKE_LIMIT = 3;
 
 	//LED pins
 	//TODO set proper pins
@@ -129,7 +131,9 @@ public class RobotMap {
 	public static final Counter leftOuttakeCounter = new Counter(new DigitalInput(LEFT_OUTTAKE_COUNTER));
 	public static final Counter rightOuttakeCounter = new Counter(new DigitalInput(RIGHT_OUTTAKE_COUNTER));
 
-
+	public static final DigitalInput leftOuttakeLimit = new DigitalInput(LEFT_OUTTAKE_LIMIT);
+	public static final DigitalInput rightOuttakeLimit = new DigitalInput(RIGHT_OUTTAKE_LIMIT);
+		
 	
 	//LED lights
 	public static Relay leftLED_PB = new Relay(LEFT_PB_RELAY, Relay.Direction.kBoth);
