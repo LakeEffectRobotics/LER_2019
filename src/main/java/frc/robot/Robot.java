@@ -204,8 +204,8 @@ public class Robot extends TimedRobot {
 		// RobotMap.leftOuttakeCounter.reset();
 
 
-		RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rSpeed);
-		RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lSpeed);
+		RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, rSpeed);
+		RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, lSpeed);
 		// if(Robot.oi.xbox.getBumperL()){
 		// 	RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
 		// }

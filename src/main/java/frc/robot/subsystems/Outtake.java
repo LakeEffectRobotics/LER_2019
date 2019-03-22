@@ -93,8 +93,8 @@ public class Outtake extends Subsystem {
       rTarget --;
     }
 
-    RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -1, 1));
-    RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, Tools.fitToRange(rSpeed, -1, 1));
+    RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -1, 1));
+    RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(rSpeed, -1, 1));
 
     if(lSpeed > 0){
 			lPos += RobotMap.leftOuttakeCounter.get();

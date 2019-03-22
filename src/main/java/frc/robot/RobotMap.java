@@ -84,8 +84,8 @@ public class RobotMap {
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
 
-	final static int LEFT_OUTTAKE_TALON = 11;
-	final static int RIGHT_OUTTAKE_TALON = 12;
+	final static int LEFT_OUTTAKE_VICTOR = 22;
+	final static int RIGHT_OUTTAKE_VICTOR = 23;
 
 	final static int LEFT_OUTTAKE_COUNTER = 2;
 	final static int LEFT_OUTTAKE_LIMIT = 4;
@@ -119,8 +119,8 @@ public class RobotMap {
 	public static TalonSRX climberTalon = new TalonSRX(CLIMBER_TALON);
 	public static VictorSPX climberVictor = new VictorSPX(CLIMBER_VICTOR);
 
-	public static TalonSRX leftOuttakeTalon = new TalonSRX(LEFT_OUTTAKE_TALON);
-	public static TalonSRX rightOuttakeTalon = new TalonSRX(RIGHT_OUTTAKE_TALON);
+	public static VictorSPX leftOuttakeVictor = new VictorSPX(LEFT_OUTTAKE_VICTOR);
+	public static VictorSPX rightOuttakeVictor = new VictorSPX(RIGHT_OUTTAKE_VICTOR);
 	/**
 	 * Creating Gyro object
 	 */	
