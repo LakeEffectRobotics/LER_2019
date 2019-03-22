@@ -7,6 +7,9 @@
 
 package frc.robot.commands.autonomous;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.revrobotics.ControlType;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -14,74 +17,70 @@ import frc.robot.RobotMap;
 import frc.robot.Tools;
 
 public class TapeAlignCommand extends Command {
-  //  TODO: Update these values
-  final static double MAX_DRIVE_DISTANCE = 18;    //  If the "B" sensors fail to detect tape after initially driving this distance, the command will simply finish.
-  final static double SENSOR_SPACING = 12;        //  The distance between the "A" and "B" sensors (and the distance that must be driven once the "B" sensors detect the tape). 
-  final static double MIN_SPEED = 0.2;
-  final static double FINISHED_THRESHOLD = 4;     //  If the "A" sensors fail to detect tape after driving this distance past SENSOR_SPACING, the command will simply finish.
 
-  double speed;
-  boolean isLeftSide;
-  boolean[] tapeDetected = new boolean[3];        //  tapeDetected[0] states if a "B" sensor has detected the tape. tapeDetected[1] states if the first corresponding "A" sensor has detected the tape. tapeDetected[2] states if the second corresponding "A" sensor has detected the tape. 
-  boolean finished = false;
+  boolean engageLock = false;
+  boolean passedTape = false;
 
-  public TapeAlignCommand(double speed) {
+  public TapeAlignCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.drivetrain);
-    this.speed = speed;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.drivetrain.resetEncoderPositions();
+    engageLock = false;
+    passedTape = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double averageEncoderPosition = -Robot.drivetrain.getAverageEncoderPosition();  //  Positions and velocities are inverted here because the robot is to be driven in reverse (in the direction of the hatch panel mechanism). 
-    if (!tapeDetected[0]) {
-      if (averageEncoderPosition < MAX_DRIVE_DISTANCE) {
-        Robot.drivetrain.drive(-speed, -speed);
-        if (RobotMap.backLeftSensor.isOnTape()) {
-          isLeftSide = true;
-          tapeDetected[0] = true;
-          Robot.drivetrain.resetEncoderPositions();
-        } else if (RobotMap.backLeftSensor.isOnTape()) {
-          isLeftSide = false;
-          tapeDetected[0] = true;
-          Robot.drivetrain.resetEncoderPositions();
-        }
-      } else {
-        finished = true;
-      }
-    } else {
-      double distanceLeft = SENSOR_SPACING - averageEncoderPosition;
-      double output = 0;
-      
-      if (distanceLeft > SENSOR_SPACING) {
-    		output = speed;
-    	} else if (distanceLeft < -SENSOR_SPACING) {
-    		output = -speed;
-      } else {
-        output = speed * (distanceLeft / SENSOR_SPACING);
-        output = Tools.setAbsoluteMinimum(output, MIN_SPEED);
-      }
-      Robot.drivetrain.drive(-speed, -speed);
+    System.out.println("Aligning: "+engageLock);
 
-      if (robotOnTape() || distanceLeft < -FINISHED_THRESHOLD) {
-        finished = true;
-      }
+    if((RobotMap.outerLeftSensor.isOnTape() || RobotMap.innerLeftSensor.isOnTape()) || 
+        (RobotMap.outerRightSensor.isOnTape() || RobotMap.innerRightSensor.isOnTape())){
+      engageLock = true;
+      RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
+      RobotMap.rightDriveSpark1.getEncoder().setPosition(0);
+    }
+
+    if(engageLock){
+      RobotMap.leftDriveSpark1.getPIDController().setReference(0, ControlType.kPosition);
+      RobotMap.rightDriveSpark1.getPIDController().setReference(0, ControlType.kPosition);
+    }else{
+      normalDrive();
     }
   }
-  //  TODO: Add some LED code in here to let drive team know if the line-up has succeeded/failed
+
+  public void normalDrive(){
+        //  Pushing the joysticks forward gives a negative Y value, whereas pushing them backward gives a positive Y value
+        double lSpeed = -Robot.oi.lJoy.getY();
+        double rSpeed = -Robot.oi.rJoy.getY();
+        double average = (lSpeed+rSpeed)/2;
+    
+        lSpeed = Tools.getAdaptedSpeed(lSpeed)*0.5;
+        rSpeed = Tools.getAdaptedSpeed(rSpeed)*0.5;
+    
+        // if sticks are close and speed reasonable, go straight
+        if(Math.abs(lSpeed-rSpeed)<0.05 && Math.abs(average)>0.25){
+          lSpeed = average;
+          rSpeed = average;
+        }
+        if(Robot.oi.slowDrive.get()){
+          Robot.drivetrain.drive(lSpeed*0.5, rSpeed*0.5);
+        }
+        else{
+          Robot.drivetrain.drive(lSpeed, rSpeed);
+        }
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -95,22 +94,4 @@ public class TapeAlignCommand extends Command {
   protected void interrupted() {
   }
 
-  protected boolean robotOnTape() {
-    if (isLeftSide) {
-      if (RobotMap.outerLeftSensor.isOnTape()) {
-        tapeDetected[1] = true;
-      }
-      if (RobotMap.innerLeftSensor.isOnTape()) {
-        tapeDetected[2] = true;
-      }
-    } else {
-      if (RobotMap.innerRightSensor.isOnTape()) {
-        tapeDetected[1] = true;
-      }
-      if (RobotMap.outerRightSensor.isOnTape()) {
-        tapeDetected[2] = true;
-      }
-    }
-    return (tapeDetected[1] && tapeDetected[2]);
-  }
 }

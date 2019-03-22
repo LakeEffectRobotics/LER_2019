@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Disco;
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.autonomous.AutoIntakeCommand;
+import frc.robot.commands.autonomous.TapeAlignCommand;
 import frc.robot.commands.autonomous.VisionDriveCommand;
 import frc.robot.commands.instant.SetElevatorHeightCommand;
 import frc.robot.commands.instant.SetIntakeArm;
@@ -29,14 +30,14 @@ public class OI {
 	final int XBOX = 2;
 
 	//Left Joystick buttons
-	final int TAPE_DRIVE_BUTTON = 2;
 	final int GYRO_DRIVE_BUTTON = 1;
 	final int VISION_DRIVE_BUTTON = 3;
 	final int RESET_CAM_BUTTON = 10;
 
 	//Right Joystick buttons
 	final int SLOW_DRIVE_BUTTON = 2;
-	final int SHAWN_DRIVE_BUTTON = 1;
+	final int SHAWN_DRIVE_BUTTON = 3;
+	final int TAPE_DRIVE_BUTTON = 1;
 
 	//Xbox buttons:
 	final int GROUND_HEIGHT_BUTTON = XBoxController.XBOX_A;
@@ -60,13 +61,13 @@ public class OI {
 	public Joystick rJoy = new Joystick(R_JOY);
 	public XBoxController xbox = new XBoxController(XBOX);
 
-	JoystickButton tapeDrive = new JoystickButton(lJoy, TAPE_DRIVE_BUTTON);
 	JoystickButton gyroDrive = new JoystickButton(lJoy, GYRO_DRIVE_BUTTON);
 	JoystickButton visionDrive = new JoystickButton(lJoy, VISION_DRIVE_BUTTON);
 	JoystickButton resetCam = new JoystickButton(lJoy, RESET_CAM_BUTTON);
 
 	public JoystickButton slowDrive = new JoystickButton(rJoy, SLOW_DRIVE_BUTTON);
 	public JoystickButton shawnDrive = new JoystickButton(rJoy, SHAWN_DRIVE_BUTTON);
+	JoystickButton tapeDrive = new JoystickButton(rJoy, TAPE_DRIVE_BUTTON);
 
 	XBoxButton groundHeight = new XBoxButton(xbox, GROUND_HEIGHT_BUTTON);
 	XBoxButton lowHeight = new XBoxButton(xbox, LOW_ROCKET_BUTTON);
@@ -90,6 +91,7 @@ public class OI {
 		//Joystick Buttons
 		gyroDrive.whileHeld(new StraightGyroDriveCommand());
 		visionDrive.whileHeld(new VisionDriveCommand());
+		tapeDrive.whileHeld(new TapeAlignCommand());
 
 		//XBox Buttons
 		groundHeight.whenPressed(new SetElevatorHeightCommand(Elevator.GROUND_HEIGHT));

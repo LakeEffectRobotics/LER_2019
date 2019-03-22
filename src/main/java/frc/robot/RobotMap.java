@@ -169,7 +169,10 @@ public class RobotMap {
 		leftDriveSpark3.follow(leftDriveSpark1);
 
 		leftDriveSpark1.setOpenLoopRampRate(0.25);
-		rightDriveSpark1.setOpenLoopRampRate(0.25);  
+		rightDriveSpark1.setOpenLoopRampRate(0.25); 
+		
+		leftDriveSpark1.getPIDController().setP(1);
+		rightDriveSpark1.getPIDController().setP(1);
 
 		//	Ratio of wheel rotations to encoder rotations
 		//	Also equal to the ratio of teeth on the motor gears to teeth on the wheel gears
