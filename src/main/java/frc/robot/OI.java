@@ -33,6 +33,7 @@ public class OI {
 	final int GYRO_DRIVE_BUTTON = 1;
 	final int VISION_DRIVE_BUTTON = 3;
 	final int RESET_CAM_BUTTON = 10;
+	final int DISCO_BUTTON = 2;
 
 	//Right Joystick buttons
 	final int SLOW_DRIVE_BUTTON = 2;
@@ -64,6 +65,7 @@ public class OI {
 	JoystickButton gyroDrive = new JoystickButton(lJoy, GYRO_DRIVE_BUTTON);
 	JoystickButton visionDrive = new JoystickButton(lJoy, VISION_DRIVE_BUTTON);
 	JoystickButton resetCam = new JoystickButton(lJoy, RESET_CAM_BUTTON);
+	JoystickButton disco = new JoystickButton(lJoy, DISCO_BUTTON);
 
 	public JoystickButton slowDrive = new JoystickButton(rJoy, SLOW_DRIVE_BUTTON);
 	public JoystickButton shawnDrive = new JoystickButton(rJoy, SHAWN_DRIVE_BUTTON);
@@ -112,6 +114,6 @@ public class OI {
 		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));
 		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_IN));
 
-		// disco.whileHeld(new Disco());
+		disco.whileHeld(new Disco());
 	}
 }

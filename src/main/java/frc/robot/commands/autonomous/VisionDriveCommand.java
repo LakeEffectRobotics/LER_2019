@@ -40,6 +40,8 @@ public class VisionDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //Saftey to prevet crashes
+    if(RobotMap.jevoisSerial == null) return;
     System.out.println("VisionDrive: "+RobotMap.jevoisSerial.getBytesReceived());
     int available = RobotMap.jevoisSerial.getBytesReceived();
     // Update collector
