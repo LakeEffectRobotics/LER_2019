@@ -34,6 +34,7 @@ public class OI {
 	final int VISION_DRIVE_BUTTON = 3;
 	final int RESET_CAM_BUTTON = 10;
 	final int DISCO_BUTTON = 2;
+	final int DEFENSE_BUTTON = 7;
 
 	//Right Joystick buttons
 	final int SLOW_DRIVE_BUTTON = 2;
@@ -66,6 +67,7 @@ public class OI {
 	JoystickButton visionDrive = new JoystickButton(lJoy, VISION_DRIVE_BUTTON);
 	JoystickButton resetCam = new JoystickButton(lJoy, RESET_CAM_BUTTON);
 	JoystickButton disco = new JoystickButton(lJoy, DISCO_BUTTON);
+	JoystickButton defense = new JoystickButton(lJoy, DEFENSE_BUTTON);
 
 	public JoystickButton slowDrive = new JoystickButton(rJoy, SLOW_DRIVE_BUTTON);
 	public JoystickButton shawnDrive = new JoystickButton(rJoy, SHAWN_DRIVE_BUTTON);
@@ -94,6 +96,7 @@ public class OI {
 		gyroDrive.whileHeld(new StraightGyroDriveCommand());
 		visionDrive.whileHeld(new VisionDriveCommand());
 		tapeDrive.whileHeld(new TapeAlignCommand());
+		defense.whenPressed(new SetIntakeArm(Intake.POSITION_MAX));
 
 		//XBox Buttons
 		groundHeight.whenPressed(new SetElevatorHeightCommand(Elevator.GROUND_HEIGHT));
@@ -106,9 +109,9 @@ public class OI {
 		cancelIntake.whenPressed(new SetIntakeArm(Intake.POSITION_UP));
 
 		outtakeLeft.whenPressed(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_OUT));
-		outtakeLeft.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));
+		outtakeLeft.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_RESET));
 		outtakeRight.whenPressed(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_OUT));
-		outtakeRight.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_IN));
+		outtakeRight.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_RESET));
 
 		autoOuttake.whenPressed(new SetOuttake(SetOuttake.SIDE_AUTO, SetOuttake.AUTO_OUT));
 		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));

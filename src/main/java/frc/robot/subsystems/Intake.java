@@ -28,9 +28,9 @@ public class Intake extends Subsystem {
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;*/
 
   // Twin Bot:
-  public static final double POSITION_MAX = -205;
-  public static final double POSITION_UP = -138;
-  public static final double POSITION_DOWN = -4;
+  public static final double POSITION_MAX = 492;
+  public static final double POSITION_UP = 333;
+  public static final double POSITION_DOWN = 115;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
   public double targetPosition=POSITION_UP;
@@ -47,7 +47,7 @@ public class Intake extends Subsystem {
   }
 
   public void init(){
-    if(getPosition() > POSITION_MID){
+    if(getPosition() < POSITION_MID){
       setTargetPosition(getPosition());
     }
     else{
@@ -56,10 +56,10 @@ public class Intake extends Subsystem {
   }
 
   public void setTargetPosition(double position){
-    if(position < POSITION_MAX) {  // sensor values are negative 
+    if(position > POSITION_MAX) {  // sensor values are negative 
       position=POSITION_MAX;
     }
-    if(position > POSITION_DOWN) {  // sensor values are negative
+    if(position < POSITION_DOWN) {  // sensor values are negative
       position=POSITION_DOWN;
     }
     if (position!=POSITION_DOWN) {

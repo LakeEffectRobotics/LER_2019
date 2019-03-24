@@ -17,7 +17,7 @@ import frc.robot.subsystems.Intake;
 
 public class AutoIntakeCommand extends Command {
 
-  final double SPEED = 0.95;
+  final double SPEED = 0.8;
   final double DEADZONE = 0.2;
   boolean pressed = false;
   long time = 0;
@@ -44,7 +44,7 @@ public class AutoIntakeCommand extends Command {
     } else {
       Robot.intake.spin(SPEED);
     }
-    if(RobotMap.intakeLimitSwitch.get() && !pressed){
+    if(!RobotMap.intakeLimitSwitch.get() && !pressed){
       pressed = true;
       time = System.currentTimeMillis();
     }
@@ -56,7 +56,7 @@ public class AutoIntakeCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.intake.getTargetPosition()==Intake.POSITION_UP && !RobotMap.intakeLimitSwitch.get());
+    return (Robot.intake.getTargetPosition()==Intake.POSITION_UP && RobotMap.intakeLimitSwitch.get());
   }
 
   // Called once after isFinished returns true

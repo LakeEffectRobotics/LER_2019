@@ -27,7 +27,7 @@ public class Elevator extends Subsystem {
   }
 
   //TODO: Set heights
-  public static final double GROUND_HEIGHT = 1;
+  public static final double GROUND_HEIGHT = -1;
   public static final double MAX_HEIGHT = 49;
   
   public static final double LOW_HEIGHT = 8.857;

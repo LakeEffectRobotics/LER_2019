@@ -29,10 +29,12 @@ public class Outtake extends Subsystem {
 
   public static final int L_GRIP = 0;
   public static final int L_IN = 0;
-  public static final int L_OUT = 20;
+  public static final int L_OUT = 25;
+  public static final int L_RESET = -1;
   public static final int R_GRIP = 0;
   public static final int R_IN = 0;
-  public static final int R_OUT = 20;
+  public static final int R_OUT = 25;
+  public static final int R_RESET = -1;
 
   public static final int SIDE_RIGHT = 1;
   public static final int SIDE_LEFT = 0;
@@ -43,13 +45,16 @@ public class Outtake extends Subsystem {
   /***The maxium distance from the line, in inches */
   public static final int MAX_DIST = 4;
 
-  int lTarget = 0;
+  int lTarget = -1;
   int lPos = 0;
 
-  int rTarget = 0;
+  int rTarget = -1;
   int rPos = 0;
 
   public int lastSide = SIDE_NONE;
+
+  private boolean lRecentReset=false, rRecentReset=false;
+  private int lLimitCount=0, rLimitCount=0;
 
   @Override
   public void initDefaultCommand() {
@@ -62,7 +67,7 @@ public class Outtake extends Subsystem {
     int target = (int) t;
 
     if(target == 0){
-      target = -1;
+      target = -1; //Special target position to ensure limit pressed
     }
 
     if (side == SIDE_LEFT) {
@@ -73,56 +78,140 @@ public class Outtake extends Subsystem {
       rTarget = target;
     }
 
-    System.out.println(side);
+    //System.out.println(side);
   }
 
   public void drive() {
 
-    int lDelta = lPos - lTarget;
-    double lSpeed = lDelta * -P;
+    /*int lDelta = lPos - lTarget;
+    double lSpeed = lDelta * P;
+
 
     if(lTarget < 0 && lDelta < 2){
-      lTarget --;
+      lTarget --; //Shift target to keep moving
     }
     
     int rDelta = rPos - rTarget;
-    double rSpeed = rDelta * -P;
+    double rSpeed = rDelta * -P;*/
 
-    
-    if(rTarget < 0 && rDelta < 2){
-      rTarget --;
+    if (lTarget>0) {
+      lRecentReset=false;
+    }
+    if (rTarget>0) {
+      rRecentReset=false;
     }
 
-    RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -1, 1));
-    RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(rSpeed, -1, 1));
+    if (!RobotMap.leftOuttakeLimit.get()) {
+      lLimitCount++;
+    } else {
+      lLimitCount=0;
+    }
+    if (!RobotMap.rightOuttakeLimit.get()) {
+      rLimitCount++;
+    } else {
+      rLimitCount=0;
+    }
 
-    if(lSpeed > 0){
+    if (lLimitCount>5 && !lRecentReset) {
+      lPos=0;
+      if (lTarget==-1) lTarget=0;
+      lRecentReset=true;
+    }
+    if (rLimitCount>8 && !rRecentReset) {
+      rPos=0;
+      if (rTarget==-1) rTarget=0;
+      rRecentReset=true;
+    }
+
+    if (RobotMap.leftOuttakeVictor.getMotorOutputVoltage()>0) {
 			lPos += RobotMap.leftOuttakeCounter.get();
-		}
-		if(lSpeed < 0){
-			lPos -= RobotMap.leftOuttakeCounter.get();
-		}
-    // System.out.println("L: "+lDelta+"\t"+lPos+"\t"+RobotMap.leftOuttakeCounter.get());
-    RobotMap.leftOuttakeCounter.reset();
-    
-    if(rSpeed > 0){
-      rPos += RobotMap.rightOuttakeCounter.get();
-		}
-		if(rSpeed < 0){
-			rPos -= RobotMap.rightOuttakeCounter.get();
+		} else {
+      lPos -= RobotMap.leftOuttakeCounter.get();
     }
+    RobotMap.leftOuttakeCounter.reset();
+
+    if (RobotMap.rightOuttakeVictor.getMotorOutputVoltage()>0) {
+      rPos += RobotMap.rightOuttakeCounter.get();
+    } else {
+      rPos -= RobotMap.rightOuttakeCounter.get();
+    }
+    RobotMap.rightOuttakeCounter.reset();
+
+    if (lPos<-1) {
+      lPos=lTarget-1;
+    }
+    if (rPos<-1) {
+      rPos=rTarget-1;
+    }
+
+
+    int lDelta = lPos - lTarget;
+    double lSpeed = lDelta * P;
+
+    int rDelta = rPos - rTarget;
+    double rSpeed = rDelta * P;
+
+    //RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -0.75, 0.75));
+    //RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(-rSpeed, -0.75, 0.75));
+    if (lDelta<-5) {
+      RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput,.75);
+    } else if (lDelta<0) {
+      RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput,.15);
+    } else if (lDelta>5) {
+      RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput,-.75);
+    } else {
+      RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput,-.15);
+    }
+
+    if (rDelta<-5) {
+      RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput,.75);
+    } else if (rDelta<0) {
+      RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput,.15);
+    } else if (rDelta>5) {
+      RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput,-.75);
+    } else {
+      RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput,-.15);
+    }
+    
+    /*if(rTarget < 0 && rDelta < 2){
+      rTarget --; //Shift target to keep moving
+    }
+
+    //if(lSpeed > 0){
+    if (RobotMap.leftOuttakeVictor.getMotorOutputVoltage()>0) {
+			lPos += RobotMap.leftOuttakeCounter.get();
+		} else {
+		//if(lSpeed < 0){
+      lPos -= RobotMap.leftOuttakeCounter.get();
+    }
+    //if(rSpeed > 0){
+    if (RobotMap.rightOuttakeVictor.getMotorOutputVoltage()>0) {
+      rPos += RobotMap.rightOuttakeCounter.get();
+    } else {
+    //if(rSpeed < 0){
+      rPos -= RobotMap.rightOuttakeCounter.get();
+    }
+ 
+    RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -0.75, 0.75));
+    RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(rSpeed, -0.75, 0.75));
+
+   System.out.println("L: "+lDelta+"\t"+lPos+"\t"+!RobotMap.leftOuttakeLimit.get()+"\t"+lTarget);
+    RobotMap.leftOuttakeCounter.reset();
+
+
     // System.out.println("R: "+rDelta+"\t"+rPos+"\t"+RobotMap.rightOuttakeCounter.get());    
     RobotMap.rightOuttakeCounter.reset();
 
-    if(RobotMap.leftOuttakeLimit.get()){
+    System.out.println(lSpeed+"\t"+lDelta+"\t"+!RobotMap.leftOuttakeLimit.get());
+
+    if(!RobotMap.leftOuttakeLimit.get()){
       lPos = 0;
-      lTarget = 0;
+      lTarget = 4; // Move back off the limit switch
     }
-    if(RobotMap.rightOuttakeLimit.get()){
+    if(!RobotMap.rightOuttakeLimit.get()){
       rPos = 0;
-      rTarget = 0;
+      rTarget = 4; // Move back off the limit switch
     }
-
+*/
   }
-
 }

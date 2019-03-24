@@ -51,6 +51,8 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
+
+	public static final boolean CLIMBER_ENABLED = true;
 	
 	public static final int PID_MODE = 0;  //0 for closed loop 1 for cascaded closed loop
 
@@ -67,13 +69,13 @@ public class RobotMap {
 	final static int CLIMBER_TALON = 11;
 	final static int CLIMBER_VICTOR = 21;
 
-	final static int BACK_LEFT_SENSOR = 4;
-	final static int OUTER_LEFT_SENSOR = 5;
-	final static int INNER_LEFT_SENSOR = 6;
+	// final static int BACK_LEFT_SENSOR = 0;
+	final static int OUTER_LEFT_SENSOR = 1;
+	final static int INNER_LEFT_SENSOR = 2;
 	
-	final static int BACK_RIGHT_SENSOR = 9;
-	final static int OUTER_RIGHT_SENSOR = 8;
-	final static int INNER_RIGHT_SENSOR = 7;
+	final static int BACK_RIGHT_SENSOR = 4;
+	final static int OUTER_RIGHT_SENSOR = 5;
+	final static int INNER_RIGHT_SENSOR = 3;
 
 	final static int INTAKE_ARM_TALON = 10;
 	final static int INTAKE_ARM_VICTOR = 20;
@@ -84,13 +86,13 @@ public class RobotMap {
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
 
-	final static int LEFT_OUTTAKE_VICTOR = 22;
-	final static int RIGHT_OUTTAKE_VICTOR = 23;
+	final static int LEFT_OUTTAKE_VICTOR = 23;
+	final static int RIGHT_OUTTAKE_VICTOR = 22;
 
-	final static int LEFT_OUTTAKE_COUNTER = 2;
-	final static int LEFT_OUTTAKE_LIMIT = 4;
-	final static int RIGHT_OUTTAKE_COUNTER = 1;
-	final static int RIGHT_OUTTAKE_LIMIT = 3;
+	final static int LEFT_OUTTAKE_COUNTER = 6;
+	final static int LEFT_OUTTAKE_LIMIT = 9;
+	final static int RIGHT_OUTTAKE_COUNTER = 7;
+	final static int RIGHT_OUTTAKE_LIMIT = 8;
 
 	//LED pins
 	//TODO set proper pins
@@ -151,8 +153,8 @@ public class RobotMap {
 	public static TapeSensor innerRightSensor;
 	
 	public static void init() { //r/outoftheloop
-		System.out.println("BL:"+BACK_LEFT_SENSOR);
-		backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
+		// System.out.println("BL:"+BACK_LEFT_SENSOR);
+		// backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
 		System.out.println("OL:"+OUTER_LEFT_SENSOR);
 		outerLeftSensor = new TapeSensor(OUTER_LEFT_SENSOR);
 		System.out.println("IL:"+INNER_LEFT_SENSOR);
@@ -204,7 +206,7 @@ public class RobotMap {
 
 		intakeArmTalon.configOpenloopRamp(0.1);
 		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-		intakeArmTalon.setSensorPhase(true);
+		intakeArmTalon.setSensorPhase(false);
 		intakeArmTalon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector,LimitSwitchNormal.NormallyOpen);
 		intakeArmTalon.config_kP(0, 1.0, 0);
 		intakeArmTalon.config_kI(0, 0.0, 0);
@@ -224,12 +226,20 @@ public class RobotMap {
 		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
 		// climberTalon2.follow(climberTalon1);
+		if (CLIMBER_ENABLED) {
+			climberTalon.set(ControlMode.PercentOutput,0.0);
+			climberVictor.follow(climberTalon);
+		}
+
 
 		//LEDs off by default:
 		leftLED_PB.set(Relay.Value.kOff);
 		leftLED_GB.set(Relay.Value.kOff);
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
+
+		leftOuttakeVictor.set(ControlMode.PercentOutput, 0);
+		rightOuttakeVictor.set(ControlMode.PercentOutput, 0);
 
 		// jevoisSerial = new SerialPort(115200, Port.kUSB);
 

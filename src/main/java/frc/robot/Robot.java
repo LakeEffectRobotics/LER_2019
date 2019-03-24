@@ -14,6 +14,8 @@ import com.revrobotics.ControlType;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Relay.Value;
@@ -62,7 +64,9 @@ public class Robot extends TimedRobot {
 				RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
 			}
 		}
+		System.out.println(!RobotMap.leftOuttakeLimit.get());
 		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
+		// System.out.println(!RobotMap.intakeLimitSwitch.get()+ "\t" +RobotMap.intakeArmTalon.getSelectedSensorPosition()+"\t"+Robot.intake.getTargetPosition()+"\t"+Robot.oi.xbox.getJoyRightY());
 	}
 
 	public void enabledInit() {
@@ -97,7 +101,8 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		robotPeriodic();
-		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+
+		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
@@ -127,7 +132,6 @@ public class Robot extends TimedRobot {
 		intake.init();
 		outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
 		outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
-
 		enabledInit();
 	}
 
@@ -150,6 +154,8 @@ public class Robot extends TimedRobot {
 	double l = 0.5;
 	double r = 0.5;
 
+	AnalogInput a0 = new AnalogInput(0);
+
 	public void testInit() {
 	}
 
@@ -157,6 +163,7 @@ public class Robot extends TimedRobot {
 //0.5465,0.4078,
 	@Override
 	public void testPeriodic() {
+		Robot.intake.setTargetPosition(Intake.POSITION_MAX);
 		// if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > 0.1)
 		// 	l += Robot.oi.xbox.getJoyLeftY()/200;
 		// RobotMap.leftServo.set(l);
@@ -192,8 +199,8 @@ public class Robot extends TimedRobot {
 		// RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
 
 		// System.out.println(count);
-		double lSpeed = Robot.oi.xbox.getJoyLeftY()/2;
-		double rSpeed = Robot.oi.xbox.getJoyRightY()/2;
+		double lSpeed = Robot.oi.lJoy.getY();
+		double rSpeed = Robot.oi.rJoy.getY();
 
 		// if(speed > 0){
 		// 	count += RobotMap.leftOuttakeCounter.get();
@@ -203,11 +210,18 @@ public class Robot extends TimedRobot {
 		// }
 		// RobotMap.leftOuttakeCounter.reset();
 
+		System.out.println(!RobotMap.leftOuttakeLimit.get()+"\t"+!RobotMap.rightOuttakeLimit.get());
+		if (RobotMap.CLIMBER_ENABLED) {
+			RobotMap.climberTalon.set(ControlMode.PercentOutput, rSpeed);
+		}
+		// RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, rSpeed);
 
-		RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, rSpeed);
-		RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, lSpeed);
+		// RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, rSpeed);
+		// RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, lSpeed);
 		// if(Robot.oi.xbox.getBumperL()){
 		// 	RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
 		// }
+
+
 	}
 }

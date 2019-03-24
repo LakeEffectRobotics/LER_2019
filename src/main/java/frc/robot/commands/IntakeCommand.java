@@ -29,7 +29,7 @@ public class IntakeCommand extends Command {
   @Override
   protected void execute() {
     // if(Math.abs(Robot.oi.xbox.getJoyRightY()) > 0.2){
-    //   Robot.intake.setTargetPosition(Robot.intake.getTargetPosition()+Robot.oi.xbox.getJoyRightY());
+    //   Robot.intake.set(ControlMode.Percent,  Robot.oi.xbox.getJoyRightY());
     // }
     // //Retract the arm for defence
     // if(Robot.oi.xbox.getDpadUp()){
