@@ -18,16 +18,16 @@ import frc.robot.subsystems.Outtake;
 public class SetOuttake extends InstantCommand {
 
   int side = 5;
-  double position;
+  int position;
   public static final int SIDE_AUTO = 5;
   public static final int SIDE_BOTH = 6;
 
-  public static double AUTO_OUT = -1;
-  public static double AUTO_IN = -2;
+  public static int AUTO_OUT = -1;
+  public static int AUTO_IN = -2;
   /**
    * Add your docs here.
    */
-  public SetOuttake(int s, double pos) {
+  public SetOuttake(int s, int pos) {
     super();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -67,8 +67,17 @@ public class SetOuttake extends InstantCommand {
         return;
       }
     }
-    Robot.outtake.setSide(side,position);
-    // System.out.println("OUTTAKE "+side);
+    // if(position == Outtake.L_OUT){
+    //   Robot.outtake.setSide(Outtake.SIDE_LEFT,Outtake.L_OUT);
+    //   Robot.outtake.setSide(Outtake.SIDE_RIGHT,Outtake.R_IN);
+    // }
+    // if(position == Outtake.R_OUT){
+    //   Robot.outtake.setSide(Outtake.SIDE_LEFT,Outtake.L_IN);
+    //   Robot.outtake.setSide(Outtake.SIDE_RIGHT,Outtake.R_OUT);
+    // }
+    // else{
+    Robot.outtake.setSide(side, position);
+    // }
   }
 
 }

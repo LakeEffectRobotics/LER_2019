@@ -76,6 +76,15 @@ public class Elevator extends Subsystem {
       if(target < GROUND_HEIGHT) target = GROUND_HEIGHT;
     }
 
+    // if(target == GROUND_HEIGHT){
+    //   Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
+    //   Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
+    // }
+    // else{
+    //   Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_GRIP);
+    //   Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_GRIP);
+    // }
+
     // System.out.println(target + "\t" + src);
     RobotMap.elevatorSpark1.getPIDController().setReference(target, ControlType.kPosition);
   }

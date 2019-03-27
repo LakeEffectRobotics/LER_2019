@@ -64,7 +64,6 @@ public class Robot extends TimedRobot {
 				RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
 			}
 		}
-		System.out.println(!RobotMap.leftOuttakeLimit.get());
 		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 		// System.out.println(!RobotMap.intakeLimitSwitch.get()+ "\t" +RobotMap.intakeArmTalon.getSelectedSensorPosition()+"\t"+Robot.intake.getTargetPosition()+"\t"+Robot.oi.xbox.getJoyRightY());
 	}
@@ -163,7 +162,6 @@ public class Robot extends TimedRobot {
 //0.5465,0.4078,
 	@Override
 	public void testPeriodic() {
-		Robot.intake.setTargetPosition(Intake.POSITION_MAX);
 		// if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > 0.1)
 		// 	l += Robot.oi.xbox.getJoyLeftY()/200;
 		// RobotMap.leftServo.set(l);
@@ -200,7 +198,7 @@ public class Robot extends TimedRobot {
 
 		// System.out.println(count);
 		double lSpeed = Robot.oi.lJoy.getY();
-		double rSpeed = Robot.oi.rJoy.getY();
+		double rSpeed = Robot.oi.xbox.getJoyRightY()/2;
 
 		// if(speed > 0){
 		// 	count += RobotMap.leftOuttakeCounter.get();
@@ -210,10 +208,18 @@ public class Robot extends TimedRobot {
 		// }
 		// RobotMap.leftOuttakeCounter.reset();
 
-		System.out.println(!RobotMap.leftOuttakeLimit.get()+"\t"+!RobotMap.rightOuttakeLimit.get());
+		// System.out.println(!RobotMap.leftOuttakeLimit.get()+"\t"+!RobotMap.rightOuttakeLimit.get());
 		if (RobotMap.CLIMBER_ENABLED) {
-			RobotMap.climberTalon.set(ControlMode.PercentOutput, rSpeed);
+			RobotMap.climberTalon.set(ControlMode.PercentOutput, lSpeed);
 		}
+
+		System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition()+"\t"+RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
+
+		if(Math.abs(lSpeed) < 0.1) lSpeed = 0;
+		if(Math.abs(rSpeed) < 0.1) rSpeed = 0;
+
+		// RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lSpeed/2);
+		// RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rSpeed/2);
 		// RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, rSpeed);
 
 		// RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, rSpeed);

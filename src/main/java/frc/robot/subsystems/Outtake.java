@@ -27,34 +27,25 @@ public class Outtake extends Subsystem {
    * public static double R_IN = 0.41; public static double R_OUT = 1;
    */
 
-  public static final int L_GRIP = 0;
-  public static final int L_IN = 0;
-  public static final int L_OUT = 25;
-  public static final int L_RESET = -1;
-  public static final int R_GRIP = 0;
-  public static final int R_IN = 0;
-  public static final int R_OUT = 25;
-  public static final int R_RESET = -1;
+  public static final int L_GRIP = 87;
+  public static final int L_IN = 100;
+  public static final int L_OUT =250;
+  public static final int R_GRIP = -47;
+  public static final int R_IN = -98;
+  public static final int R_OUT = -247;
 
   public static final int SIDE_RIGHT = 1;
   public static final int SIDE_LEFT = 0;
   public static final int SIDE_NONE = -1;
 
-  final static double P = 0.1;
-
   /***The maxium distance from the line, in inches */
   public static final int MAX_DIST = 4;
 
   int lTarget = -1;
-  int lPos = 0;
 
   int rTarget = -1;
-  int rPos = 0;
 
   public int lastSide = SIDE_NONE;
-
-  private boolean lRecentReset=false, rRecentReset=false;
-  private int lLimitCount=0, rLimitCount=0;
 
   @Override
   public void initDefaultCommand() {
@@ -63,12 +54,8 @@ public class Outtake extends Subsystem {
     setDefaultCommand(new OuttakeCommand());
   }
 
-  public void setSide(int side, double t) {
+  public void setSide(int side, int t) {
     int target = (int) t;
-
-    if(target == 0){
-      target = -1; //Special target position to ensure limit pressed
-    }
 
     if (side == SIDE_LEFT) {
       lTarget = target;
@@ -77,11 +64,15 @@ public class Outtake extends Subsystem {
     if (side == SIDE_RIGHT) {
       rTarget = target;
     }
-
+    RobotMap.leftOuttakeTalon.set(ControlMode.Position,lTarget);
+    RobotMap.rightOuttakeTalon.set(ControlMode.Position,rTarget);
     //System.out.println(side);
   }
 
   public void drive() {
+
+
+
 
     /*int lDelta = lPos - lTarget;
     double lSpeed = lDelta * P;
@@ -94,7 +85,7 @@ public class Outtake extends Subsystem {
     int rDelta = rPos - rTarget;
     double rSpeed = rDelta * -P;*/
 
-    if (lTarget>0) {
+    /*if (lTarget>0) {
       lRecentReset=false;
     }
     if (rTarget>0) {

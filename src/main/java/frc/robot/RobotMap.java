@@ -52,7 +52,7 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 
-	public static final boolean CLIMBER_ENABLED = true;
+	public static final boolean CLIMBER_ENABLED = false;
 	
 	public static final int PID_MODE = 0;  //0 for closed loop 1 for cascaded closed loop
 
@@ -86,8 +86,8 @@ public class RobotMap {
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
 
-	final static int LEFT_OUTTAKE_VICTOR = 23;
-	final static int RIGHT_OUTTAKE_VICTOR = 22;
+	final static int LEFT_OUTTAKE_TALON = 14;
+	final static int RIGHT_OUTTAKE_TALON = 13;
 
 	final static int LEFT_OUTTAKE_COUNTER = 6;
 	final static int LEFT_OUTTAKE_LIMIT = 9;
@@ -121,8 +121,8 @@ public class RobotMap {
 	public static TalonSRX climberTalon = new TalonSRX(CLIMBER_TALON);
 	public static VictorSPX climberVictor = new VictorSPX(CLIMBER_VICTOR);
 
-	public static VictorSPX leftOuttakeVictor = new VictorSPX(LEFT_OUTTAKE_VICTOR);
-	public static VictorSPX rightOuttakeVictor = new VictorSPX(RIGHT_OUTTAKE_VICTOR);
+	public static TalonSRX leftOuttakeTalon = new TalonSRX(LEFT_OUTTAKE_TALON);
+	public static TalonSRX rightOuttakeTalon = new TalonSRX(RIGHT_OUTTAKE_TALON);
 	/**
 	 * Creating Gyro object
 	 */	
@@ -238,8 +238,20 @@ public class RobotMap {
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
 
-		leftOuttakeVictor.set(ControlMode.PercentOutput, 0);
-		rightOuttakeVictor.set(ControlMode.PercentOutput, 0);
+		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		leftOuttakeTalon.setSensorPhase(false);
+		leftOuttakeTalon.config_kP(0, 8.0, 0);
+		leftOuttakeTalon.config_kI(0, 0.0, 0);
+		leftOuttakeTalon.config_kD(0, 0.001, 0);
+
+		
+		rightOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		rightOuttakeTalon.setSensorPhase(true);
+		rightOuttakeTalon.config_kP(0, 10.0, 0);
+		rightOuttakeTalon.config_kI(0, 0.0, 0);
+		rightOuttakeTalon.config_kD(0, 0.001, 0);
+
+		rightOuttakeTalon.set(ControlMode.PercentOutput, 0);
 
 		// jevoisSerial = new SerialPort(115200, Port.kUSB);
 

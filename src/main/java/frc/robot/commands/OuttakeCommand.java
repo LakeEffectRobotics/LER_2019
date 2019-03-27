@@ -38,7 +38,7 @@ public class OuttakeCommand extends Command {
       Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
     }    
   
-    Robot.outtake.drive();
+    // Robot.outtake.drive();
 
     // System.out.println(RobotMap.leftDriveSpark2.getEncoder().getPosition());
   }
