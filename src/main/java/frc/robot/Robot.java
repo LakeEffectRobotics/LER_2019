@@ -45,6 +45,9 @@ public class Robot extends TimedRobot {
 	
 	public static UsbCamera jevois;
 
+	double maxL = 0;
+	double maxR = 0;
+
 	public void robotPeriodic() {
 		//Called periodically, use to interface with dashboard
 		SmartDashboard.putNumber("Left Encoder", RobotMap.leftDriveSpark1.getEncoder().getPosition());
@@ -64,6 +67,14 @@ public class Robot extends TimedRobot {
 				RobotMap.jevoisSerial.read(RobotMap.jevoisSerial.getBytesReceived());
 			}
 		}
+
+		if(Math.abs(maxL) < Math.abs(RobotMap.leftDriveSpark1.getEncoder().getVelocity()))
+			maxL = RobotMap.leftDriveSpark1.getEncoder().getVelocity();
+			
+		if(Math.abs(maxR) < Math.abs(RobotMap.rightDriveSpark1.getEncoder().getVelocity()))
+			maxR = RobotMap.rightDriveSpark1.getEncoder().getVelocity();
+
+		System.out.println(maxL+"\t"+maxR);
 		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 		// System.out.println(!RobotMap.intakeLimitSwitch.get()+ "\t" +RobotMap.intakeArmTalon.getSelectedSensorPosition()+"\t"+Robot.intake.getTargetPosition()+"\t"+Robot.oi.xbox.getJoyRightY());
 	}
