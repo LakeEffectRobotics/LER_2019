@@ -48,9 +48,9 @@ public class ElevatorCommand extends Command {
 
     //Offset for grabbing+releasing hatches
     if(Robot.oi.shiftUp.getAnalog() > DEADZONE){
-      Robot.elevator.setOffset(Robot.oi.shiftUp.getAnalog()*Elevator.HATCH_RELEASE_OFFSET);
+      Robot.elevator.setOffset(Robot.oi.shiftUp.getAnalog()*Elevator.BUMP_UP);
     } else if(Robot.oi.shiftDown.getAnalog() > DEADZONE){
-      Robot.elevator.setOffset(-Robot.oi.shiftDown.getAnalog()*Elevator.HATCH_RELEASE_OFFSET);
+      Robot.elevator.setOffset(Robot.oi.shiftDown.getAnalog()*Elevator.BUMP_DOWN);
     } else {
       Robot.elevator.setOffset(0);
     }

@@ -28,9 +28,9 @@ public class Intake extends Subsystem {
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;*/
 
   // Twin Bot:
-  public static final double POSITION_MAX = 492;
-  public static final double POSITION_UP = 333;
-  public static final double POSITION_DOWN = 115;
+  public static final double POSITION_MAX = 528;
+  public static final double POSITION_UP = 390;
+  public static final double POSITION_DOWN = 155;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
   
   public double targetPosition=POSITION_UP;
@@ -83,7 +83,7 @@ public class Intake extends Subsystem {
 
   public void spin(double speed){
     //TODO change for comp bot
-    RobotMap.intakeRollerTalon.set(ControlMode.PercentOutput, -speed*SPEED_PRACTICE);
+    RobotMap.intakeRollerTalon.set(ControlMode.PercentOutput, -speed);
   }
 
   

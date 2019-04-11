@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ControlType;
 
 import edu.wpi.cscore.UsbCamera;
@@ -59,6 +60,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
 		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 
+		SmartDashboard.putNumber("Reverse", oi.shawnDrive.get()?1:0);
+		System.out.println(oi.shawnDrive.get());
 
 		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
 		//If there are more than 10 bytes in the buffer, clear it
@@ -171,6 +174,12 @@ public class Robot extends TimedRobot {
 
 	int count = 0;
 //0.5465,0.4078,
+
+	TalonSRX test = new TalonSRX(10);
+
+	double lPos = 0;
+	double rPos = 0;
+
 	@Override
 	public void testPeriodic() {
 		// if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > 0.1)
@@ -208,8 +217,8 @@ public class Robot extends TimedRobot {
 		// RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
 
 		// System.out.println(count);
-		double lSpeed = Robot.oi.lJoy.getY();
-		double rSpeed = Robot.oi.xbox.getJoyRightY()/2;
+		lPos += Robot.oi.xbox.getJoyLeftY()/2;
+		rPos += Robot.oi.xbox.getJoyRightY()/2;
 
 		// if(speed > 0){
 		// 	count += RobotMap.leftOuttakeCounter.get();
@@ -220,21 +229,26 @@ public class Robot extends TimedRobot {
 		// RobotMap.leftOuttakeCounter.reset();
 
 		// System.out.println(!RobotMap.leftOuttakeLimit.get()+"\t"+!RobotMap.rightOuttakeLimit.get());
-		if (RobotMap.CLIMBER_ENABLED) {
-			RobotMap.climberTalon.set(ControlMode.PercentOutput, lSpeed);
-		}
+		// if (RobotMap.CLIMBER_ENABLED) {
+		// 	RobotMap.climberTalon.set(ControlMode.PercentOutput, lSpeed);
+		// }
 
 		System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition()+"\t"+RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
 
-		if(Math.abs(lSpeed) < 0.1) lSpeed = 0;
-		if(Math.abs(rSpeed) < 0.1) rSpeed = 0;
+		// if(Math.abs(lSpeed) < 0.1) lSpeed = 0;
+		// if(Math.abs(rSpeed) < 0.1) rSpeed = 0;
+
+		// test.set(ControlMode.PercentOutput, lSpeed);
 
 		// RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lSpeed/2);
 		// RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rSpeed/2);
 		// RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, rSpeed);
 
-		// RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, rSpeed);
-		// RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, lSpeed);
+		// RobotMap.rightOuttakeTalon.set(ControlMode.Position, rPos);
+		// RobotMap.leftOuttakeTalon.set(ControlMode.Position, lPos);
+
+		RobotMap.leftOuttakeTalon.set(ControlMode.Velocity, Robot.oi.xbox.getJoyLeftY()/3);
+		RobotMap.rightOuttakeTalon.set(ControlMode.Velocity, Robot.oi.xbox.getJoyRightY()/3);
 		// if(Robot.oi.xbox.getBumperL()){
 		// 	RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
 		// }

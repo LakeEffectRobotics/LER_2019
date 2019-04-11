@@ -48,8 +48,8 @@ public class OI {
 	final int HIGH_ROCKET_BUTTON = XBoxController.XBOX_B;
 	final int CARGO_SHIP_HEIGHT_BUTTON = XBoxController.XBOX_RB;
 
-	final int ELEVATOR_SHIFT_UP = XBoxController.XBOX_LEFT_TRIGGER;
-	final int ELEVATOR_SHIFT_DOWN = XBoxController.XBOX_RIGHT_TRIGGER;
+	final int ELEVATOR_SHIFT_UP = XBoxController.XBOX_RIGHT_TRIGGER;
+	final int ELEVATOR_SHIFT_DOWN = XBoxController.XBOX_LEFT_TRIGGER;
 
 	final int INTAKE_BUTTON = XBoxController.XBOX_START;
 	final int INTAKE_CANCEL_BUTTON = XBoxController.XBOX_BACK;
@@ -86,8 +86,8 @@ public class OI {
 	XBoxButton outtakeRight = new XBoxButton(xbox, OUTTAKE_RIGHT_BUTTON);
 	XBoxButton autoOuttake = new XBoxButton(xbox, AUTO_OUTTAKE_BUTTON);
 
-	public XBoxTrigger shiftUp = new XBoxTrigger(xbox, true);
-	public XBoxTrigger shiftDown = new XBoxTrigger(xbox, false);
+	public XBoxTrigger shiftUp = new XBoxTrigger(xbox, false);
+	public XBoxTrigger shiftDown = new XBoxTrigger(xbox, true);
 
 	// XBoxButton disco = new XBoxButton(xbox, DISCO_BUTTON);
 

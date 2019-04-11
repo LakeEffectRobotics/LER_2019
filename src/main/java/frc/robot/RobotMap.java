@@ -59,12 +59,12 @@ public class RobotMap {
 	/**
 	 * Declaring CANIDs
 	 */
-	final static int RIGHT_DRIVE_SPARK_1 = 4;
-	final static int RIGHT_DRIVE_SPARK_2 = 5;
-	final static int RIGHT_DRIVE_SPARK_3 = 6;
-	final static int LEFT_DRIVE_SPARK_1 = 1;
-	final static int LEFT_DRIVE_SPARK_2 = 2;
-	final static int LEFT_DRIVE_SPARK_3 = 3;
+	final static int RIGHT_DRIVE_SPARK_1 = 1;
+	final static int RIGHT_DRIVE_SPARK_2 = 2;
+	final static int RIGHT_DRIVE_SPARK_3 = 3;
+	final static int LEFT_DRIVE_SPARK_1 = 4;
+	final static int LEFT_DRIVE_SPARK_2 = 5;
+	final static int LEFT_DRIVE_SPARK_3 = 6;
 
 	final static int CLIMBER_TALON = 11;
 	final static int CLIMBER_VICTOR = 21;
@@ -177,9 +177,6 @@ public class RobotMap {
 		leftDriveSpark1.setOpenLoopRampRate(0.25);
 		rightDriveSpark1.setOpenLoopRampRate(0.25); 
 		
-		leftDriveSpark1.getPIDController().setP(1);
-		rightDriveSpark1.getPIDController().setP(1);
-
 		//	Ratio of wheel rotations to encoder rotations
 		//	Also equal to the ratio of teeth on the motor gears to teeth on the wheel gears
 		double gearRatio = 14.0 / 50.0;
@@ -252,6 +249,8 @@ public class RobotMap {
 		rightOuttakeTalon.config_kD(0, 0.001, 0);
 
 		rightOuttakeTalon.set(ControlMode.PercentOutput, 0);
+
+		climberTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 
 		// jevoisSerial = new SerialPort(115200, Port.kUSB);
 

@@ -37,10 +37,10 @@ public class Elevator extends Subsystem {
 
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CARGO_SHIP_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
-  public static final double HATCH_OFFSET = -5;
-  public static final double HATCH_RELEASE_OFFSET = -3;
+  public static final double BUMP_UP = 15;
+  public static final double BUMP_DOWN = -5;
 
-  public static final double acceleration = 0.65;
+  public static final double acceleration = 0.90;
 
   double targetHeight = GROUND_HEIGHT;
   public Mode currentMode = Mode.CARGO;
@@ -69,7 +69,7 @@ public class Elevator extends Subsystem {
 
     //Add offset here so it doesn't affect the saved target
     target += offset;
-    if(currentMode == Mode.HATCH) target += HATCH_OFFSET;
+    if(currentMode == Mode.HATCH) target += BUMP_UP;
     
     if(!Robot.oi.xbox.getButtonBack()){ // Override limits
       if(target > MAX_HEIGHT) target=MAX_HEIGHT;
