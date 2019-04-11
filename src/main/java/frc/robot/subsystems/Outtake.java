@@ -27,12 +27,12 @@ public class Outtake extends Subsystem {
    * public static double R_IN = 0.41; public static double R_OUT = 1;
    */
 
-  public static final int L_GRIP = 87;
-  public static final int L_IN = 100;
-  public static final int L_OUT =250;
-  public static final int R_GRIP = -47;
-  public static final int R_IN = -98;
-  public static final int R_OUT = -247;
+  public static final int L_GRIP = 200;
+  public static final int L_IN = 226;
+  public static final int L_OUT = 500;
+  public static final int R_GRIP = -220;
+  public static final int R_IN = -248;
+  public static final int R_OUT = -410;
 
   public static final int SIDE_RIGHT = 1;
   public static final int SIDE_LEFT = 0;

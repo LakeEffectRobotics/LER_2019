@@ -236,7 +236,7 @@ public class RobotMap {
 		rightLED_GR.set(Relay.Value.kOff);
 
 		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-		leftOuttakeTalon.setSensorPhase(false);
+		leftOuttakeTalon.setSensorPhase(true);
 		leftOuttakeTalon.config_kP(0, 8.0, 0);
 		leftOuttakeTalon.config_kI(0, 0.0, 0);
 		leftOuttakeTalon.config_kD(0, 0.001, 0);
