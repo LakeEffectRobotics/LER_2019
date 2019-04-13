@@ -26,13 +26,23 @@ public class Outtake extends Subsystem {
    * = 0.51; public static double L_OUT = 0; public static double R_GRIP = 0.5;
    * public static double R_IN = 0.41; public static double R_OUT = 1;
    */
-
+  /* Commented out by Mr. Wood - these are values for the twin before replacing pots???
   public static final int L_GRIP = 200;
   public static final int L_IN = 226;
   public static final int L_OUT = 500;
   public static final int R_GRIP = -220;
   public static final int R_IN = -248;
-  public static final int R_OUT = -410;
+  public static final int R_OUT = -410;*/
+
+  public static final int L_GRIP = -575;
+  public static final int L_IN = -555;
+  public static final int L_OUT = -270;
+  public static final int R_GRIP = -234;
+  public static final int R_IN = -254;
+  public static final int R_OUT = -500;
+
+  public static final boolean L_DISABLED = false;
+  public static final boolean R_DISABLED = false;
 
   public static final int SIDE_RIGHT = 1;
   public static final int SIDE_LEFT = 0;
@@ -56,9 +66,15 @@ public class Outtake extends Subsystem {
 
   public void setSide(int side, int t) {
     int target = (int) t;
+    if(t == R_GRIP || t == L_GRIP){
+      System.out.println("GRIP 2");
+    }
 
     if (side == SIDE_LEFT) {
       lTarget = target;
+      // if(Robot.outtake.L_DISABLED){
+      //   return;
+      // }
     }
 
     if (side == SIDE_RIGHT) {
@@ -70,9 +86,6 @@ public class Outtake extends Subsystem {
   }
 
   public void drive() {
-
-
-
 
     /*int lDelta = lPos - lTarget;
     double lSpeed = lDelta * P;

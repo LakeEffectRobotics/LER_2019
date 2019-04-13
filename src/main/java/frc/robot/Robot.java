@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lights;
 import frc.robot.subsystems.Outtake;
 import frc.robot.subsystems.Lights.Colour;
+import frc.robot.commands.autonomous.AutoCommandGroup;
 
 public class Robot extends TimedRobot {
 
@@ -46,6 +48,24 @@ public class Robot extends TimedRobot {
 	
 	public static UsbCamera jevois;
 
+	public static AutoCommandGroup autonomous_command_group;
+
+	public static enum AutonomousTarget {
+		CARGO_FRONT, CARGO_1, CARGO_2, CARGO_3, ROCKET_NEAR, ROCKET_FAR, NOTHING
+	}
+
+	public static enum AutonomousStartPosition {
+		LEFT, MID_LEFT, MID_RIGHT, RIGHT
+	}
+
+	public static enum AutonomousGamepiece {
+		CARGO, HATCH, NOTHING
+	}
+
+	public static SendableChooser<AutonomousStartPosition> autonomous_position_chooser = new SendableChooser<AutonomousStartPosition>();
+	public static SendableChooser<AutonomousTarget> autonomous_target_chooser = new SendableChooser<AutonomousTarget>();
+	public static SendableChooser<AutonomousGamepiece> autonomous_gamepiece_chooser = new SendableChooser<AutonomousGamepiece>();
+
 	double maxL = 0;
 	double maxR = 0;
 
@@ -58,12 +78,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
-		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
+		// //System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 
 		SmartDashboard.putNumber("Reverse", oi.shawnDrive.get()?1:0);
-		System.out.println(oi.shawnDrive.get());
+		//System.out.println(oi.shawnDrive.get());
 
-		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
+		// //System.out.println(RobotMap.elevatorSpark1.getEncoder().getVelocity());
 		//If there are more than 10 bytes in the buffer, clear it
 		if(RobotMap.jevoisSerial!=null){
 			if(RobotMap.jevoisSerial.getBytesReceived() > 100){
@@ -77,9 +97,9 @@ public class Robot extends TimedRobot {
 		if(Math.abs(maxR) < Math.abs(RobotMap.rightDriveSpark1.getEncoder().getVelocity()))
 			maxR = RobotMap.rightDriveSpark1.getEncoder().getVelocity();
 
-		System.out.println(maxL+"\t"+maxR);
-		//System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
-		// System.out.println(!RobotMap.intakeLimitSwitch.get()+ "\t" +RobotMap.intakeArmTalon.getSelectedSensorPosition()+"\t"+Robot.intake.getTargetPosition()+"\t"+Robot.oi.xbox.getJoyRightY());
+		//System.out.println(maxL+"\t"+maxR);
+		////System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
+		// //System.out.println(!RobotMap.intakeLimitSwitch.get()+ "\t" +RobotMap.intakeArmTalon.getSelectedSensorPosition()+"\t"+Robot.intake.getTargetPosition()+"\t"+Robot.oi.xbox.getJoyRightY());
 	}
 
 	public void enabledInit() {
@@ -97,6 +117,23 @@ public class Robot extends TimedRobot {
 		lights.setBoth(Lights.Colour.PURPLE);
 		intake.init();
 		//Setup dashboard
+		autonomous_position_chooser.setDefaultOption("Left", AutonomousStartPosition.LEFT);
+		autonomous_position_chooser.addOption("Mid Left", AutonomousStartPosition.MID_LEFT);
+		autonomous_position_chooser.addOption("Mid Right", AutonomousStartPosition.MID_RIGHT);
+		autonomous_position_chooser.addOption("Right", AutonomousStartPosition.RIGHT);
+		SmartDashboard.putData("Start Position", autonomous_position_chooser);
+		autonomous_target_chooser.setDefaultOption("Front", AutonomousTarget.CARGO_FRONT);
+		autonomous_target_chooser.addOption("Cargo1", AutonomousTarget.CARGO_1);
+		autonomous_target_chooser.addOption("Cargo2", AutonomousTarget.CARGO_2);
+		autonomous_target_chooser.addOption("Cargo3", AutonomousTarget.CARGO_3);
+		autonomous_target_chooser.addOption("Rocket near", AutonomousTarget.ROCKET_NEAR);
+		autonomous_target_chooser.addOption("Rocket far", AutonomousTarget.ROCKET_FAR);
+		autonomous_target_chooser.addOption("Nothing", AutonomousTarget.NOTHING);
+		SmartDashboard.putData("Target", autonomous_target_chooser);
+		autonomous_gamepiece_chooser.setDefaultOption("Nothing", AutonomousGamepiece.NOTHING);
+		autonomous_gamepiece_chooser.addOption("Hatch", AutonomousGamepiece.HATCH);
+		autonomous_gamepiece_chooser.addOption("Cargo", AutonomousGamepiece.CARGO);
+		SmartDashboard.putData("Gamepiece", autonomous_position_chooser);
 
 		//Setup jevois feed
 		jevois = CameraServer.getInstance().startAutomaticCapture(0);
@@ -115,12 +152,14 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		robotPeriodic();
 
-		// System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+		// //System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	@Override
 	public void autonomousInit() {
 		enabledInit();
+		autonomous_command_group = new AutoCommandGroup();
+		autonomous_command_group.start();
 	}
 
 	//private int count=0;
@@ -160,7 +199,7 @@ public class Robot extends TimedRobot {
 		// 	Robot.oi.xbox.setRumble(RumbleType.kRightRumble, 1);
 		// }
 		
-		// System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
+		// //System.out.println(Robot.elevator.getTargetHeight()+"\t"+RobotMap.elevatorSpark1.getEncoder().getPosition());
 	}
 
 	//3653,3967
@@ -189,9 +228,9 @@ public class Robot extends TimedRobot {
 		// 	r += Robot.oi.xbox.getJoyRightY()/200;
 		// RobotMap.rightServo.set(r);
 		
-		// System.out.println(l+"\t"+r);
+		// //System.out.println(l+"\t"+r);
 		// RobotMap.intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-		// System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+		// //System.out.println(RobotMap.intakeArmTalon.getSelectedSensorPosition());
 
 		// Robot.lights.setColour(Lights.LEFT, Lights.Colour.RED);
 		// Robot.lights.setColour(Lights.RIGHT, Lights.Colour.GREEN);
@@ -205,18 +244,18 @@ public class Robot extends TimedRobot {
 		// Robot.lights.setColour(Lights.LEFT, Colour.PURPLE);
 		// Robot.lights.setColour(Lights.RIGHT, Colour.PURPLE);
 
-		// System.out.println(RobotMap.intakeLimitSwitch.get());
+		// //System.out.println(RobotMap.intakeLimitSwitch.get());
 
-		// System.out.println(RobotMap.jevoisSerial.getBytesReceived());
+		// //System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 
 		// RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
-		// System.out.println(RobotMap.leftDriveSpark1.getEncoder().getPosition()+"\t"+RobotMap.leftDriveSpark2.getEncoder().getPosition());
+		// //System.out.println(RobotMap.leftDriveSpark1.getEncoder().getPosition()+"\t"+RobotMap.leftDriveSpark2.getEncoder().getPosition());
 
 		// // RobotMap.climberVictor.follow(RobotMap.climberTalon);
 
 		// RobotMap.climberTalon.set(ControlMode.PercentOutput, oi.lJoy.getY());
 
-		// System.out.println(count);
+		// //System.out.println(count);
 		lPos += Robot.oi.xbox.getJoyLeftY()/2;
 		rPos += Robot.oi.xbox.getJoyRightY()/2;
 
@@ -228,12 +267,12 @@ public class Robot extends TimedRobot {
 		// }
 		// RobotMap.leftOuttakeCounter.reset();
 
-		// System.out.println(!RobotMap.leftOuttakeLimit.get()+"\t"+!RobotMap.rightOuttakeLimit.get());
+		// //System.out.println(!RobotMap.leftOuttakeLimit.get()+"\t"+!RobotMap.rightOuttakeLimit.get());
 		// if (RobotMap.CLIMBER_ENABLED) {
 		// 	RobotMap.climberTalon.set(ControlMode.PercentOutput, lSpeed);
 		// }
 
-		System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition()+"\t"+RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
+		//System.out.println("L"+RobotMap.leftOuttakeTalon.getSelectedSensorPosition()+"\tR"+RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
 
 		// if(Math.abs(lSpeed) < 0.1) lSpeed = 0;
 		// if(Math.abs(rSpeed) < 0.1) rSpeed = 0;

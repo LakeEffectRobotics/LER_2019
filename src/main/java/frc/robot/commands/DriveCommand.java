@@ -49,7 +49,7 @@ public class DriveCommand extends Command {
       Robot.drivetrain.drive(lSpeed*0.25, rSpeed*0.25);
     }
     else{
-      Robot.drivetrain.drive(lSpeed*0.75, rSpeed*0.75);
+      Robot.drivetrain.drive(lSpeed*0.85, rSpeed*0.85);
     }
   }
 

@@ -214,7 +214,7 @@ public class RobotMap {
 
 		elevatorSpark1.getPIDController().setP(1);
 		//Down is halved to prevent damage (somewhat)
-		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration/2, Elevator.acceleration);
+		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration/4, Elevator.acceleration);
 		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
 		elevatorSpark1.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 		elevatorSpark1.getPIDController().setSmartMotionMaxVelocity(2000, 0);
@@ -237,14 +237,14 @@ public class RobotMap {
 
 		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		leftOuttakeTalon.setSensorPhase(true);
-		leftOuttakeTalon.config_kP(0, 8.0, 0);
+		leftOuttakeTalon.config_kP(0, 12.0, 0);
 		leftOuttakeTalon.config_kI(0, 0.0, 0);
 		leftOuttakeTalon.config_kD(0, 0.001, 0);
 
 		
 		rightOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		rightOuttakeTalon.setSensorPhase(true);
-		rightOuttakeTalon.config_kP(0, 10.0, 0);
+		rightOuttakeTalon.config_kP(0, 12.0, 0);
 		rightOuttakeTalon.config_kI(0, 0.0, 0);
 		rightOuttakeTalon.config_kD(0, 0.001, 0);
 
