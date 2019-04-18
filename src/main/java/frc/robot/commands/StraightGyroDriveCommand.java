@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
-
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Tools;
 
@@ -18,7 +18,9 @@ public class StraightGyroDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gyro.resetAngle();
+        Robot.gyro.resetAngle();
+        RobotMap.leftDriveSpark1.getEncoder().setPosition(0);
+        RobotMap.rightDriveSpark1.getEncoder().setPosition(0);
     }
 
     // Called repeatedly when this Command is scheduled to run

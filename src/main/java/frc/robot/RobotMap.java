@@ -179,18 +179,18 @@ public class RobotMap {
 		
 		//	Ratio of wheel rotations to encoder rotations
 		//	Also equal to the ratio of teeth on the motor gears to teeth on the wheel gears
-		double gearRatio = 14.0 / 50.0;
+		double gearRatio = 50/14.0;
 		//	1 rotation has 2π radians
 		double rotationsToRadians = 2 * Math.PI;
 		//	The wheels have radius 3"
-		double wheelRadius = 6;
+		double wheelRadius = 3;
 		//	Conversion of encoder rotations to linear distance travelled by the robot (in inches)
 		//		Multiplying by gear ratio gives the number of wheel rotations
 		//		Multiplying by 2π gives the number of radians rotated by the wheels
 		//		Multiplying by wheel radius gives the distance travelled by the robot (in inches)
-		double rotationsToInches = gearRatio * wheelRadius;
-
-
+		// double rotationsToInches = (1/gearRatio * (wheelRadius*2*Math.PI));
+		// double rotationsToInches = (50/14.0)*(1/(Math.PI*2*wheelRadius));
+		double rotationsToInches = ((6.25*Math.PI)/12.3);
 		leftDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
 		leftDriveSpark1.getEncoder().setVelocityConversionFactor(rotationsToInches);
 		rightDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
@@ -214,7 +214,7 @@ public class RobotMap {
 
 		elevatorSpark1.getPIDController().setP(1);
 		//Down is halved to prevent damage (somewhat)
-		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration/4, Elevator.acceleration);
+		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration, Elevator.acceleration);
 		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
 		elevatorSpark1.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 		elevatorSpark1.getPIDController().setSmartMotionMaxVelocity(2000, 0);
@@ -236,7 +236,7 @@ public class RobotMap {
 		rightLED_GR.set(Relay.Value.kOff);
 
 		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-		leftOuttakeTalon.setSensorPhase(true);
+		leftOuttakeTalon.setSensorPhase(false);
 		leftOuttakeTalon.config_kP(0, 12.0, 0);
 		leftOuttakeTalon.config_kI(0, 0.0, 0);
 		leftOuttakeTalon.config_kD(0, 0.001, 0);
@@ -251,8 +251,5 @@ public class RobotMap {
 		rightOuttakeTalon.set(ControlMode.PercentOutput, 0);
 
 		climberTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-
-		// jevoisSerial = new SerialPort(115200, Port.kUSB);
-
 	}
 }

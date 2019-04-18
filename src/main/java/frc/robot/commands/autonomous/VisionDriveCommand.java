@@ -9,18 +9,16 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.Tools;
 
 public class VisionDriveCommand extends Command {
 
   double lSpeed, rSpeed;
-  int offset = 0;
   /**
    * Amount of bits in each of the last 5 messages, used to check for data
    * validity
    */
-  int[] collector = {0,0,2,0,0};
+  //int[] collector = {0,0,2,0,0};
 
   /** The offset where speed=1, inversely proportinal to power */
   final double MAX_DIFF = 20.0;
@@ -41,44 +39,45 @@ public class VisionDriveCommand extends Command {
   @Override
   protected void execute() {
     //Saftey to prevet crashes
-    if(RobotMap.jevoisSerial == null) return;
-    System.out.println("VisionDrive: "+RobotMap.jevoisSerial.getBytesReceived());
-    int available = RobotMap.jevoisSerial.getBytesReceived();
-    // Update collector
-    int sum = available;
-    for (int i = 0; i < collector.length - 1; i++) {
-      collector[i] = collector[i] + 1;
-      sum += collector[i];
-    }
-    collector[collector.length - 1] = available;
+    //if(RobotMap.jevoisSerial == null) return;
 
-    // If there have been <2 bits in the last 5 messages, there's an issue
-    if (sum < 2) {
-      offset = 0;
-    }
+    //System.out.println("VisionDrive: "+RobotMap.jevoisSerial.getBytesReceived());
+    // int available = RobotMap.jevoisSerial.getBytesReceived();
+    // // Update collector
+    // int sum = available;
+    // for (int i = 0; i < collector.length - 1; i++) {
+    //   collector[i] = collector[i] + 1;
+    //   sum += collector[i];
+    // }
+    // collector[collector.length - 1] = available;
 
-    // Parse new offset
-    if (available > 0) {
-      String[] in = RobotMap.jevoisSerial.readString().split("\n");
-      System.out.println(in[0]);
-      String t = in[in.length - 1];
-      if (t.length() > 1) {
-        // Remove the trailing whitespace
-        t = t.substring(0, t.length() - 1);
-        offset = Integer.parseInt(t);
-      }
-    }
-    if(offset > MAX_DIFF) offset = 0;
+    // // If there have been <2 bits in the last 5 messages, there's an issue
+    // if (sum < 2) {
+    //   offset = 0;
+    // }
 
-    offset = (int) fitToRange(offset, -MAX_DIFF, MAX_DIFF);
+    // // Parse new offset
+    // if (available > 0) {
+    //   String[] in = RobotMap.jevoisSerial.readString().split("\n");
+    //   System.out.println(in[0]);
+    //   String t = in[in.length - 1];
+    //   if (t.length() > 1) {
+    //     // Remove the trailing whitespace
+    //     t = t.substring(0, t.length() - 1);
+    //     offset = Integer.parseInt(t);
+    //   }
+    // }
+    //if(offset > MAX_DIFF) offset = 0;
 
-    lSpeed = Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
+    Robot.vision_offset = (int) fitToRange(Robot.vision_offset, -MAX_DIFF, MAX_DIFF);
+
+    lSpeed = Math.pow(Robot.vision_offset / (MAX_DIFF), 3) * MULTIPLIER;
     lSpeed += 0.5 * Tools.getAdaptedSpeed(Robot.oi.lJoy.getY());
 
-    rSpeed = -Math.pow(offset / (MAX_DIFF), 3) * MULTIPLIER;
+    rSpeed = -Math.pow(Robot.vision_offset / (MAX_DIFF), 3) * MULTIPLIER;
     rSpeed += 0.5 * Tools.getAdaptedSpeed(Robot.oi.lJoy.getY());
 
-    System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);
+    //System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);
 
     Robot.drivetrain.drive(fitToRange(-lSpeed, -1.0, 1.0), fitToRange(-rSpeed, -1.0, 1.0));
   }

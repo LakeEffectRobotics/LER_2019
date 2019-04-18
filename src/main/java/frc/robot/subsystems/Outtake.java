@@ -34,9 +34,9 @@ public class Outtake extends Subsystem {
   public static final int R_IN = -248;
   public static final int R_OUT = -410;*/
 
-  public static final int L_GRIP = -575;
-  public static final int L_IN = -555;
-  public static final int L_OUT = -270;
+  public static final int L_GRIP = 3410;
+  public static final int L_IN = 3382;//-555;
+  public static final int L_OUT = 3148;
   public static final int R_GRIP = -234;
   public static final int R_IN = -254;
   public static final int R_OUT = -500;

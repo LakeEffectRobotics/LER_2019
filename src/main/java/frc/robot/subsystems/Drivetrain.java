@@ -11,6 +11,7 @@ import frc.robot.Robot;
 import frc.robot.Tools;
 import frc.robot.commands.DriveCommand;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Drivetrain extends Subsystem {
@@ -34,12 +35,16 @@ public class Drivetrain extends Subsystem {
 		RobotMap.rightDriveSpark1.set(-r);  //  r is inverted because the left and right motors are oriented in opposite directions
 	}
 
+	public void setPercentVoltage(double l, double r) {
+		RobotMap.leftDriveSpark1.set(l);	// because talons 2 and 3 follow 1, we only need to set 1
+		RobotMap.rightDriveSpark1.set(-r);
+	}
 	public double getLeftEncoderPosition() {
 		return RobotMap.leftDriveSpark1.getEncoder().getPosition();
 	}
 
 	public double getRightEncoderPosition() {
-		return RobotMap.rightDriveSpark1.getEncoder().getPosition();
+		return -RobotMap.rightDriveSpark1.getEncoder().getPosition();
 	}
 
 	public double getAverageEncoderPosition() {
@@ -65,6 +70,9 @@ public class Drivetrain extends Subsystem {
 		*/
 		double averageEncoderPosition = getAverageEncoderPosition();
 		double distanceLeft = distance - averageEncoderPosition;
+		System.out.println(getLeftEncoderPosition() +"\t"+ getRightEncoderPosition()+"\t"+distance + "\t" + distanceLeft);
+
+		SmartDashboard.putNumber("Distance Left", distanceLeft);
     	if (distanceLeft > SLOW_DOWN_THRESHOLD) {
     		l = speed;
     	} else if (distanceLeft < -SLOW_DOWN_THRESHOLD) {
