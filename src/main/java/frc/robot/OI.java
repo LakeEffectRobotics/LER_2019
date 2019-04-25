@@ -13,7 +13,7 @@ import frc.robot.commands.Disco;
 import frc.robot.commands.StraightGyroDriveCommand;
 import frc.robot.commands.autonomous.AutoIntakeCommand;
 import frc.robot.commands.autonomous.TapeAlignCommand;
-import frc.robot.commands.autonomous.VisionDriveCommand;
+import frc.robot.commands.VisionDriveCommand;
 import frc.robot.commands.instant.SetElevatorHeightCommand;
 import frc.robot.commands.instant.SetIntakeArm;
 import frc.robot.commands.instant.SetOuttake;

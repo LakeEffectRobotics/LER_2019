@@ -5,10 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autonomous;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.Tools;
 
 public class VisionDriveCommand extends Command {
@@ -22,7 +23,7 @@ public class VisionDriveCommand extends Command {
 
   /** The offset where speed=1, inversely proportinal to power */
   final double MAX_DIFF = 20.0;
-  final double MULTIPLIER = 0.075;
+  final double kP = 0.075;
 
   public VisionDriveCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -39,7 +40,7 @@ public class VisionDriveCommand extends Command {
   @Override
   protected void execute() {
     //Saftey to prevet crashes
-    //if(RobotMap.jevoisSerial == null) return;
+    if(RobotMap.jevoisSerial == null) return;
 
     //System.out.println("VisionDrive: "+RobotMap.jevoisSerial.getBytesReceived());
     // int available = RobotMap.jevoisSerial.getBytesReceived();
@@ -69,12 +70,14 @@ public class VisionDriveCommand extends Command {
     // }
     //if(offset > MAX_DIFF) offset = 0;
 
-    Robot.vision_offset = (int) fitToRange(Robot.vision_offset, -MAX_DIFF, MAX_DIFF);
+      //System.out.println("Vision: "+Robot.visionOffset);
 
-    lSpeed = Math.pow(Robot.vision_offset / (MAX_DIFF), 3) * MULTIPLIER;
+    Robot.visionOffset = (int) fitToRange(Robot.visionOffset, -MAX_DIFF, MAX_DIFF);
+
+    lSpeed = Math.pow(Robot.visionOffset / (MAX_DIFF), 3) * kP;
     lSpeed += 0.5 * Tools.getAdaptedSpeed(Robot.oi.lJoy.getY());
 
-    rSpeed = -Math.pow(Robot.vision_offset / (MAX_DIFF), 3) * MULTIPLIER;
+    rSpeed = -Math.pow(Robot.visionOffset / (MAX_DIFF), 3) * kP;
     rSpeed += 0.5 * Tools.getAdaptedSpeed(Robot.oi.lJoy.getY());
 
     //System.out.println(available+"\t"+offset+"\t"+lSpeed+"\t"+rSpeed);

@@ -38,7 +38,7 @@ public class BumpElevatorHeight extends InstantCommand {
   @Override
   protected void initialize() {
     double height = Robot.elevator.getTargetHeight();
-    System.out.println(height);
+    //System.out.println(height);
 
     /*if(Robot.intakeArm.getTargetPosition()!=IntakeArm.POSITION_DOWN){
       Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_DOWN);
@@ -52,7 +52,7 @@ public class BumpElevatorHeight extends InstantCommand {
       return;
     }
 
-    System.out.println(direction == DOWN);
+    //System.out.println(direction == DOWN);
 
     for (int i = 0; i < Elevator.HEIGHTS.length; i++) {
       try {
@@ -61,15 +61,15 @@ public class BumpElevatorHeight extends InstantCommand {
           if (direction == UP && height == Elevator.HEIGHTS[i + 1])
             continue;
 
-          System.out.println(height + " is between " + Elevator.HEIGHTS[i] + " and " + Elevator.HEIGHTS[i + 1]);
+          //System.out.println(height + " is between " + Elevator.HEIGHTS[i] + " and " + Elevator.HEIGHTS[i + 1]);
           if (direction == UP) {
-            System.out.println("UP to" + Elevator.HEIGHTS[i + 1]);
+            //System.out.println("UP to" + Elevator.HEIGHTS[i + 1]);
             // Go to higher step
             Robot.elevator.setTargetHeight(Elevator.HEIGHTS[i + 1], 0, "Bump up");
             break;
           } else if (direction == DOWN) {
             // Go to lower step
-            System.out.println("DOWN to" + Elevator.HEIGHTS[i]);
+            //System.out.println("DOWN to" + Elevator.HEIGHTS[i]);
             Robot.elevator.setTargetHeight(Elevator.HEIGHTS[i], 0, "Bump down");
             break;
           }

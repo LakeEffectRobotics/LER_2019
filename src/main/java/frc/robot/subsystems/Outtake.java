@@ -34,12 +34,12 @@ public class Outtake extends Subsystem {
   public static final int R_IN = -248;
   public static final int R_OUT = -410;*/
 
-  public static final int L_GRIP = 3410;
-  public static final int L_IN = 3382;//-555;
-  public static final int L_OUT = 3148;
-  public static final int R_GRIP = -234;
-  public static final int R_IN = -254;
-  public static final int R_OUT = -500;
+  public static final int L_GRIP = 753;
+  public static final int L_IN = 716;//-555;
+  public static final int L_OUT = 481;
+  public static final int R_GRIP = -155;//855;
+  public static final int R_IN = -214;//803;
+  public static final int R_OUT = -400; //635;
 
   public static final boolean L_DISABLED = false;
   public static final boolean R_DISABLED = false;
@@ -66,6 +66,7 @@ public class Outtake extends Subsystem {
 
   public void setSide(int side, int t) {
     int target = (int) t;
+    //TODO: Remove debug code
     if(t == R_GRIP || t == L_GRIP){
       System.out.println("GRIP 2");
     }
@@ -199,14 +200,14 @@ public class Outtake extends Subsystem {
     RobotMap.leftOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(-lSpeed, -0.75, 0.75));
     RobotMap.rightOuttakeVictor.set(ControlMode.PercentOutput, Tools.fitToRange(rSpeed, -0.75, 0.75));
 
-   System.out.println("L: "+lDelta+"\t"+lPos+"\t"+!RobotMap.leftOuttakeLimit.get()+"\t"+lTarget);
+    //System.out.println("L: "+lDelta+"\t"+lPos+"\t"+!RobotMap.leftOuttakeLimit.get()+"\t"+lTarget);
     RobotMap.leftOuttakeCounter.reset();
 
 
     // System.out.println("R: "+rDelta+"\t"+rPos+"\t"+RobotMap.rightOuttakeCounter.get());    
     RobotMap.rightOuttakeCounter.reset();
 
-    System.out.println(lSpeed+"\t"+lDelta+"\t"+!RobotMap.leftOuttakeLimit.get());
+    //System.out.println(lSpeed+"\t"+lDelta+"\t"+!RobotMap.leftOuttakeLimit.get());
 
     if(!RobotMap.leftOuttakeLimit.get()){
       lPos = 0;

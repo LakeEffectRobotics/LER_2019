@@ -34,12 +34,12 @@ public class SetElevatorHeightCommand extends InstantCommand {
     if(height < Elevator.LOW_HEIGHT){
       Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
       Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
-      System.out.println("MID");
+      //System.out.println("MID");
     }
     else{
       Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_GRIP);
       Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_GRIP);
-      System.out.println("GRIP");
+      //System.out.println("GRIP");
     }
   }
 

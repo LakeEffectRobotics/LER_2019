@@ -155,15 +155,15 @@ public class RobotMap {
 	public static void init() { //r/outoftheloop
 		// System.out.println("BL:"+BACK_LEFT_SENSOR);
 		// backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
-		System.out.println("OL:"+OUTER_LEFT_SENSOR);
+		//System.out.println("OL:"+OUTER_LEFT_SENSOR);
 		outerLeftSensor = new TapeSensor(OUTER_LEFT_SENSOR);
-		System.out.println("IL:"+INNER_LEFT_SENSOR);
+		//System.out.println("IL:"+INNER_LEFT_SENSOR);
 		innerLeftSensor = new TapeSensor(INNER_LEFT_SENSOR);
-		System.out.println("BR:"+BACK_RIGHT_SENSOR);
+		//System.out.println("BR:"+BACK_RIGHT_SENSOR);
 		backRightSensor = new TapeSensor(BACK_RIGHT_SENSOR);
-		System.out.println("OR:"+OUTER_RIGHT_SENSOR);
+		//System.out.println("OR:"+OUTER_RIGHT_SENSOR);
 		outerRightSensor = new TapeSensor(OUTER_RIGHT_SENSOR);
-		System.out.println("IR:"+INNER_RIGHT_SENSOR);
+		//System.out.println("IR:"+INNER_RIGHT_SENSOR);
 		innerRightSensor = new TapeSensor(INNER_RIGHT_SENSOR);
 
 		// leftDriveSpark1.setInverted(true);

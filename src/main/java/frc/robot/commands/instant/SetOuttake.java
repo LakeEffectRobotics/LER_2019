@@ -39,7 +39,7 @@ public class SetOuttake extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    System.out.println("Outtake: "+side);
+    //System.out.println("Outtake: "+side);
     if(side == SIDE_BOTH){
       if(position == AUTO_IN){
         Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
@@ -48,22 +48,22 @@ public class SetOuttake extends InstantCommand {
       return;
     }
     if(side == SIDE_AUTO){
-      System.out.println("AUTO");
+      //System.out.println("AUTO");
       double distance = (RobotMap.leftDriveSpark2.getEncoder().getPosition()+RobotMap.rightDriveSpark2.getEncoder().getPosition())/2.0;
       if(Robot.outtake.lastSide == Outtake.SIDE_LEFT && distance < Outtake.MAX_DIST){
         side = Outtake.SIDE_LEFT;
-        System.out.println("LEFT");
+        //System.out.println("LEFT");
         if(position == AUTO_OUT) position = Outtake.L_OUT;
         if(position == AUTO_IN) position = Outtake.L_IN;
       }
       else if(Robot.outtake.lastSide == Outtake.SIDE_RIGHT && distance < Outtake.MAX_DIST){
         side=Outtake.SIDE_RIGHT;
-        System.out.println("RIGHT");
+        //System.out.println("RIGHT");
         if(position == AUTO_OUT) position = Outtake.R_OUT;
         if(position == AUTO_IN) position = Outtake.R_IN;
       }
       else{
-        System.out.println("NOPE");
+        //System.out.println("NOPE");
         return;
       }
     }

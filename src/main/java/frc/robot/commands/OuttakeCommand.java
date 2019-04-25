@@ -37,14 +37,19 @@ public class OuttakeCommand extends Command {
       RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
       Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
     }    
+
+    //Reset last side if the robot has gone more than 3 feet
+    if(RobotMap.leftDriveSpark2.getEncoder().getPosition() > 36 || RobotMap.rightDriveSpark2.getEncoder().getPosition() > 36){
+      Robot.outtake.lastSide = Outtake.SIDE_NONE;
+    }
   
     if(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() == -5){
       Robot.outtake.setSide(Outtake.SIDE_LEFT, -5);
-      System.out.println("LEFT SIDE DEAD!");
+      // System.out.println("LEFT SIDE DEAD!");
     }
     if(RobotMap.rightOuttakeTalon.getSelectedSensorPosition() == -5){
       Robot.outtake.setSide(Outtake.SIDE_RIGHT, -5);
-      System.out.println("RIGHT SIDE DEAD");
+      // System.out.println("RIGHT SIDE DEAD");
     }
 
     

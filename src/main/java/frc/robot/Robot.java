@@ -15,12 +15,14 @@ import com.revrobotics.ControlType;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.SerialPort.FlowControl;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -71,12 +73,20 @@ public class Robot extends TimedRobot {
 
 	double maxL = 0;
 	double maxR = 0;
-	public static int vision_offset = 0;
+	public static int visionOffset = 0;
 	private String t="";
 	private String[] in;
+	//Used to track jevois serial status
+	//1 is added if available = 0
+	//1 is removed otherwise
+	//If it = 0, serial port is made null
+	private int last5 = 0;
+	private int periodicCount=0;
+	private int jevois_available=0;
 
 	@Override
 	public void robotPeriodic() {
+		periodicCount++;
 		// Called periodically, use to interface with dashboard
 		//SmartDashboard.putNumber("Left Encoder", RobotMap.leftDriveSpark1.getEncoder().getPosition());
 		//SmartDashboard.putNumber("Right Encoder", RobotMap.rightDriveSpark1.getEncoder().getPosition());
@@ -87,7 +97,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
 		// //System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 		SmartDashboard.putBoolean("Serial good", RobotMap.jevoisSerial != null);
-		SmartDashboard.putNumber("Vision Offset", vision_offset);
+		SmartDashboard.putNumber("Vision Offset", visionOffset);
 		//SmartDashboard.putNumber("Reverse", oi.shawnDrive.get() ? 1 : 0);
 		// System.out.println(oi.shawnDrive.get());
 
@@ -109,17 +119,20 @@ public class Robot extends TimedRobot {
 		//// System.out.println(RobotMap.leftTapeSensor1.isOnTape()+"\t"+RobotMap.rightTapeSensor1.isOnTape());
 		// //System.out.println(!RobotMap.intakeLimitSwitch.get()+ "\t"
 		// +RobotMap.intakeArmTalon.getSelectedSensorPosition()+"\t"+Robot.intake.getTargetPosition()+"\t"+Robot.oi.xbox.getJoyRightY());
-		if (RobotMap.jevoisSerial == null) {
-			System.out.println("initializing JeVois Serial");
-			try {
-				RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
-			} catch (Exception e) {
-				System.out.println("JeVois error");
-				RobotMap.jevoisSerial = null;
+
+		if (RobotMap.jevoisSerial == null ) {
+			if (periodicCount%50==051) {
+				System.out.println("initializing JeVois Serial");
+				try {
+					RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
+				} catch (Exception e) {
+					System.out.println("JeVois error");
+					RobotMap.jevoisSerial = null;
+				}
 			}
 		} else {
 
-			int available = RobotMap.jevoisSerial.getBytesReceived();
+			jevois_available = RobotMap.jevoisSerial.getBytesReceived();
 			// Update collector
 			/*
 			 * int sum = available; for (int i = 0; i < collector.length - 1; i++) {
@@ -131,8 +144,21 @@ public class Robot extends TimedRobot {
 			 */
 
 			// Parse new offset
+			//System.out.println(available);
+			if(jevois_available == 0) last5 ++;
+			else last5 =0;
+			
+			//System.out.println(last5);
+			if(last5 >= 150){
+				System.out.println("Resetting Jevois serial");
+				RobotMap.jevoisSerial.reset();
+				RobotMap.jevoisSerial.close();
+				//RobotMap.jevoisSerial.setFlowControl(FlowControl.kRtsCts);
+				RobotMap.jevoisSerial=null;
+				last5 = 0;
+			}
 
-			if (available > 0) {
+			if (jevois_available > 0) {
 				try {
 					in = RobotMap.jevoisSerial.readString().split("\n");
 					if (in.length>2) {
@@ -140,12 +166,12 @@ public class Robot extends TimedRobot {
 						if (t.length() > 1) {
 							// Remove the trailing whitespace
 							t = t.substring(0, t.length() - 1);
-							vision_offset = Integer.parseInt(t);
+							visionOffset = Integer.parseInt(t);
 						}
 					}
 				} catch (Exception e) {
 					//vision_offset = 0;
-					System.out.println("Parse Err:"+t);
+					System.out.println("Parse Err");
 				}
 			}
 
@@ -163,6 +189,13 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		oi.init();
 		RobotMap.init();
+		/******************************************************************************
+		 * These 2 lines have no purpose other than to invoke actions that can cause large delays
+		 * the first time they are called.
+		 */
+		System.out.println("Ignore this: " + maxL);
+		NetworkTableInstance.getDefault();
+		/**************************************************************************/
 		gyro.calibrate();
 		lights.setBoth(Lights.Colour.PURPLE);
 		intake.init();
@@ -189,13 +222,15 @@ public class Robot extends TimedRobot {
 		jevois = CameraServer.getInstance().startAutomaticCapture(0);
 		jevois.setPixelFormat(PixelFormat.kYUYV);
 		jevois.setResolution(320, 240);
-		jevois.setFPS(15);
+		jevois.setFPS(25);
+		
 		try {
 			RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
 		} catch (Exception e) {
 			System.out.println("JeVois error");
 			RobotMap.jevoisSerial = null;
 		}
+
 	}
 
 	@Override
@@ -348,6 +383,19 @@ public class Robot extends TimedRobot {
 		// if(Robot.oi.xbox.getBumperL()){
 		// RobotMap.leftOuttakeCounter.setReverseDirection(!RobotMap.leftOuttakeCounter.getDirection());
 		// }
+
+		if(Robot.oi.xbox.getButtonA()){
+			Robot.lights.setBoth(Lights.Colour.GREEN);
+		}
+		if(Robot.oi.xbox.getButtonX()){
+			Robot.lights.setBoth(Lights.Colour.BLUE);
+		}
+		if(Robot.oi.xbox.getButtonB()){
+			Robot.lights.setBoth(Lights.Colour.RED);
+		}
+		if(Robot.oi.xbox.getButtonY()){
+			Robot.lights.setBoth(Lights.Colour.OFF);
+		}
 
 		System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() + "\t"
 				+ RobotMap.rightOuttakeTalon.getSelectedSensorPosition());

@@ -67,9 +67,9 @@ public class CurveDriveCommand extends Command {
     	
     	double current_angle = -Robot.gyro.getAngle();
     	double target_degrees = degrees_per_inch * (Robot.drivetrain.getLeftEncoderPosition() + Robot.drivetrain.getLeftEncoderPosition()) / 2;
-      double modifier = (target_degrees - current_angle) * k_p;
+      	double modifier = (target_degrees - current_angle) * k_p;
       
-      System.out.println(current_angle + "\t" + target_degrees + "\t"+ auto_drive_output[2]);
+      	//System.out.println(current_angle + "\t" + target_degrees + "\t"+ auto_drive_output[2]);
 		l -= modifier;
 		r += modifier;
 		

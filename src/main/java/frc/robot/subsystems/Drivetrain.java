@@ -70,7 +70,7 @@ public class Drivetrain extends Subsystem {
 		*/
 		double averageEncoderPosition = getAverageEncoderPosition();
 		double distanceLeft = distance - averageEncoderPosition;
-		System.out.println(getLeftEncoderPosition() +"\t"+ getRightEncoderPosition()+"\t"+distance + "\t" + distanceLeft);
+		//System.out.println(getLeftEncoderPosition() +"\t"+ getRightEncoderPosition()+"\t"+distance + "\t" + distanceLeft);
 
 		SmartDashboard.putNumber("Distance Left", distanceLeft);
     	if (distanceLeft > SLOW_DOWN_THRESHOLD) {

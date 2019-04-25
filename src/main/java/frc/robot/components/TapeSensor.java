@@ -10,7 +10,7 @@ public class TapeSensor extends DigitalInput {
     
     public TapeSensor(int channel) {
         super(channel);
-        System.out.println(channel);
+        //System.out.println(channel);
     }
 
     //  this.get() will return false on tape and true otherwise because the voltage going to the RoboRIO is inverted in Jeremy's calibration circuit

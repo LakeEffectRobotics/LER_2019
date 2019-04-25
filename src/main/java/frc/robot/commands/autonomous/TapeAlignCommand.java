@@ -39,7 +39,7 @@ public class TapeAlignCommand extends Command {
   @Override
   protected void execute() {
     
-    System.out.println("Aligning: "+engageLock);
+    //System.out.println("Aligning: "+engageLock);
 
     if((RobotMap.outerLeftSensor.isOnTape() || RobotMap.innerLeftSensor.isOnTape()) || 
         (RobotMap.outerRightSensor.isOnTape() || RobotMap.innerRightSensor.isOnTape())){

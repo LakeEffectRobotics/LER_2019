@@ -22,17 +22,17 @@ public class Intake extends Subsystem {
 
   //TODO: Set positions
   // Competition bot:
-  /*public static final double POSITION_MAX = -220;
-  public static final double POSITION_UP = -120;
-  public static final double POSITION_DOWN = -5;
-  public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;*/
-
+  public static final double POSITION_MAX = 507;
+  public static final double POSITION_UP = 350;
+  public static final double POSITION_DOWN = 114;
+  public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
+/*
   // Twin Bot:
   public static final double POSITION_MAX = 528;
   public static final double POSITION_UP = 390;
   public static final double POSITION_DOWN = 155;
   public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
-  
+  */
   public double targetPosition=POSITION_UP;
   
   

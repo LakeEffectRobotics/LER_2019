@@ -57,16 +57,22 @@ public class AutoCommandGroup extends CommandGroup {
 
 		int direction = INTAKE_FIRST;
 
+		// From middle-left to left front cargoship
+		addSequential(new AutoGyroDriveCommand(SLOW_SPEED, 135, 2, false, 0));
+		//addSequential(new AutoGyroDriveStraightCommand(SLOW_SPEED, 110));
+
 		// Off hab 1
 		//addSequential(new AutoGyroDriveStraightCommand(MEDIUM_SPEED, 20));
 
 		// Off hab 2
-		addSequential(new AutoGyroDriveStraightCommand(MEDIUM_SPEED, 80));//seems long because its airborne
-		//addSequential(new Delay(1000));
+		//addSequential(new AutoGyroDriveStraightCommand(MEDIUM_SPEED, 80));//seems long because its airborne
 
-		//To near rocket
-		addSequential(new AutoGyroDriveCommand(MEDIUM_SPEED, 85, 80, false, 0));
-		addSequential(new AutoGyroDriveCommand(MEDIUM_SPEED, 35, 45, false, 0));
+		//To near left rocket
+		//addSequential(new AutoGyroDriveCommand(MEDIUM_SPEED, 85, 80, false, 0));
+		//addSequential(new AutoGyroDriveCommand(MEDIUM_SPEED, 35, 45, false, 0));
+
+
+
 		//addSequential(new AutoGyroDriveStraightCommand(0.75, (D_MID - 45) * direction));
 /*
 		addSequential(new AutoGyroDriveStraightCommand(0.75, (D_MID - 45) * direction));
