@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANPIDController.AccelStrategy;
@@ -211,10 +212,12 @@ public class RobotMap {
 		intakeArmVictor.follow(intakeArmTalon);
 
 		elevatorSpark2.follow(elevatorSpark1, true);
+		elevatorSpark2.setSmartCurrentLimit(40);
 
 		elevatorSpark1.getPIDController().setP(1);
-		//Down is halved to prevent damage (somewhat)
+		elevatorSpark1.setSmartCurrentLimit(40);
 		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration, Elevator.acceleration);
+
 		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
 		elevatorSpark1.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 		elevatorSpark1.getPIDController().setSmartMotionMaxVelocity(2000, 0);

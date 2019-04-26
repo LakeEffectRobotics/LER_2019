@@ -37,7 +37,7 @@ public class Intake extends Subsystem {
   
   
   final double SPEED_PRACTICE = 0.7;
-  final double SPEED = 1;
+  final double SPEED = 0.60;
 
   @Override
   public void initDefaultCommand() {

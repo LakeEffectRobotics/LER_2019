@@ -51,7 +51,8 @@ public class Robot extends TimedRobot {
 	public static final Elevator elevator = new Elevator();
 	public static final Outtake outtake = new Outtake();
 
-	public static UsbCamera jevois;
+	public static UsbCamera webcam;
+	// public static UsbCamera jevois;
 
 	public static AutoCommandGroup autonomous_command_group;
 
@@ -94,7 +95,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Intake Angle", RobotMap.intakeArmTalon.getSelectedSensorPosition());
 		SmartDashboard.putNumber("Current Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Current Absolute Gyro Angle", gyro.getAbsoluteAngle());
-		SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
+		// SmartDashboard.putBoolean("Camera connected", jevois.isConnected());
 		// //System.out.println(RobotMap.jevoisSerial.getBytesReceived());
 		SmartDashboard.putBoolean("Serial good", RobotMap.jevoisSerial != null);
 		SmartDashboard.putNumber("Vision Offset", visionOffset);
@@ -120,16 +121,16 @@ public class Robot extends TimedRobot {
 		// //System.out.println(!RobotMap.intakeLimitSwitch.get()+ "\t"
 		// +RobotMap.intakeArmTalon.getSelectedSensorPosition()+"\t"+Robot.intake.getTargetPosition()+"\t"+Robot.oi.xbox.getJoyRightY());
 
-		if (RobotMap.jevoisSerial == null ) {
-			if (periodicCount%50==051) {
-				System.out.println("initializing JeVois Serial");
-				try {
-					RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
-				} catch (Exception e) {
-					System.out.println("JeVois error");
-					RobotMap.jevoisSerial = null;
-				}
-			}
+		/*if (RobotMap.jevoisSerial == null ) {
+			// if (periodicCount%50==051) {
+			// 	System.out.println("initializing JeVois Serial");
+			// 	try {
+			// 		RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
+			// 	} catch (Exception e) {
+			// 		System.out.println("JeVois error");
+			// 		RobotMap.jevoisSerial = null;
+			// 	}
+			// }
 		} else {
 
 			jevois_available = RobotMap.jevoisSerial.getBytesReceived();
@@ -141,7 +142,7 @@ public class Robot extends TimedRobot {
 			 * 
 			 * // If there have been <2 bits in the last 5 messages, there's an issue if
 			 * (sum < 2) { offset = 0; }
-			 */
+			 * /
 
 			// Parse new offset
 			//System.out.println(available);
@@ -175,7 +176,7 @@ public class Robot extends TimedRobot {
 				}
 			}
 
-		}
+	}*/
 	}
 
 	public void enabledInit() {
@@ -218,18 +219,25 @@ public class Robot extends TimedRobot {
 		autonomous_gamepiece_chooser.addOption("Cargo", AutonomousGamepiece.CARGO);
 		SmartDashboard.putData("Gamepiece", autonomous_position_chooser);
 
+		// Setup webcam feed
+		webcam = CameraServer.getInstance().startAutomaticCapture(0);
+		webcam.setPixelFormat(PixelFormat.kYUYV);
+		webcam.setResolution(320, 240);
+		webcam.setFPS(25);
+
+
 		// Setup jevois feed
-		jevois = CameraServer.getInstance().startAutomaticCapture(0);
-		jevois.setPixelFormat(PixelFormat.kYUYV);
-		jevois.setResolution(320, 240);
-		jevois.setFPS(25);
+		// jevois = CameraServer.getInstance().startAutomaticCapture(0);
+		// jevois.setPixelFormat(PixelFormat.kYUYV);
+		// jevois.setResolution(320, 240);
+		// jevois.setFPS(25);
 		
-		try {
+		/*try {
 			RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
 		} catch (Exception e) {
 			System.out.println("JeVois error");
 			RobotMap.jevoisSerial = null;
-		}
+		}*/
 
 	}
 
