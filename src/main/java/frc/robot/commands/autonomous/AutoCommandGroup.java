@@ -56,16 +56,24 @@ public class AutoCommandGroup extends CommandGroup {
 		 *********************************************************************/
 
 		int direction = INTAKE_FIRST;
+		addSequential(new AutoGyroDriveStraightCommand(SLOW_SPEED, 1, .5));
 
 		// From middle-left to left front cargoship
 		//addSequential(new AutoGyroDriveCommand(SLOW_SPEED, 135, 2, false, 0));
-		//addSequential(new AutoGyroDriveStraightCommand(SLOW_SPEED, 110));
+
+		// From middle-right to right front cargoship
+		//addSequential(new AutoGyroDriveCommand(SLOW_SPEED, 135, -2, false, 0));
+
+		//// addParallel(new SetElevatorHeightCommand(Elevator.LOW_HEIGHT));	
+		//addSequential(new AutoGyroDriveStraightCommand(SLOW_SPEED, 110, 3.5));
+		//// addSequential(new SetElevatorHeightCommand(Elevator.GROUND_HEIGHT));
+		//// addParallel(new AutoGyroDriveStraightCommand(SLOW_SPEED, 6, 1));
 
 		// Off hab 1
 		//addSequential(new AutoGyroDriveStraightCommand(MEDIUM_SPEED, 20));
 
 		// Off hab 2
-		addSequential(new AutoGyroDriveStraightCommand(MEDIUM_SPEED, 86));//seems long because its airborne
+		//addSequential(new AutoGyroDriveStraightCommand(MEDIUM_SPEED, 86));//seems long because its airborne
 
 		//To near left rocket
 		//addSequential(new AutoGyroDriveCommand(MEDIUM_SPEED, 85, 80, false, 0));

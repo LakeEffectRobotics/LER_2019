@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.OuttakeCommand;
 
@@ -33,12 +34,12 @@ public class Outtake extends Subsystem {
   public static final int R_IN = -248;
   public static final int R_OUT = -410;*/
 
-  public static final int L_GRIP = 756;
-  public static final int L_IN = 746;//-555;
-  public static final int L_OUT = 449;
-  public static final int R_GRIP = -129;//855;
-  public static final int R_IN = -212;//803;
-  public static final int R_OUT = -439; //635;
+  public static final int L_GRIP = 685;
+  public static final int L_IN = 660;//-555;
+  public static final int L_OUT = 460;
+  public static final int R_GRIP = -3;//855;
+  public static final int R_IN = -44;//803;
+  public static final int R_OUT = -250; //635;
 
   public boolean L_DISABLED = false;
   public boolean R_DISABLED = false;
@@ -84,12 +85,20 @@ public class Outtake extends Subsystem {
     RobotMap.rightOuttakeTalon.set(ControlMode.Position,rTarget);
     //System.out.println(side);
 
-    if(side == SIDE_LEFT && L_DISABLED){
-      RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, 0);
-    }
-    if(side == SIDE_RIGHT && R_DISABLED){
-      RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, 0);
+    if(Robot.oi.rightIn.get() || Robot.oi.rightOut.get()) R_DISABLED = true;
+    if(Robot.oi.leftIn.get()  || Robot.oi.leftOut.get()) L_DISABLED = true;
 
+    if(L_DISABLED){
+      int lVal = 0;
+      lVal += Robot.oi.leftIn.get()?1:0;
+      lVal -= Robot.oi.leftOut.get()?1:0;
+      // RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lVal/2);
+    }
+    if(R_DISABLED){
+      int rVal = 0;
+      rVal += Robot.oi.rightIn.get()?1:0;
+      rVal -= Robot.oi.rightOut.get()?1:0;
+      // RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rVal/2);
     }
   }
 

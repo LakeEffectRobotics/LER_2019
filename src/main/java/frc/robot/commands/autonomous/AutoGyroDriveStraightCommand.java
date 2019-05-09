@@ -17,12 +17,13 @@ public class AutoGyroDriveStraightCommand extends Command {
     private double distance;
     private boolean finished = false;
 
-    public AutoGyroDriveStraightCommand(double speed, double distance) {
+    public AutoGyroDriveStraightCommand(double speed, double distance, double timeout) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.drivetrain);
         this.speed = speed;
         this.distance = distance;
+        setTimeout(timeout);
     }
 
     // Called just before this Command runs the first time
@@ -44,7 +45,11 @@ public class AutoGyroDriveStraightCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-      return finished;
+        if (isTimedOut()) {
+            Robot.autonomous_command_group.cancel();//is this necessary?
+        }
+        return finished || isTimedOut();
+        //  return finished;
     }
 
     // Called once after isFinished returns true

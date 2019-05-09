@@ -47,8 +47,9 @@ public class DriveCommand extends Command {
     }
     if(Robot.oi.slowDrive.get()){
       Robot.drivetrain.drive(lSpeed*0.25, rSpeed*0.25);
-    }
-    else{
+    } else if (Robot.oi.TURBO.get()){
+      Robot.drivetrain.drive(lSpeed, rSpeed);
+    } else{
       Robot.drivetrain.drive(lSpeed*0.8, rSpeed*0.8);
     }
   }

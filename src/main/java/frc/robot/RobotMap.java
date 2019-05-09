@@ -216,7 +216,7 @@ public class RobotMap {
 
 		elevatorSpark1.getPIDController().setP(1);
 		elevatorSpark1.setSmartCurrentLimit(40);
-		elevatorSpark1.getPIDController().setOutputRange(-Elevator.acceleration, Elevator.acceleration);
+		elevatorSpark1.getPIDController().setOutputRange(-Elevator.ACCELERATION*0.75, Elevator.ACCELERATION);
 
 		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
 		elevatorSpark1.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);

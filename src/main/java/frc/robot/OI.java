@@ -17,6 +17,7 @@ import frc.robot.commands.autonomous.VisionDrive;
 import frc.robot.commands.instant.SetElevatorHeightCommand;
 import frc.robot.commands.instant.SetIntakeArm;
 import frc.robot.commands.instant.SetOuttake;
+import frc.robot.commands.instant.Stop;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Outtake;
@@ -35,11 +36,17 @@ public class OI {
 	final int RESET_CAM_BUTTON = 10;
 	final int DISCO_BUTTON = 2;
 	final int DEFENSE_BUTTON = 7;
+	final int LEFT_OUT = 8;
+	final int LEFT_IN = 9;
 
 	//Right Joystick buttons
 	final int SLOW_DRIVE_BUTTON = 2;
-	final int SHAWN_DRIVE_BUTTON = 3;
+	final int TURBO_BUTTON = 3;
+	final int SHAWN_DRIVE_BUTTON = 5;
 	final int TAPE_DRIVE_BUTTON = 1;
+	final int RIGHT_OUT = 8;
+	final int RIGHT_IN = 9;
+	final int FIX_DT = 4;
 
 	//Xbox buttons:
 	final int GROUND_HEIGHT_BUTTON = XBoxController.XBOX_A;
@@ -68,10 +75,16 @@ public class OI {
 	JoystickButton resetCam = new JoystickButton(lJoy, RESET_CAM_BUTTON);
 	JoystickButton disco = new JoystickButton(lJoy, DISCO_BUTTON);
 	JoystickButton defense = new JoystickButton(lJoy, DEFENSE_BUTTON);
+	public JoystickButton leftIn = new JoystickButton(lJoy, LEFT_IN);
+	public JoystickButton leftOut = new JoystickButton(lJoy, LEFT_OUT);
 
 	public JoystickButton slowDrive = new JoystickButton(rJoy, SLOW_DRIVE_BUTTON);
 	public JoystickButton shawnDrive = new JoystickButton(rJoy, SHAWN_DRIVE_BUTTON);
+	public JoystickButton TURBO = new JoystickButton(rJoy, TURBO_BUTTON);
 	JoystickButton tapeDrive = new JoystickButton(rJoy, TAPE_DRIVE_BUTTON);
+	public JoystickButton rightIn = new JoystickButton(lJoy, RIGHT_IN);
+	public JoystickButton rightOut = new JoystickButton(lJoy, RIGHT_OUT);
+	JoystickButton fixDT = new JoystickButton(lJoy, FIX_DT);
 
 	XBoxButton groundHeight = new XBoxButton(xbox, GROUND_HEIGHT_BUTTON);
 	XBoxButton lowHeight = new XBoxButton(xbox, LOW_ROCKET_BUTTON);
@@ -107,6 +120,8 @@ public class OI {
 
 		intake.whenPressed(new AutoIntakeCommand());
 		cancelIntake.whenPressed(new SetIntakeArm(Intake.POSITION_UP));
+
+		fixDT.whenPressed(new Stop());
 
 		outtakeLeft.whenPressed(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_OUT));
 		outtakeLeft.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));

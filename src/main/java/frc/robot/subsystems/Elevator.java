@@ -27,20 +27,20 @@ public class Elevator extends Subsystem {
   }
 
   //TODO: Set heights
-  public static final double GROUND_HEIGHT = -1;
-  public static final double MAX_HEIGHT = 50;
+  public static final double GROUND_HEIGHT = 0;
+  public static final double MAX_HEIGHT = 60;
   
-  public static final double LOW_HEIGHT = 9.5;
+  public static final double LOW_HEIGHT = 9.0;
   public static final double CARGO_SHIP_HEIGHT = 22;
   public static final double MID_HEIGHT = 30.5;
-  public static final double HIGH_HEIGHT = 49.5;
+  public static final double HIGH_HEIGHT = 51;
 
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CARGO_SHIP_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
   public static final double BUMP_UP = 15;
   public static final double BUMP_DOWN = -4.5;
 
-  public static final double acceleration = 0.90;
+  public static final double ACCELERATION = 0.80;
 
   double targetHeight = GROUND_HEIGHT;
   public Mode currentMode = Mode.CARGO;

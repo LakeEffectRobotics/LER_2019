@@ -290,6 +290,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+
 		//robotPeriodic();
 
 		// if(RobotMap.leftTapeSensor1.get()){
@@ -407,6 +409,6 @@ public class Robot extends TimedRobot {
 
 		System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() + "\t"
 				+ RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
-
+		// System.out.println(RobotMap.outerLeftSensor.isOnTape() + "\t" + RobotMap.innerLeftSensor.isOnTape() + "\t" + RobotMap.innerRightSensor.isOnTape() + "\t" + RobotMap.outerRightSensor.isOnTape());
 	}
 }
