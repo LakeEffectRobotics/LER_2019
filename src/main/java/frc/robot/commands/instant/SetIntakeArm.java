@@ -9,20 +9,12 @@ package frc.robot.commands.instant;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.Intake;
 
-/**
- * Add your docs here.
- */
 public class SetIntakeArm extends InstantCommand {
-  /**
-   * Add your docs here.
-   */
   double pos;
 
   public SetIntakeArm(double pos) {
     super();
-    // Use requires() here to declare subsystem dependencies
     requires(Robot.intake);
     this.pos = pos;
   }

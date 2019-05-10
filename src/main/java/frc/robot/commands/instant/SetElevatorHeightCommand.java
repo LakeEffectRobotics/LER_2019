@@ -12,16 +12,12 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Outtake;
 
-/**
- * Add your docs here.
- */
 public class SetElevatorHeightCommand extends InstantCommand {
 
   double height;
 
   public SetElevatorHeightCommand(double targetHeight) {
     super();
-    // Use requires() here to declare subsystem dependencies
     requires(Robot.elevator);
     height = targetHeight;
   }
@@ -29,17 +25,16 @@ public class SetElevatorHeightCommand extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-      Robot.elevator.setTargetHeight(height, 0, "Set");
-      
-    if(height < Elevator.LOW_HEIGHT){
+    // Set the height, with offset of 0
+    Robot.elevator.setTargetHeight(height, 0, "Set");
+
+    // Release grip if the height is low
+    if (height < Elevator.LOW_HEIGHT) {
       Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
       Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
-      //System.out.println("MID");
-    }
-    else{
+    } else { // Grip the ball if elevator is raised
       Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_GRIP);
       Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_GRIP);
-      //System.out.println("GRIP");
     }
   }
 

@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot.commands.instant;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -24,6 +23,7 @@ public class SetOuttake extends InstantCommand {
 
   public static int AUTO_OUT = -1;
   public static int AUTO_IN = -2;
+
   /**
    * Add your docs here.
    */
@@ -33,51 +33,49 @@ public class SetOuttake extends InstantCommand {
     // eg. requires(chassis);
     // requires(Robot.outtake);
     side = s;
-    position=pos;
+    position = pos;
   }
 
   // Called once when the command executes
   @Override
   protected void initialize() {
-    //System.out.println("Outtake: "+side);
-    if(side == SIDE_BOTH){
-      if(position == AUTO_IN){
+
+    // Bring both in
+    if (side == SIDE_BOTH) {
+      if (position == AUTO_IN) {
         Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
         Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
       }
       return;
     }
-    if(side == SIDE_AUTO){
-      //System.out.println("AUTO");
-      double distance = (RobotMap.leftDriveSpark2.getEncoder().getPosition()+RobotMap.rightDriveSpark2.getEncoder().getPosition())/2.0;
-      if(Robot.outtake.lastSide == Outtake.SIDE_LEFT && distance < Outtake.MAX_DIST){
+
+    // Auto-outtake using sensors
+    if (side == SIDE_AUTO) {
+      // Get distance from last tape
+      double distance = (RobotMap.leftDriveSpark2.getEncoder().getPosition()
+          + RobotMap.rightDriveSpark2.getEncoder().getPosition()) / 2.0;
+      // If the last side was left, and we are close enough
+      if (Robot.outtake.lastSide == Outtake.SIDE_LEFT && distance < Outtake.MAX_DIST) {
+        // Set values
         side = Outtake.SIDE_LEFT;
-        //System.out.println("LEFT");
-        if(position == AUTO_OUT) position = Outtake.L_OUT;
-        if(position == AUTO_IN) position = Outtake.L_IN;
+        if (position == AUTO_OUT)
+          position = Outtake.L_OUT;
+        if (position == AUTO_IN)
+          position = Outtake.L_IN;
       }
-      else if(Robot.outtake.lastSide == Outtake.SIDE_RIGHT && distance < Outtake.MAX_DIST){
-        side=Outtake.SIDE_RIGHT;
-        //System.out.println("RIGHT");
-        if(position == AUTO_OUT) position = Outtake.R_OUT;
-        if(position == AUTO_IN) position = Outtake.R_IN;
-      }
-      else{
-        //System.out.println("NOPE");
+      // If the last side was right, and we are close enough
+      else if (Robot.outtake.lastSide == Outtake.SIDE_RIGHT && distance < Outtake.MAX_DIST) {
+        // Set values
+        side = Outtake.SIDE_RIGHT;
+        if (position == AUTO_OUT)
+          position = Outtake.R_OUT;
+        if (position == AUTO_IN)
+          position = Outtake.R_IN;
+      } else {
         return;
       }
     }
-    // if(position == Outtake.L_OUT){
-    //   Robot.outtake.setSide(Outtake.SIDE_LEFT,Outtake.L_OUT);
-    //   Robot.outtake.setSide(Outtake.SIDE_RIGHT,Outtake.R_IN);
-    // }
-    // if(position == Outtake.R_OUT){
-    //   Robot.outtake.setSide(Outtake.SIDE_LEFT,Outtake.L_IN);
-    //   Robot.outtake.setSide(Outtake.SIDE_RIGHT,Outtake.R_OUT);
-    // }
-    // else{
     Robot.outtake.setSide(side, position);
-    // }
   }
 
 }
