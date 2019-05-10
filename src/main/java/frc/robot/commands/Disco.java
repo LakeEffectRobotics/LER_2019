@@ -13,8 +13,6 @@ import frc.robot.subsystems.Lights;
 
 public class Disco extends Command {
   public Disco() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.lights);
   }
 
@@ -28,26 +26,31 @@ public class Disco extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.lights.setColour(Lights.LEFT, (leftColour&RED)==RED, (leftColour&GREEN)==GREEN, (leftColour&BLUE)==BLUE);
-    Robot.lights.setColour(Lights.RIGHT, (rightColour&RED)==RED, (rightColour&GREEN)==GREEN, (rightColour&BLUE)==BLUE);
+    Robot.lights.setColour(Lights.LEFT, (leftColour & RED) == RED, (leftColour & GREEN) == GREEN,
+        (leftColour & BLUE) == BLUE);
+    Robot.lights.setColour(Lights.RIGHT, (rightColour & RED) == RED, (rightColour & GREEN) == GREEN,
+        (rightColour & BLUE) == BLUE);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(delay < 7){
+    if (delay < 7) {
       delay++;
       return;
-    } 
+    }
     delay = 0;
     leftColour += 0b001;
-    if(leftColour > 0b111) leftColour = 0b001;
+    if (leftColour > 0b111)
+      leftColour = 0b001;
     rightColour -= 0b001;
-    if(rightColour == 0b000) rightColour = 0b111;
-    
+    if (rightColour == 0b000)
+      rightColour = 0b111;
 
-    Robot.lights.setColour(Lights.LEFT, (leftColour&RED)==RED, (leftColour&GREEN)==GREEN, (leftColour&BLUE)==BLUE);
-    Robot.lights.setColour(Lights.RIGHT, (rightColour&RED)==RED, (rightColour&GREEN)==GREEN, (rightColour&BLUE)==BLUE);
+    Robot.lights.setColour(Lights.LEFT, (leftColour & RED) == RED, (leftColour & GREEN) == GREEN,
+        (leftColour & BLUE) == BLUE);
+    Robot.lights.setColour(Lights.RIGHT, (rightColour & RED) == RED, (rightColour & GREEN) == GREEN,
+        (rightColour & BLUE) == BLUE);
   }
 
   // Make this return true when this Command no longer needs to run execute()

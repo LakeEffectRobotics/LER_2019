@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.Elevator;
 
 public class ElevatorCommand extends Command {
@@ -17,40 +16,37 @@ public class ElevatorCommand extends Command {
   final double DEADZONE = 0.2;
 
   public ElevatorCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.elevator);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //F greg
+    // F greg
+    //WARNING Anything put here will be called every time the elevator is required
   }
 
-  // Called repeatedly when this Command is scheduled to run
-  
   @Override
   protected void execute() {
-    //Manual control using left stick
-    if(Math.abs(Robot.oi.xbox.getJoyLeftY()) > DEADZONE){
-      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight()-Robot.oi.xbox.getJoyLeftY()*0.8, 0, "Joy");
+    // Manual control using left stick
+    if (Math.abs(Robot.oi.xbox.getJoyLeftY()) > DEADZONE) {
+      Robot.elevator.setTargetHeight(Robot.elevator.getTargetHeight() - Robot.oi.xbox.getJoyLeftY() * 0.8, 0, "Joy");
     }
 
-    
-    if(Math.abs(Robot.elevator.getHeight() - Robot.elevator.getTargetHeight()) < 3 && Robot.elevator.getTargetHeight() == Elevator.GROUND_HEIGHT){
+    // Coast when near target, reduce oscillation
+    if (Math.abs(Robot.elevator.getHeight() - Robot.elevator.getTargetHeight()) < 3
+        && Robot.elevator.getTargetHeight() == Elevator.GROUND_HEIGHT) {
       Robot.elevator.coast();
       return;
     } else {
       Robot.elevator.resume();
     }
 
-
-    //Offset for grabbing+releasing hatches
-    if(Robot.oi.shiftUp.getAnalog() > DEADZONE){
-      Robot.elevator.setOffset(Robot.oi.shiftUp.getAnalog()*Elevator.BUMP_UP);
-    } else if(Robot.oi.shiftDown.getAnalog() > DEADZONE){
-      Robot.elevator.setOffset(Robot.oi.shiftDown.getAnalog()*Elevator.BUMP_DOWN);
+    // Offset for grabbing+releasing hatches
+    if (Robot.oi.shiftUp.getAnalog() > DEADZONE) {
+      Robot.elevator.setOffset(Robot.oi.shiftUp.getAnalog() * Elevator.BUMP_UP);
+    } else if (Robot.oi.shiftDown.getAnalog() > DEADZONE) {
+      Robot.elevator.setOffset(Robot.oi.shiftDown.getAnalog() * Elevator.BUMP_DOWN);
     } else {
       Robot.elevator.setOffset(0);
     }

@@ -27,6 +27,7 @@ public class OuttakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //Set sides based on tape detection
     if(RobotMap.outerLeftSensor.isOnTape()){
       RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
       RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
@@ -43,20 +44,13 @@ public class OuttakeCommand extends Command {
       Robot.outtake.lastSide = Outtake.SIDE_NONE;
     }
   
+    //Disable sides if the sensor is lost
     if(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() == -5){
       Robot.outtake.setSide(Outtake.SIDE_LEFT, -5);
-      // System.out.println("LEFT SIDE DEAD!");
     }
     if(RobotMap.rightOuttakeTalon.getSelectedSensorPosition() == -5){
       Robot.outtake.setSide(Outtake.SIDE_RIGHT, -5);
-      // System.out.println("RIGHT SIDE DEAD");
     }
-
-    
-
-    // Robot.outtake.drive();
-
-    // System.out.println(RobotMap.leftDriveSpark2.getEncoder().getPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -16,8 +16,6 @@ public class DriveCommand extends Command {
   final double DEADZONE = 0.025;
 
   public DriveCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.drivetrain);
   }
 
@@ -29,28 +27,34 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //  Pushing the joysticks forward gives a negative Y value, whereas pushing them backward gives a positive Y value
+    // Pushing the joysticks forward gives a negative Y value, whereas pushing them
+    // backward gives a positive Y value
     double lSpeed = -Robot.oi.lJoy.getY();
     double rSpeed = -Robot.oi.rJoy.getY();
-    double average = (lSpeed+rSpeed)/2;
+    double average = (lSpeed + rSpeed) / 2;
 
-    if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
-    if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
+    //Deadzone
+    if (Math.abs(lSpeed) < DEADZONE)
+      lSpeed = 0;
+    if (Math.abs(rSpeed) < DEADZONE)
+      rSpeed = 0;
 
+    //Get the speeds from the Tools function
     lSpeed = Tools.getAdaptedSpeed(lSpeed);
-    rSpeed = Tools.getAdaptedSpeed(rSpeed);;
+    rSpeed = Tools.getAdaptedSpeed(rSpeed);
 
     // if sticks are close and speed reasonable, go straight
-    if(Math.abs(lSpeed-rSpeed)<0.05 && Math.abs(average)>0.25){
+    if (Math.abs(lSpeed - rSpeed) < 0.05 && Math.abs(average) > 0.25) {
       lSpeed = average;
       rSpeed = average;
     }
-    if(Robot.oi.slowDrive.get()){
-      Robot.drivetrain.drive(lSpeed*0.25, rSpeed*0.25);
-    } else if (Robot.oi.TURBO.get()){
+    //Slow and TURBO modes
+    if (Robot.oi.slowDrive.get()) {
+      Robot.drivetrain.drive(lSpeed * 0.25, rSpeed * 0.25);
+    } else if (Robot.oi.TURBO.get()) {
       Robot.drivetrain.drive(lSpeed, rSpeed);
-    } else{
-      Robot.drivetrain.drive(lSpeed*0.8, rSpeed*0.8);
+    } else {
+      Robot.drivetrain.drive(lSpeed * 0.8, rSpeed * 0.8);
     }
   }
 
