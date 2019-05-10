@@ -12,28 +12,16 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
-import com.revrobotics.CANPIDController.AccelStrategy;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.SerialPort.Parity;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.SerialPort.StopBits;
-import frc.robot.components.TalonSRX_2;
 import frc.robot.components.TapeSensor;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Elevator;
 
 /**
@@ -43,22 +31,10 @@ import frc.robot.subsystems.Elevator;
  * floating around.
  */
 public class RobotMap {
-	// For example to map the right and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
-
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
-
 	public static final boolean CLIMBER_ENABLED = false;
-	
-	public static final int PID_MODE = 0;  //0 for closed loop 1 for cascaded closed loop
 
 	/**
-	 * Declaring CANIDs
+	 * Drivetrain
 	 */
 	final static int RIGHT_DRIVE_SPARK_1 = 1;
 	final static int RIGHT_DRIVE_SPARK_2 = 2;
@@ -67,36 +43,46 @@ public class RobotMap {
 	final static int LEFT_DRIVE_SPARK_2 = 5;
 	final static int LEFT_DRIVE_SPARK_3 = 6;
 
+	/**
+	 * Climber (Ya right)
+	 */
 	final static int CLIMBER_TALON = 11;
 	final static int CLIMBER_VICTOR = 21;
 
-	// final static int BACK_LEFT_SENSOR = 0;
-	final static int OUTER_LEFT_SENSOR = 1;
-	final static int INNER_LEFT_SENSOR = 2;
-	
-	final static int BACK_RIGHT_SENSOR = 4;
-	final static int OUTER_RIGHT_SENSOR = 5;
-	final static int INNER_RIGHT_SENSOR = 3;
-
+	/**
+	 * Intake
+	 */
 	final static int INTAKE_ARM_TALON = 10;
 	final static int INTAKE_ARM_VICTOR = 20;
 	final static int INTAKE_ROLLER_TALON = 12;
 	final static int INTAKE_LIMIT_SWITCH = 0;
-	//final static int INTAKE_POT = 2;
 
+	/**
+	 * Elevator
+	 */
 	final static int ELEVATOR_SPARK_1 = 7;
 	final static int ELEVATOR_SPARK_2 = 8;
 
+	/**
+	 * Outtake
+	 */
 	final static int LEFT_OUTTAKE_TALON = 14;
 	final static int RIGHT_OUTTAKE_TALON = 13;
 
-	final static int LEFT_OUTTAKE_COUNTER = 6;
-	final static int LEFT_OUTTAKE_LIMIT = 9;
-	final static int RIGHT_OUTTAKE_COUNTER = 7;
-	final static int RIGHT_OUTTAKE_LIMIT = 8;
+	/**
+	 * Line sensors
+	 */
+	// final static int BACK_LEFT_SENSOR = 0;
+	final static int OUTER_LEFT_SENSOR = 1;
+	final static int INNER_LEFT_SENSOR = 2;
 
-	//LED pins
-	//TODO set proper pins
+	final static int BACK_RIGHT_SENSOR = 4;
+	final static int OUTER_RIGHT_SENSOR = 5;
+	final static int INNER_RIGHT_SENSOR = 3;
+
+	/**
+	 * LEDs
+	 */
 	private static final int LEFT_PB_RELAY = 0;
 	private static final int LEFT_GR_RELAY = 1;
 	private static final int RIGHT_PB_RELAY = 2;
@@ -105,6 +91,7 @@ public class RobotMap {
 	/**
 	 * Creating motor controller objects
 	 */
+	// Drivetrain
 	public static CANSparkMax rightDriveSpark1 = new CANSparkMax(RIGHT_DRIVE_SPARK_1, MotorType.kBrushless);
 	public static CANSparkMax rightDriveSpark2 = new CANSparkMax(RIGHT_DRIVE_SPARK_2, MotorType.kBrushless);
 	public static CANSparkMax rightDriveSpark3 = new CANSparkMax(RIGHT_DRIVE_SPARK_3, MotorType.kBrushless);
@@ -112,147 +99,129 @@ public class RobotMap {
 	public static CANSparkMax leftDriveSpark2 = new CANSparkMax(LEFT_DRIVE_SPARK_2, MotorType.kBrushless);
 	public static CANSparkMax leftDriveSpark3 = new CANSparkMax(LEFT_DRIVE_SPARK_3, MotorType.kBrushless);
 
+	// Intake
 	public static TalonSRX intakeArmTalon = new TalonSRX(INTAKE_ARM_TALON);
 	public static VictorSPX intakeArmVictor = new VictorSPX(INTAKE_ARM_VICTOR);
 	public static TalonSRX intakeRollerTalon = new TalonSRX(INTAKE_ROLLER_TALON);
 
+	// Elevator
 	public static CANSparkMax elevatorSpark1 = new CANSparkMax(ELEVATOR_SPARK_1, MotorType.kBrushless);
 	public static CANSparkMax elevatorSpark2 = new CANSparkMax(ELEVATOR_SPARK_2, MotorType.kBrushless);
 
+	// Climber (Ha Ha)
 	public static TalonSRX climberTalon = new TalonSRX(CLIMBER_TALON);
 	public static VictorSPX climberVictor = new VictorSPX(CLIMBER_VICTOR);
 
+	// Outtake
 	public static TalonSRX leftOuttakeTalon = new TalonSRX(LEFT_OUTTAKE_TALON);
 	public static TalonSRX rightOuttakeTalon = new TalonSRX(RIGHT_OUTTAKE_TALON);
-	/**
-	 * Creating Gyro object
-	 */	
+
+	// Gyro
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(INTAKE_LIMIT_SWITCH);
 	public static SerialPort jevoisSerial;
 
-	public static final Counter leftOuttakeCounter = new Counter(new DigitalInput(LEFT_OUTTAKE_COUNTER));
-	public static final Counter rightOuttakeCounter = new Counter(new DigitalInput(RIGHT_OUTTAKE_COUNTER));
-
-	public static final DigitalInput leftOuttakeLimit = new DigitalInput(LEFT_OUTTAKE_LIMIT);
-	public static final DigitalInput rightOuttakeLimit = new DigitalInput(RIGHT_OUTTAKE_LIMIT);
-		
-	
-	//LED lights
+	// LED lights
 	public static Relay leftLED_PB = new Relay(LEFT_PB_RELAY, Relay.Direction.kBoth);
 	public static Relay leftLED_GB = new Relay(LEFT_GR_RELAY, Relay.Direction.kBoth);
 	public static Relay rightLED_PB = new Relay(RIGHT_PB_RELAY, Relay.Direction.kBoth);
 	public static Relay rightLED_GR = new Relay(RIGHT_GR_RELAY, Relay.Direction.kBoth);
 
-	//Creating sensor objects
+	// Creating sensor objects
 	public static TapeSensor backLeftSensor;
 	public static TapeSensor outerLeftSensor;
 	public static TapeSensor innerLeftSensor;
-	
+
 	public static TapeSensor backRightSensor;
 	public static TapeSensor outerRightSensor;
 	public static TapeSensor innerRightSensor;
-	
-	public static void init() { //r/outoftheloop
-		// System.out.println("BL:"+BACK_LEFT_SENSOR);
-		// backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
-		//System.out.println("OL:"+OUTER_LEFT_SENSOR);
-		outerLeftSensor = new TapeSensor(OUTER_LEFT_SENSOR);
-		//System.out.println("IL:"+INNER_LEFT_SENSOR);
-		innerLeftSensor = new TapeSensor(INNER_LEFT_SENSOR);
-		//System.out.println("BR:"+BACK_RIGHT_SENSOR);
-		backRightSensor = new TapeSensor(BACK_RIGHT_SENSOR);
-		//System.out.println("OR:"+OUTER_RIGHT_SENSOR);
-		outerRightSensor = new TapeSensor(OUTER_RIGHT_SENSOR);
-		//System.out.println("IR:"+INNER_RIGHT_SENSOR);
-		innerRightSensor = new TapeSensor(INNER_RIGHT_SENSOR);
 
-		// leftDriveSpark1.setInverted(true);
-		// rightDriveSpark1.setInverted(true);
-		//Set followers
+	public static void init() {
+
+		// Set followers
 		rightDriveSpark2.follow(rightDriveSpark1);
 		rightDriveSpark3.follow(rightDriveSpark1);
 		leftDriveSpark2.follow(leftDriveSpark1);
 		leftDriveSpark3.follow(leftDriveSpark1);
 
 		leftDriveSpark1.setOpenLoopRampRate(0.25);
-		rightDriveSpark1.setOpenLoopRampRate(0.25); 
-		
-		//	Ratio of wheel rotations to encoder rotations
-		//	Also equal to the ratio of teeth on the motor gears to teeth on the wheel gears
-		double gearRatio = 50/14.0;
-		//	1 rotation has 2π radians
+		rightDriveSpark1.setOpenLoopRampRate(0.25);
+
+		// Ratio of wheel rotations to encoder rotations
+		// Also equal to the ratio of teeth on the motor gears to teeth on the wheel
+		// gears
+		double gearRatio = 50 / 14.0;
+		// 1 rotation has 2π radians
 		double rotationsToRadians = 2 * Math.PI;
-		//	The wheels have radius 3"
+		// The wheels have radius 3"
 		double wheelRadius = 3;
-		//	Conversion of encoder rotations to linear distance travelled by the robot (in inches)
-		//		Multiplying by gear ratio gives the number of wheel rotations
-		//		Multiplying by 2π gives the number of radians rotated by the wheels
-		//		Multiplying by wheel radius gives the distance travelled by the robot (in inches)
+		// Conversion of encoder rotations to linear distance travelled by the robot (in
+		// inches)
+		// Multiplying by gear ratio gives the number of wheel rotations
+		// Multiplying by 2π gives the number of radians rotated by the wheels
+		// Multiplying by wheel radius gives the distance travelled by the robot (in
+		// inches)
 		// double rotationsToInches = (1/gearRatio * (wheelRadius*2*Math.PI));
 		// double rotationsToInches = (50/14.0)*(1/(Math.PI*2*wheelRadius));
-		double rotationsToInches = ((6.25*Math.PI)/12.3);
+		double rotationsToInches = ((6.25 * Math.PI) / 12.3);
 		leftDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
 		leftDriveSpark1.getEncoder().setVelocityConversionFactor(rotationsToInches);
 		rightDriveSpark1.getEncoder().setPositionConversionFactor(rotationsToInches);
 		rightDriveSpark1.getEncoder().setVelocityConversionFactor(rotationsToInches);
-		
+
 		leftDriveSpark2.getEncoder().setPositionConversionFactor(rotationsToInches);
 		leftDriveSpark2.getEncoder().setVelocityConversionFactor(rotationsToInches);
 		rightDriveSpark2.getEncoder().setPositionConversionFactor(rotationsToInches);
 		rightDriveSpark2.getEncoder().setVelocityConversionFactor(rotationsToInches);
 
+		// Setup intake + PID
+		intakeArmVictor.follow(intakeArmTalon);
+
 		intakeArmTalon.configOpenloopRamp(0.1);
 		intakeArmTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		intakeArmTalon.setSensorPhase(false);
-		intakeArmTalon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector,LimitSwitchNormal.NormallyOpen);
+		intakeArmTalon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector,
+				LimitSwitchNormal.NormallyOpen);
 		intakeArmTalon.config_kP(0, 1.0, 0);
 		intakeArmTalon.config_kI(0, 0.0, 0);
 		intakeArmTalon.config_kD(0, 0.001, 0);
-		intakeArmVictor.follow(intakeArmTalon);
 
+		// Setup elevator + PID
 		elevatorSpark2.follow(elevatorSpark1, true);
 		elevatorSpark2.setSmartCurrentLimit(40);
 
 		elevatorSpark1.getPIDController().setP(1);
 		elevatorSpark1.setSmartCurrentLimit(40);
-		elevatorSpark1.getPIDController().setOutputRange(-Elevator.ACCELERATION*0.75, Elevator.ACCELERATION);
-
+		elevatorSpark1.getPIDController().setOutputRange(-Elevator.ACCELERATION * 0.75, Elevator.ACCELERATION);
 		elevatorSpark1.getPIDController().setReference(Elevator.GROUND_HEIGHT, ControlType.kPosition);
-		elevatorSpark1.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
-		elevatorSpark1.getPIDController().setSmartMotionMaxVelocity(2000, 0);
-		elevatorSpark1.getPIDController().setSmartMotionMaxAccel(1000, 0);
 
 		Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "Init");
 
-		// climberTalon2.follow(climberTalon1);
+		// Setup climber (NOPE)
 		if (CLIMBER_ENABLED) {
-			climberTalon.set(ControlMode.PercentOutput,0.0);
+			climberTalon.set(ControlMode.PercentOutput, 0.0);
 			climberVictor.follow(climberTalon);
+			climberTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		}
 
-
-		//LEDs off by default:
+		// LEDs off by default:
 		leftLED_PB.set(Relay.Value.kOff);
 		leftLED_GB.set(Relay.Value.kOff);
 		rightLED_PB.set(Relay.Value.kOff);
 		rightLED_GR.set(Relay.Value.kOff);
 
+		// Setup outtake
 		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		leftOuttakeTalon.setSensorPhase(false);
 		leftOuttakeTalon.config_kP(0, 12.0, 0);
 		leftOuttakeTalon.config_kI(0, 0.0, 0);
 		leftOuttakeTalon.config_kD(0, 0.001, 0);
 
-		
 		rightOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 		rightOuttakeTalon.setSensorPhase(true);
 		rightOuttakeTalon.config_kP(0, 12.0, 0);
 		rightOuttakeTalon.config_kI(0, 0.0, 0);
 		rightOuttakeTalon.config_kD(0, 0.001, 0);
 
-		rightOuttakeTalon.set(ControlMode.PercentOutput, 0);
-
-		climberTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 	}
 }
