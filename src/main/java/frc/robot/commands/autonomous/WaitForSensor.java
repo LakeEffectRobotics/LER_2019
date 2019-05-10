@@ -16,8 +16,6 @@ public class WaitForSensor extends Command {
   boolean state;
 
   public WaitForSensor(DigitalInput i, boolean state) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     sensor = i;
     this.state = state;
   }

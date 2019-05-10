@@ -7,11 +7,9 @@
 
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.XBoxController;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
@@ -23,8 +21,6 @@ public class AutoIntakeCommand extends Command {
   long time = 0;
 
   public AutoIntakeCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.intake);
   }
 
@@ -39,16 +35,16 @@ public class AutoIntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.oi.xbox.getTriggerLeft() > DEADZONE){
-      Robot.intake.spin(Robot.oi.xbox.getTriggerLeft());
-    } else {
-      Robot.intake.spin(SPEED);
-    }
-    if(!RobotMap.intakeLimitSwitch.get() && !pressed){
+    // Set the roller speed
+    Robot.intake.spin(SPEED);
+
+    // First time the switch is pressed
+    if (!RobotMap.intakeLimitSwitch.get() && !pressed) {
       pressed = true;
       time = System.currentTimeMillis();
     }
-    if(pressed && System.currentTimeMillis()-time > 250){
+    // Wait 250ms after press to retract arm
+    if (pressed && System.currentTimeMillis() - time > 250) {
       Robot.intake.setTargetPosition(Intake.POSITION_UP);
     }
   }
@@ -56,12 +52,14 @@ public class AutoIntakeCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.intake.getTargetPosition()==Intake.POSITION_UP && RobotMap.intakeLimitSwitch.get());
+    // It's finished when the button is pressed and the target is up
+    return (Robot.intake.getTargetPosition() == Intake.POSITION_UP && RobotMap.intakeLimitSwitch.get());
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    // Stop roller, ensure the target is up
     Robot.intake.spin(0);
     Robot.intake.setTargetPosition(Intake.POSITION_UP);
   }
