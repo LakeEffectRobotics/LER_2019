@@ -20,71 +20,63 @@ public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  //TODO: Set positions
   // Competition bot:
   public static final double POSITION_MAX = 507;
   public static final double POSITION_UP = 350;
   public static final double POSITION_DOWN = 114;
-  public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
-/*
-  // Twin Bot:
-  public static final double POSITION_MAX = 528;
-  public static final double POSITION_UP = 390;
-  public static final double POSITION_DOWN = 155;
-  public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
-  */
-  public double targetPosition=POSITION_UP;
-  
-  
+  public static final double POSITION_MID = (POSITION_UP + POSITION_DOWN) / 2;
+  /*
+   * // Twin Bot: public static final double POSITION_MAX = 528; public static
+   * final double POSITION_UP = 390; public static final double POSITION_DOWN =
+   * 155; public static final double POSITION_MID = (POSITION_UP+POSITION_DOWN)/2;
+   */
+  public double targetPosition = POSITION_UP;
+
   final double SPEED_PRACTICE = 0.7;
   final double SPEED = 0.60;
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new IntakeCommand());
   }
 
-  public void init(){
-    if(getPosition() < POSITION_MID){
+  public void init() {
+    if (getPosition() < POSITION_MID) {
       setTargetPosition(getPosition());
-    }
-    else{
+    } else {
       setTargetPosition(POSITION_UP);
     }
   }
 
-  public void setTargetPosition(double position){
-    if(position > POSITION_MAX) {  // sensor values are negative 
-      position=POSITION_MAX;
+  public void setTargetPosition(double position) {
+    if (position > POSITION_MAX) { // sensor values are negative
+      position = POSITION_MAX;
     }
-    if(position < POSITION_DOWN) {  // sensor values are negative
-      position=POSITION_DOWN;
+    if (position < POSITION_DOWN) { // sensor values are negative
+      position = POSITION_DOWN;
     }
-    if (position!=POSITION_DOWN) {
+    // Slow when going down to prevent damage
+    if (position != POSITION_DOWN) {
       RobotMap.intakeArmTalon.config_kP(0, 3.0, 0);
       RobotMap.intakeArmTalon.config_kD(0, 0.2, 0);
       RobotMap.intakeArmTalon.config_kI(0, 0.000, 0);
     } else {
       RobotMap.intakeArmTalon.config_kP(0, 1, 0);
     }
-    targetPosition = position; 
+    targetPosition = position;
     RobotMap.intakeArmTalon.set(ControlMode.Position, position);
   }
 
-  public double getPosition(){
-    return(RobotMap.intakeArmTalon.getSelectedSensorPosition());
+  public double getPosition() {
+    return (RobotMap.intakeArmTalon.getSelectedSensorPosition());
   }
 
-  public double getTargetPosition(){
-    return(targetPosition);
+  public double getTargetPosition() {
+    return (targetPosition);
   }
 
-  public void spin(double speed){
-    //TODO change for comp bot
+  public void spin(double speed) {
     RobotMap.intakeRollerTalon.set(ControlMode.PercentOutput, -speed);
   }
 
-  
 }

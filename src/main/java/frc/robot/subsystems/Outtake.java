@@ -59,17 +59,11 @@ public class Outtake extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new OuttakeCommand());
   }
 
   public void setSide(int side, int t) {
     int target = (int) t;
-    //TODO: Remove debug code
-    if(t == R_GRIP || t == L_GRIP){
-      System.out.println("GRIP 2");
-    }
 
     if (side == SIDE_LEFT) {
       lTarget = target;
@@ -83,7 +77,6 @@ public class Outtake extends Subsystem {
     }
     RobotMap.leftOuttakeTalon.set(ControlMode.Position,lTarget);
     RobotMap.rightOuttakeTalon.set(ControlMode.Position,rTarget);
-    //System.out.println(side);
 
     if(Robot.oi.rightIn.get() || Robot.oi.rightOut.get()) R_DISABLED = true;
     if(Robot.oi.leftIn.get()  || Robot.oi.leftOut.get()) L_DISABLED = true;
@@ -92,13 +85,13 @@ public class Outtake extends Subsystem {
       int lVal = 0;
       lVal += Robot.oi.leftIn.get()?1:0;
       lVal -= Robot.oi.leftOut.get()?1:0;
-      // RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lVal/2);
+      RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, lVal/2);
     }
     if(R_DISABLED){
       int rVal = 0;
       rVal += Robot.oi.rightIn.get()?1:0;
       rVal -= Robot.oi.rightOut.get()?1:0;
-      // RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rVal/2);
+      RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, rVal/2);
     }
   }
 

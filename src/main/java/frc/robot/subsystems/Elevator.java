@@ -26,7 +26,6 @@ public class Elevator extends Subsystem {
     CARGO, HATCH
   }
 
-  //TODO: Set heights
   public static final double GROUND_HEIGHT = 0;
   public static final double MAX_HEIGHT = 60;
   
@@ -37,9 +36,11 @@ public class Elevator extends Subsystem {
 
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CARGO_SHIP_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 
+  //Up and down offsets
   public static final double BUMP_UP = 15;
   public static final double BUMP_DOWN = -4.5;
 
+  //Elevator speed
   public static final double ACCELERATION = 0.80;
 
   double targetHeight = GROUND_HEIGHT;
