@@ -23,14 +23,14 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Outtake;
 
 public class OI {
-	
+
 	// input number definitions
-	final int L_JOY = 1;
 	final int R_JOY = 0;
-	
+	final int L_JOY = 1;
+
 	final int XBOX = 2;
 
-	//Left Joystick buttons
+	// Left Joystick buttons
 	final int GYRO_DRIVE_BUTTON = 1;
 	final int VISION_DRIVE_BUTTON = 3;
 	final int RESET_CAM_BUTTON = 10;
@@ -39,7 +39,7 @@ public class OI {
 	final int LEFT_OUT = 8;
 	final int LEFT_IN = 9;
 
-	//Right Joystick buttons
+	// Right Joystick buttons
 	final int SLOW_DRIVE_BUTTON = 2;
 	final int TURBO_BUTTON = 3;
 	final int SHAWN_DRIVE_BUTTON = 5;
@@ -48,7 +48,7 @@ public class OI {
 	final int RIGHT_IN = 9;
 	final int FIX_DT = 4;
 
-	//Xbox buttons:
+	// Xbox buttons:
 	final int GROUND_HEIGHT_BUTTON = XBoxController.XBOX_A;
 	final int LOW_ROCKET_BUTTON = XBoxController.XBOX_X;
 	final int MID_ROCKET_BUTTON = XBoxController.XBOX_Y;
@@ -65,11 +65,12 @@ public class OI {
 	final int OUTTAKE_RIGHT_BUTTON = XBoxController.XBOX_R3;
 	final int AUTO_OUTTAKE_BUTTON = XBoxController.XBOX_LB;
 
-	//Initialisation
+	// Initialisation
 	public Joystick lJoy = new Joystick(L_JOY);
 	public Joystick rJoy = new Joystick(R_JOY);
 	public XBoxController xbox = new XBoxController(XBOX);
 
+	// LEFT
 	JoystickButton gyroDrive = new JoystickButton(lJoy, GYRO_DRIVE_BUTTON);
 	JoystickButton visionDrive = new JoystickButton(lJoy, VISION_DRIVE_BUTTON);
 	JoystickButton resetCam = new JoystickButton(lJoy, RESET_CAM_BUTTON);
@@ -78,6 +79,7 @@ public class OI {
 	public JoystickButton leftIn = new JoystickButton(lJoy, LEFT_IN);
 	public JoystickButton leftOut = new JoystickButton(lJoy, LEFT_OUT);
 
+	// RIGHT
 	public JoystickButton slowDrive = new JoystickButton(rJoy, SLOW_DRIVE_BUTTON);
 	public JoystickButton shawnDrive = new JoystickButton(rJoy, SHAWN_DRIVE_BUTTON);
 	public JoystickButton TURBO = new JoystickButton(rJoy, TURBO_BUTTON);
@@ -86,15 +88,16 @@ public class OI {
 	public JoystickButton rightOut = new JoystickButton(lJoy, RIGHT_OUT);
 	JoystickButton fixDT = new JoystickButton(lJoy, FIX_DT);
 
+	// XBOX
 	XBoxButton groundHeight = new XBoxButton(xbox, GROUND_HEIGHT_BUTTON);
 	XBoxButton lowHeight = new XBoxButton(xbox, LOW_ROCKET_BUTTON);
 	XBoxButton midHeight = new XBoxButton(xbox, MID_ROCKET_BUTTON);
 	XBoxButton highHeight = new XBoxButton(xbox, HIGH_ROCKET_BUTTON);
 	XBoxButton cargoShipHeight = new XBoxButton(xbox, CARGO_SHIP_HEIGHT_BUTTON);
-	
+
 	XBoxButton intake = new XBoxButton(xbox, INTAKE_BUTTON);
 	XBoxButton cancelIntake = new XBoxButton(xbox, INTAKE_CANCEL_BUTTON);
-	
+
 	XBoxButton outtakeLeft = new XBoxButton(xbox, OUTTAKE_LEFT_BUTTON);
 	XBoxButton outtakeRight = new XBoxButton(xbox, OUTTAKE_RIGHT_BUTTON);
 	XBoxButton autoOuttake = new XBoxButton(xbox, AUTO_OUTTAKE_BUTTON);
@@ -105,13 +108,13 @@ public class OI {
 	// XBoxButton disco = new XBoxButton(xbox, DISCO_BUTTON);
 
 	public void init() {
-		//Joystick Buttons
+		// Joystick Buttons
 		gyroDrive.whileHeld(new StraightGyroDriveCommand());
 		visionDrive.whileHeld(new VisionDrive(false));
 		tapeDrive.whileHeld(new TapeAlignCommand());
 		defense.whenPressed(new SetIntakeArm(Intake.POSITION_MAX));
 
-		//XBox Buttons
+		// XBox Buttons
 		groundHeight.whenPressed(new SetElevatorHeightCommand(Elevator.GROUND_HEIGHT));
 		lowHeight.whenPressed(new SetElevatorHeightCommand(Elevator.LOW_HEIGHT));
 		midHeight.whenPressed(new SetElevatorHeightCommand(Elevator.MID_HEIGHT));
