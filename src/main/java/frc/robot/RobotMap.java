@@ -138,6 +138,14 @@ public class RobotMap {
 
 	public static void init() {
 
+		// backLeftSensor = new TapeSensor(BACK_LEFT_SENSOR);
+		innerLeftSensor = new TapeSensor(INNER_LEFT_SENSOR);
+		outerLeftSensor = new TapeSensor(OUTER_LEFT_SENSOR);
+		
+		backRightSensor = new TapeSensor(BACK_RIGHT_SENSOR);
+		innerRightSensor = new TapeSensor(INNER_RIGHT_SENSOR);
+		outerRightSensor = new TapeSensor(OUTER_RIGHT_SENSOR);
+
 		// Set followers
 		rightDriveSpark2.follow(rightDriveSpark1);
 		rightDriveSpark3.follow(rightDriveSpark1);
@@ -211,17 +219,17 @@ public class RobotMap {
 		rightLED_GR.set(Relay.Value.kOff);
 
 		// Setup outtake
-		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
 		leftOuttakeTalon.setSensorPhase(false);
-		leftOuttakeTalon.config_kP(0, 12.0, 0);
-		leftOuttakeTalon.config_kI(0, 0.0, 0);
-		leftOuttakeTalon.config_kD(0, 0.001, 0);
+		// leftOuttakeTalon.config_kP(0, 12.0, 0);
+		// leftOuttakeTalon.config_kI(0, 0.0, 0);
+		// leftOuttakeTalon.config_kD(0, 0.001, 0);
 
-		rightOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		rightOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
 		rightOuttakeTalon.setSensorPhase(true);
-		rightOuttakeTalon.config_kP(0, 12.0, 0);
-		rightOuttakeTalon.config_kI(0, 0.0, 0);
-		rightOuttakeTalon.config_kD(0, 0.001, 0);
+		// rightOuttakeTalon.config_kP(0, 12.0, 0);
+		// rightOuttakeTalon.config_kI(0, 0.0, 0);
+		// rightOuttakeTalon.config_kD(0, 0.001, 0);
 
 	}
 }

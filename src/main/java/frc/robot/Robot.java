@@ -271,6 +271,16 @@ public class Robot extends TimedRobot {
 		RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, Robot.oi.xbox.getJoyLeftY() / 3);
 		RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, Robot.oi.xbox.getJoyRightY() / 3);
 
+		if(RobotMap.leftOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
+			RobotMap.leftOuttakeTalon.setSelectedSensorPosition(0);
+		}
+
+		if(RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
+			RobotMap.rightOuttakeTalon.setSelectedSensorPosition(0);
+		}
+
+		System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() +"\t"+ RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
+
 		if (Robot.oi.xbox.getButtonA()) {
 			Robot.lights.setBoth(Lights.Colour.GREEN);
 		}
@@ -283,6 +293,9 @@ public class Robot extends TimedRobot {
 		if (Robot.oi.xbox.getButtonY()) {
 			Robot.lights.setBoth(Lights.Colour.OFF);
 		}
+
+		// RobotMap.intakeArmTalon.set(ControlMode.PercentOutput, Robot.oi.xbox.getJoyLeftX());
+		// RobotMap.intakeArmVictor.set(ControlMode.PercentOutput, Robot.oi.xbox.getJoyLeftX());
 
 	}
 }

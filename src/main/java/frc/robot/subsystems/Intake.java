@@ -32,7 +32,6 @@ public class Intake extends Subsystem {
    */
   public double targetPosition = POSITION_UP;
 
-  final double SPEED_PRACTICE = 0.7;
   final double SPEED = 0.60;
 
   @Override

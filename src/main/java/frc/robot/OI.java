@@ -102,7 +102,9 @@ public class OI {
 	XBoxButton outtakeRight = new XBoxButton(xbox, OUTTAKE_RIGHT_BUTTON);
 	XBoxButton autoOuttake = new XBoxButton(xbox, AUTO_OUTTAKE_BUTTON);
 
+	//Right
 	public XBoxTrigger shiftUp = new XBoxTrigger(xbox, false);
+	//Left
 	public XBoxTrigger shiftDown = new XBoxTrigger(xbox, true);
 
 	// XBoxButton disco = new XBoxButton(xbox, DISCO_BUTTON);

@@ -15,7 +15,7 @@ import frc.robot.subsystems.Intake;
 
 public class AutoIntakeCommand extends Command {
 
-  final double SPEED = 0.65;
+  final double SPEED = 0.47;
   final double DEADZONE = 0.2;
   boolean pressed = false;
   long time = 0;

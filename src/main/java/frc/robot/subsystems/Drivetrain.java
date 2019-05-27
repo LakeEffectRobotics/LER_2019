@@ -30,6 +30,9 @@ public class Drivetrain extends Subsystem {
 			RobotMap.rightDriveSpark1.set(-l);
 			return;
 		}
+		//Code for safety at demos:
+		//l*=0.75;
+		//r*=0.75;
 
 		RobotMap.leftDriveSpark1.set(l);
 		RobotMap.rightDriveSpark1.set(-r);  //  r is inverted because the left and right motors are oriented in opposite directions
