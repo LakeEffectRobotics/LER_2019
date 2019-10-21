@@ -9,15 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
+import frc.robot.Tools;
 
 public class DriveCommand extends Command {
 
-  final double DEADZONE = 0.1;
+  final double DEADZONE = 0.025;
 
   public DriveCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.drivetrain);
   }
 
@@ -29,18 +27,34 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //  Pushing the joysticks forward gives a negative Y value, whereas pushing them backward gives a positive Y value
-    double lSpeed = -Robot.oi.l_joy.getY();
-    double rSpeed = -Robot.oi.r_joy.getY();
+    // Pushing the joysticks forward gives a negative Y value, whereas pushing them
+    // backward gives a positive Y value
+    double lSpeed = -Robot.oi.lJoy.getY();
+    double rSpeed = -Robot.oi.rJoy.getY();
+    double average = (lSpeed + rSpeed) / 2;
 
-    if(Math.abs(lSpeed) < DEADZONE) lSpeed = 0;
-    if(Math.abs(rSpeed) < DEADZONE) rSpeed = 0;
-    if(Robot.oi.l_joy.getRawButton(2)){
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/10, Math.pow(rSpeed, 3)/10);
+    //Deadzone
+    if (Math.abs(lSpeed) < DEADZONE)
+      lSpeed = 0;
+    if (Math.abs(rSpeed) < DEADZONE)
+      rSpeed = 0;
 
+    //Get the speeds from the Tools function
+    lSpeed = Tools.getAdaptedSpeed(lSpeed);
+    rSpeed = Tools.getAdaptedSpeed(rSpeed);
+
+    // if sticks are close and speed reasonable, go straight
+    if (Math.abs(lSpeed - rSpeed) < 0.05 && Math.abs(average) > 0.25) {
+      lSpeed = average;
+      rSpeed = average;
     }
-    else{
-      Robot.drivetrain.drive(Math.pow(lSpeed, 3)/2, Math.pow(rSpeed, 3)/2);
+    //Slow and TURBO modes
+    if (Robot.oi.slowDrive.get()) {
+      Robot.drivetrain.drive(lSpeed * 0.25, rSpeed * 0.25);
+    } else if (Robot.oi.TURBO.get()) {
+      Robot.drivetrain.drive(lSpeed, rSpeed);
+    } else {
+      Robot.drivetrain.drive(lSpeed * 0.8, rSpeed * 0.8);
     }
   }
 

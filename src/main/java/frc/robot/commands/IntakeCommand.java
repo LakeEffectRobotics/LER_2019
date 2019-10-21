@@ -7,42 +7,23 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.ControlType;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class LockDriveCommand extends Command {
-  public LockDriveCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.drivetrain);
+public class IntakeCommand extends Command {
+  public IntakeCommand() {
+    requires(Robot.intake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.leftDriveSpark1.getPIDController().setP(1);
-    RobotMap.leftDriveSpark1.getPIDController().setOutputRange(-1, 1);
-    RobotMap.leftDriveSpark1.getPIDController().setReference(RobotMap.leftDriveSpark1.getEncoder().getPosition(), ControlType.kPosition);
-    
-    
-    RobotMap.rightDriveSpark1.getPIDController().setP(1);
-    RobotMap.rightDriveSpark1.getPIDController().setOutputRange(-1, 1);
-    RobotMap.rightDriveSpark1.getPIDController().setReference(RobotMap.rightDriveSpark1.getEncoder().getPosition(), ControlType.kPosition);
-   
+    //Robot.intakeArm.setTargetPosition(IntakeArm.POSITION_UP);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // System.out.print(RobotMap.leftDriveSpark1.getEncoder().getPosition());
-    // System.out.print("\t");
-    // System.out.println(RobotMap.rightDriveSpark1.getEncoder().getPosition());
-
-    //TODO: Allow the driver to move the bot
-
 
   }
 

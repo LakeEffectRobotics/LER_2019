@@ -7,43 +7,50 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.ControlType;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Outtake;
 import frc.robot.RobotMap;
 
-public class LockDriveCommand extends Command {
-  public LockDriveCommand() {
+public class OuttakeCommand extends Command {
+  public OuttakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.drivetrain);
+    requires(Robot.outtake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    RobotMap.leftDriveSpark1.getPIDController().setP(1);
-    RobotMap.leftDriveSpark1.getPIDController().setOutputRange(-1, 1);
-    RobotMap.leftDriveSpark1.getPIDController().setReference(RobotMap.leftDriveSpark1.getEncoder().getPosition(), ControlType.kPosition);
-    
-    
-    RobotMap.rightDriveSpark1.getPIDController().setP(1);
-    RobotMap.rightDriveSpark1.getPIDController().setOutputRange(-1, 1);
-    RobotMap.rightDriveSpark1.getPIDController().setReference(RobotMap.rightDriveSpark1.getEncoder().getPosition(), ControlType.kPosition);
-   
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // System.out.print(RobotMap.leftDriveSpark1.getEncoder().getPosition());
-    // System.out.print("\t");
-    // System.out.println(RobotMap.rightDriveSpark1.getEncoder().getPosition());
+    //Set sides based on tape detection
+    if(RobotMap.outerLeftSensor.isOnTape()){
+      RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
+      RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
+      Robot.outtake.lastSide = Outtake.SIDE_LEFT;
+    }   
+    if(RobotMap.outerRightSensor.isOnTape()){
+      RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
+      RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
+      Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
+    }    
 
-    //TODO: Allow the driver to move the bot
-
-
+    //Reset last side if the robot has gone more than 3 feet
+    if(RobotMap.leftDriveSpark2.getEncoder().getPosition() > 36 || RobotMap.rightDriveSpark2.getEncoder().getPosition() > 36){
+      Robot.outtake.lastSide = Outtake.SIDE_NONE;
+    }
+  
+    //Disable sides if the sensor is lost
+    if(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() == -5){
+      Robot.outtake.setSide(Outtake.SIDE_LEFT, -5);
+    }
+    if(RobotMap.rightOuttakeTalon.getSelectedSensorPosition() == -5){
+      Robot.outtake.setSide(Outtake.SIDE_RIGHT, -5);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
