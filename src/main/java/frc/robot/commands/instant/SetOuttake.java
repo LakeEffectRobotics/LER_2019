@@ -43,8 +43,8 @@ public class SetOuttake extends InstantCommand {
     // Bring both in
     if (side == SIDE_BOTH) {
       if (position == AUTO_IN) {
-        Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
-        Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
+        Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_INTAKE);
+        Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_INTAKE);
       }
       return;
     }
@@ -61,7 +61,7 @@ public class SetOuttake extends InstantCommand {
         if (position == AUTO_OUT)
           position = Outtake.L_OUT;
         if (position == AUTO_IN)
-          position = Outtake.L_IN;
+          position = Outtake.L_INTAKE;
       }
       // If the last side was right, and we are close enough
       else if (Robot.outtake.lastSide == Outtake.SIDE_RIGHT && distance < Outtake.MAX_DIST) {
@@ -70,7 +70,7 @@ public class SetOuttake extends InstantCommand {
         if (position == AUTO_OUT)
           position = Outtake.R_OUT;
         if (position == AUTO_IN)
-          position = Outtake.R_IN;
+          position = Outtake.R_INTAKE;
       } else {
         return;
       }

@@ -220,15 +220,17 @@ public class RobotMap {
 
 		// Setup outtake
 		leftOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-		leftOuttakeTalon.setSensorPhase(false);
-		// leftOuttakeTalon.config_kP(0, 12.0, 0);
-		// leftOuttakeTalon.config_kI(0, 0.0, 0);
+		leftOuttakeTalon.setSensorPhase(true);
+		leftOuttakeTalon.config_kP(0, 2, 0);
+		leftOuttakeTalon.config_kI(0, 0.03, 0);
+		leftOuttakeTalon.configMaxIntegralAccumulator(0,5000);
 		// leftOuttakeTalon.config_kD(0, 0.001, 0);
 
 		rightOuttakeTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-		rightOuttakeTalon.setSensorPhase(true);
-		// rightOuttakeTalon.config_kP(0, 12.0, 0);
-		// rightOuttakeTalon.config_kI(0, 0.0, 0);
+		rightOuttakeTalon.setSensorPhase(false);
+		rightOuttakeTalon.config_kP(0, 2, 0);
+		rightOuttakeTalon.config_kI(0, 0.03, 0);
+		rightOuttakeTalon.configMaxIntegralAccumulator(0,5000);
 		// rightOuttakeTalon.config_kD(0, 0.001, 0);
 
 	}

@@ -28,7 +28,7 @@ public class OuttakeCommand extends Command {
   @Override
   protected void execute() {
     //Set sides based on tape detection
-    if(RobotMap.outerLeftSensor.isOnTape()){
+    /*if(RobotMap.outerLeftSensor.isOnTape()){
       RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
       RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
       Robot.outtake.lastSide = Outtake.SIDE_LEFT;
@@ -37,20 +37,29 @@ public class OuttakeCommand extends Command {
       RobotMap.leftDriveSpark2.getEncoder().setPosition(0);
       RobotMap.rightDriveSpark2.getEncoder().setPosition(0);
       Robot.outtake.lastSide = Outtake.SIDE_RIGHT;
-    }    
+    } */   
 
     //Reset last side if the robot has gone more than 3 feet
     if(RobotMap.leftDriveSpark2.getEncoder().getPosition() > 36 || RobotMap.rightDriveSpark2.getEncoder().getPosition() > 36){
       Robot.outtake.lastSide = Outtake.SIDE_NONE;
     }
-  
-    //Disable sides if the sensor is lost
-    if(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() == -5){
-      Robot.outtake.setSide(Outtake.SIDE_LEFT, -5);
+
+    //TODO: Power monitoring when resetting to detect ball "DamonDrive"?
+
+    if(RobotMap.leftOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
+      RobotMap.leftOuttakeTalon.setSelectedSensorPosition(0);
+      Robot.outtake.setSide(Outtake.SIDE_LEFT, 2);
+      if (Robot.outtake.leftCalibrated == 0)
+        Robot.outtake.leftCalibrated = 1;
     }
-    if(RobotMap.rightOuttakeTalon.getSelectedSensorPosition() == -5){
-      Robot.outtake.setSide(Outtake.SIDE_RIGHT, -5);
+    
+    if(RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
+      RobotMap.rightOuttakeTalon.setSelectedSensorPosition(0);
+      Robot.outtake.setSide(Outtake.SIDE_RIGHT, 2);
+      if (Robot.outtake.rightCalibrated == 0)
+        Robot.outtake.rightCalibrated = 1;
     }
+    // if (mode==)
   }
 
   // Make this return true when this Command no longer needs to run execute()
