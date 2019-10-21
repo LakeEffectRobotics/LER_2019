@@ -27,12 +27,12 @@ public class Elevator extends Subsystem {
   }
 
   public static final double GROUND_HEIGHT = 0;
-  public static final double MAX_HEIGHT = 60;
+  public static final double MAX_HEIGHT = 50;//60;
   
   public static final double LOW_HEIGHT = 9.0;
   public static final double CARGO_SHIP_HEIGHT = 22;
   public static final double MID_HEIGHT = 30.5;
-  public static final double HIGH_HEIGHT = 51;
+  public static final double HIGH_HEIGHT = 45;
 
   public static final double[] HEIGHTS = {GROUND_HEIGHT, LOW_HEIGHT, CARGO_SHIP_HEIGHT, MID_HEIGHT, HIGH_HEIGHT, MAX_HEIGHT};
 

@@ -129,13 +129,13 @@ public class OI {
 		fixDT.whenPressed(new Stop());
 
 		outtakeLeft.whenPressed(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_OUT));
-		outtakeLeft.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));
+		outtakeLeft.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_GRIP));
 		outtakeRight.whenPressed(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_OUT));
-		outtakeRight.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_IN));
+		outtakeRight.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_GRIP));
 
 		autoOuttake.whenPressed(new SetOuttake(SetOuttake.SIDE_AUTO, SetOuttake.AUTO_OUT));
-		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_IN));
-		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_IN));
+		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_LEFT, Outtake.L_INTAKE));
+		autoOuttake.whenReleased(new SetOuttake(Outtake.SIDE_RIGHT, Outtake.R_INTAKE));
 
 		disco.whileHeld(new Disco());
 	}

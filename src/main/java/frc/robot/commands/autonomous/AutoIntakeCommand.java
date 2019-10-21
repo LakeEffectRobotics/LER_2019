@@ -7,11 +7,14 @@
 
 package frc.robot.commands.autonomous;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Outtake;
 
 public class AutoIntakeCommand extends Command {
 
@@ -27,6 +30,8 @@ public class AutoIntakeCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_INTAKE);
+    Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_INTAKE);
     Robot.intake.setTargetPosition(Intake.POSITION_DOWN);
     pressed = false;
     Robot.elevator.setTargetHeight(Elevator.GROUND_HEIGHT, 0, "INTAKE");

@@ -30,8 +30,8 @@ public class SetElevatorHeightCommand extends InstantCommand {
 
     // Release grip if the height is low
     if (height < Elevator.LOW_HEIGHT) {
-      Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
-      Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
+      Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_INTAKE);
+      Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_INTAKE);
     } else { // Grip the ball if elevator is raised
       Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_GRIP);
       Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_GRIP);

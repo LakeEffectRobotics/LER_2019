@@ -95,71 +95,83 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Vision Offset", visionOffset);
 		// SmartDashboard.putNumber("Reverse", oi.shawnDrive.get() ? 1 : 0);
 		// System.out.println(oi.shawnDrive.get());
-
+		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftOuttakeTalon.getSelectedSensorPosition());
+		SmartDashboard.putNumber("RightEncoder", RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
+		SmartDashboard.putNumber("LeftSwitch", RobotMap.leftOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed() ? 1:0);
+		SmartDashboard.putNumber("RightSwitch", RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed() ? 1:0);
 		// VISION CODE REMOVED WITH REMOVAL OF JEVOIS
 		// jevoisPeriodic();
+
+		
+		//System.out.print(RobotMap.leftOuttakeTalon.getClosedLoopTarget());
+		//System.out.print(",  ");
+		//System.out.print(RobotMap.rightOuttakeTalon.getClosedLoopTarget());
+		//System.out.print(",  ");
+		//System.out.print(RobotMap.leftOuttakeTalon.getSelectedSensorPosition());//getSensorCollection().getQuadraturePosition());
+		//System.out.print(",  ");
+ 		//System.out.println(RobotMap.rightOuttakeTalon.getSelectedSensorPosition());//getSensorCollection().getQuadraturePosition());
 
 	}
 
 	public void jevoisPeriodic() {
 
-		if (RobotMap.jevoisSerial == null) {
-			if (periodicCount % 50 == 051) {
-				System.out.println("initializing JeVois Serial");
-				try {
-					RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
-				} catch (Exception e) {
-					System.out.println("JeVois error");
-					RobotMap.jevoisSerial = null;
-				}
-			}
-		} else {
+		// if (RobotMap.jevoisSerial == null) {
+		// 	if (periodicCount % 50 == 051) {
+		// 		System.out.println("initializing JeVois Serial");
+		// 		try {
+		// 			RobotMap.jevoisSerial = new SerialPort(115200, Port.kUSB);
+		// 		} catch (Exception e) {
+		// 			System.out.println("JeVois error");
+		// 			RobotMap.jevoisSerial = null;
+		// 		}
+		// 	}
+		// } else {
 
-			jevois_available = RobotMap.jevoisSerial.getBytesReceived();
-			// Update collector
-			/*
-			 * int sum = available; for (int i = 0; i < collector.length - 1; i++) {
-			 * collector[i] = collector[i] + 1; sum += collector[i]; }
-			 * collector[collector.length - 1] = available;
-			 * 
-			 * // If there have been <2 bits in the last 5 messages, there's an issue if
-			 * (sum < 2) { offset = 0; }
-			 */
+		// 	jevois_available = RobotMap.jevoisSerial.getBytesReceived();
+		// 	// Update collector
+		// 	/*
+		// 	 * int sum = available; for (int i = 0; i < collector.length - 1; i++) {
+		// 	 * collector[i] = collector[i] + 1; sum += collector[i]; }
+		// 	 * collector[collector.length - 1] = available;
+		// 	 * 
+		// 	 * // If there have been <2 bits in the last 5 messages, there's an issue if
+		// 	 * (sum < 2) { offset = 0; }
+		// 	 */
 
-			// Parse new offset
-			if (jevois_available == 0)
-				errorCount++;
-			else
-				errorCount = 0;
+		// 	// Parse new offset
+		// 	if (jevois_available == 0)
+		// 		errorCount++;
+		// 	else
+		// 		errorCount = 0;
 
-			if (errorCount >= 150) {
-				System.out.println("Resetting Jevois serial");
-				RobotMap.jevoisSerial.reset();
-				RobotMap.jevoisSerial.close();
-				// RobotMap.jevoisSerial.setFlowControl(FlowControl.kRtsCts);
-				RobotMap.jevoisSerial = null;
-				errorCount = 0;
-			}
+		// 	if (errorCount >= 150) {
+		// 		System.out.println("Resetting Jevois serial");
+		// 		RobotMap.jevoisSerial.reset();
+		// 		RobotMap.jevoisSerial.close();
+		// 		// RobotMap.jevoisSerial.setFlowControl(FlowControl.kRtsCts);
+		// 		RobotMap.jevoisSerial = null;
+		// 		errorCount = 0;
+		// 	}
 
-			if (jevois_available > 0) {
-				try {
-					in = RobotMap.jevoisSerial.readString().split("\n");
-					// Process data
-					if (in.length > 2) {
-						t = in[in.length - 2];
-						if (t.length() > 1) {
-							// Remove the trailing whitespace
-							t = t.substring(0, t.length() - 1);
-							visionOffset = Integer.parseInt(t);
-						}
-					}
-				} catch (Exception e) {
-					// vision_offset = 0;
-					System.out.println("Parse Err");
-				}
-			}
+		// 	if (jevois_available > 0) {
+		// 		try {
+		// 			in = RobotMap.jevoisSerial.readString().split("\n");
+		// 			// Process data
+		// 			if (in.length > 2) {
+		// 				t = in[in.length - 2];
+		// 				if (t.length() > 1) {
+		// 					// Remove the trailing whitespace
+		// 					t = t.substring(0, t.length() - 1);
+		// 					visionOffset = Integer.parseInt(t);
+		// 				}
+		// 			}
+		// 		} catch (Exception e) {
+		// 			// vision_offset = 0;
+		// 			System.out.println("Parse Err");
+		// 		}
+		// 	}
 
-		}
+		// }
 	}
 
 	public void enabledInit() {
@@ -197,10 +209,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Gamepiece", autonomous_position_chooser);
 
 		// Setup webcam feed
-		webcam = CameraServer.getInstance().startAutomaticCapture(0);
-		webcam.setPixelFormat(PixelFormat.kYUYV);
-		webcam.setResolution(320, 240);
-		webcam.setFPS(25);
+		// webcam = CameraServer.getInstance().startAutomaticCapture(0);
+		// webcam.setPixelFormat(PixelFormat.kYUYV);
+		// webcam.setResolution(320, 240);
+		// webcam.setFPS(25);
 
 		// Setup jevois feed
 		// jevois = CameraServer.getInstance().startAutomaticCapture(0);
@@ -248,21 +260,50 @@ public class Robot extends TimedRobot {
 		// Prevent old target height from causing issues
 		RobotMap.elevatorSpark1.getPIDController().setReference(RobotMap.elevatorSpark1.getEncoder().getPosition(),
 				ControlType.kPosition);
-		Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
+		//Robot.elevator.setTargetHeight(RobotMap.elevatorSpark1.getEncoder().getPosition(), 0, "Enable");
+		Robot.elevator.setTargetHeight(Elevator.LOW_HEIGHT/2, 0, "Enable");
 
 		intake.init();
-		outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_IN);
-		outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_IN);
+		RobotMap.leftOuttakeTalon.setSelectedSensorPosition(1000);
+		RobotMap.rightOuttakeTalon.setSelectedSensorPosition(1000);
+		outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_GRIP);
+		outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_GRIP);
 		enabledInit();
 	}
 
+	int c=0;
 	@Override
 	public void teleopPeriodic() {
+		
 		Scheduler.getInstance().run();
-		System.out.println(RobotMap.elevatorSpark1.getEncoder().getPosition());
+		if (Robot.outtake.leftCalibrated == 1)
+		{
+			Robot.outtake.leftCalibrated = 2;
+			Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_INTAKE);
+		}
+		if (Robot.outtake.rightCalibrated == 1)
+		{
+			Robot.outtake.rightCalibrated = 2;
+			Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_INTAKE);
+		}
 
+		// if (++c%20==0) {
+		// 	System.out.print(RobotMap.elevatorSpark1.getEncoder().getPosition());
+		// 	System.out.print(",  ");
+		// 	System.out.print(RobotMap.leftOuttakeTalon.getClosedLoopTarget());
+		// 	System.out.print(",  ");
+		// 	System.out.print(RobotMap.rightOuttakeTalon.getClosedLoopTarget());
+		// 	System.out.print(",  ");
+		// 	System.out.print(RobotMap.leftOuttakeTalon.getSelectedSensorPosition());//getSensorCollection().getQuadraturePosition());
+		// 	System.out.print(",  ");
+		// 	System.out.println(RobotMap.rightOuttakeTalon.getSelectedSensorPosition());//getSensorCollection().getQuadraturePosition());
+		// }
 	}
-
+	@Override
+	public void testInit() {
+		RobotMap.leftOuttakeTalon.setSelectedSensorPosition(0);
+		RobotMap.rightOuttakeTalon.setSelectedSensorPosition(0);
+	}
 	@Override
 	public void testPeriodic() {
 		/**
@@ -270,16 +311,27 @@ public class Robot extends TimedRobot {
 		 */
 		RobotMap.leftOuttakeTalon.set(ControlMode.PercentOutput, Robot.oi.xbox.getJoyLeftY() / 3);
 		RobotMap.rightOuttakeTalon.set(ControlMode.PercentOutput, Robot.oi.xbox.getJoyRightY() / 3);
+		//System.out.println("L,R="+Robot.oi.xbox.getJoyLeftY() / 3+","+Robot.oi.xbox.getJoyRightY() / 3);
 
 		if(RobotMap.leftOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
 			RobotMap.leftOuttakeTalon.setSelectedSensorPosition(0);
-		}
-
-		if(RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
+			//Robot.outtake.setSide(Outtake.SIDE_LEFT, 1);
+		  }
+		  
+		  if(RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
 			RobotMap.rightOuttakeTalon.setSelectedSensorPosition(0);
-		}
+			//Robot.outtake.setSide(Outtake.SIDE_RIGHT, 1);
+		  }
+		//if(RobotMap.leftOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
+		//	RobotMap.leftOuttakeTalon.setSelectedSensorPosition(0);
+		//}
 
-		System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() +"\t"+ RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
+		//if(RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
+		//	RobotMap.rightOuttakeTalon.setSelectedSensorPosition(0);
+		//}
+
+		//System.out.println(RobotMap.leftOuttakeTalon.getSelectedSensorPosition() +"\t"+ RobotMap.rightOuttakeTalon.getSelectedSensorPosition());
+		//System.out.println(RobotMap.leftOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed() +"\t"+ RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed());
 
 		if (Robot.oi.xbox.getButtonA()) {
 			Robot.lights.setBoth(Lights.Colour.GREEN);

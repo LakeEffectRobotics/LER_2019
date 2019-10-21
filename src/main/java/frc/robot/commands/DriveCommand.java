@@ -13,7 +13,7 @@ import frc.robot.Tools;
 
 public class DriveCommand extends Command {
 
-  final double DEADZONE = 0.025;
+  final double DEADZONE = 0.05;
 
   public DriveCommand() {
     requires(Robot.drivetrain);
