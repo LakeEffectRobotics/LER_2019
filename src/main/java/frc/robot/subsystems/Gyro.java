@@ -49,7 +49,7 @@ public class Gyro extends Subsystem {
     
     public double[] getStraightOutput(double l, double r) {
     	final double ANGLE_TOLERANCE = 1;
-    	double k_p = 0.03;
+    	double k_p = 0.01;
     	double l_out = l;
     	double r_out = r;
     	double current_angle = getAngle();
