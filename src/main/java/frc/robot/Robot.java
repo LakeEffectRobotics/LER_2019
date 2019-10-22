@@ -264,10 +264,8 @@ public class Robot extends TimedRobot {
 		Robot.elevator.setTargetHeight(Elevator.LOW_HEIGHT/2, 0, "Enable");
 
 		intake.init();
-		RobotMap.leftOuttakeTalon.setSelectedSensorPosition(1000);
-		RobotMap.rightOuttakeTalon.setSelectedSensorPosition(1000);
-		outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_GRIP);
-		outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_GRIP);
+		// TODO: preform the following command only when a button is pressed
+		outtake.calibrate();
 		enabledInit();
 	}
 

@@ -21,14 +21,16 @@ public class Outtake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-
-  public static final int L_GRIP = -10;
-  public static final int L_INTAKE = 60;
-  public static final int L_OUT = 573;
-
-  public static final int R_GRIP = -10;
-  public static final int R_INTAKE = 60;
-  public static final int R_OUT = 500;
+  // TODO: re-calibrate grip, intake, and out positions for bot right and left
+  public static final int L_CALIBRATE = -2000;
+  public static final int L_GRIP = 200;
+  public static final int L_INTAKE = 300;
+  public static final int L_OUT = 900;
+  
+  public static final int R_CALIBRATE = -2000;
+  public static final int R_GRIP = 100;
+  public static final int R_INTAKE = 200;
+  public static final int R_OUT = 800;
   
 
   public static final int SIDE_RIGHT = 1;
@@ -49,6 +51,12 @@ public class Outtake extends Subsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new OuttakeCommand());
+  }
+
+  // Sets the outtake to a large negative position until it hits limit switch
+  public void calibrate() {
+    RobotMap.leftOuttakeTalon.set(ControlMode.Position, L_CALIBRATE);
+    RobotMap.rightOuttakeTalon.set(ControlMode.Position, R_CALIBRATE);
   }
 
   public void setSide(int side, int target) {

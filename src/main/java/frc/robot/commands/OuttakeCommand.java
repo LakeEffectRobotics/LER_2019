@@ -48,14 +48,14 @@ public class OuttakeCommand extends Command {
 
     if(RobotMap.leftOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
       RobotMap.leftOuttakeTalon.setSelectedSensorPosition(0);
-      Robot.outtake.setSide(Outtake.SIDE_LEFT, 2);
+      Robot.outtake.setSide(Outtake.SIDE_LEFT, Outtake.L_INTAKE);
       if (Robot.outtake.leftCalibrated == 0)
         Robot.outtake.leftCalibrated = 1;
     }
     
     if(RobotMap.rightOuttakeTalon.getSensorCollection().isRevLimitSwitchClosed()){
       RobotMap.rightOuttakeTalon.setSelectedSensorPosition(0);
-      Robot.outtake.setSide(Outtake.SIDE_RIGHT, 2);
+      Robot.outtake.setSide(Outtake.SIDE_RIGHT, Outtake.R_INTAKE);
       if (Robot.outtake.rightCalibrated == 0)
         Robot.outtake.rightCalibrated = 1;
     }
